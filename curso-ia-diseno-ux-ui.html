@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA en Diseño de Productos Digitales — Programa de Especialización</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--primary:#ffffff;--primary-light:#f5f6fc;--accent:#496BE3;--accent2:#886BFF;
+--accent3:#6c5ce7;--gold:#e0a816;--green:#1e8a4e;--bg:#f4f5f9;--card:#ffffff;
+--card2:#f0f2f8;--text:#1a1a2e;--text2:#4a4a68;--text3:#8888a0;
+--glass:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.09);
+--gradient1:linear-gradient(135deg,#496BE3,#886BFF);
+--gradient2:linear-gradient(135deg,#496BE3,#886BFF);
+--gradient3:linear-gradient(135deg,#1e8a4e,#496BE3);
+--radius:16px;--radius-sm:10px;
+--sidebar-w:300px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#eee}
+::-webkit-scrollbar-thumb{background:#bbb;border-radius:3px}
+
+/* ===== COVER PAGE ===== */
+.cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#f8f9ff 0%,#eef0ff 40%,#f4f0ff 100%);padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-30%;right:-15%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(73,107,227,.07),transparent 70%)}
+.cover::after{content:'';position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(136,107,255,.06),transparent 70%)}
+.cover-inner{position:relative;z-index:1;max-width:800px}
+.cover-badge{display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(73,107,227,.1);color:var(--accent);font-size:.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:24px}
+.cover h1{font-size:3.2rem;font-weight:800;line-height:1.1;letter-spacing:-2px;margin-bottom:16px}
+.cover h1 span{background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cover>p,.cover-inner>p{color:var(--text2);font-size:1.1rem;max-width:600px;margin:0 auto 32px}
+.cover-stats{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.cover-stat{text-align:center}
+.cover-stat .num{font-size:2rem;font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cover-stat .label{font-size:.78rem;color:var(--text3);margin-top:2px}
+.cover-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:40px;text-align:left;width:100%;max-width:880px}
+.cover-mod{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;transition:all .3s;cursor:default;position:relative;overflow:hidden}
+.cover-mod::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.cover-mod:hover{box-shadow:0 6px 24px rgba(73,107,227,.1);transform:translateY(-3px);border-color:rgba(73,107,227,.2)}
+.cover-mod .cm-num{font-size:1.6rem;font-weight:800;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.cover-mod .cm-icon{font-size:1.1rem;position:absolute;top:16px;right:16px}
+.cover-mod .cm-text{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.3}
+.cover-mod .cm-hours{font-size:.72rem;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:10px}
+.start-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;border-radius:var(--radius);background:var(--gradient1);color:#fff;font-size:1rem;font-weight:700;border:none;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(73,107,227,.25)}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(73,107,227,.35)}
+.cover-author{margin-top:40px;font-size:.82rem;color:var(--text3);line-height:1.6}
+.cover-author strong{color:var(--text2);font-weight:600}
+
+/* ===== SIDEBAR ===== */
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--primary);border-right:1px solid var(--border);box-shadow:2px 0 12px rgba(0,0,0,.04);z-index:100;display:flex;flex-direction:column;transition:transform .3s ease,width .3s ease}
+.sidebar.collapsed{transform:translateX(calc(-1 * var(--sidebar-w)))}
+.sidebar-header{padding:20px 24px;border-bottom:1px solid var(--border)}
+.sidebar-header h2{font-size:.92rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;letter-spacing:-.3px}
+.sidebar-header p{font-size:.72rem;color:var(--text3);margin-top:2px}
+
+.progress-bar-container{padding:14px 24px;border-bottom:1px solid var(--border)}
+.progress-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text2);margin-bottom:6px}
+.progress-bar{height:6px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gradient1);border-radius:3px;transition:width .5s ease;width:0%}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
+.nav-module{cursor:pointer;padding:10px 24px;font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:10px;transition:all .2s;border-left:3px solid transparent}
+.nav-module:hover{background:var(--glass);color:var(--text)}
+.nav-module.active{color:var(--accent);border-left-color:var(--accent);background:rgba(73,107,227,.05)}
+.nav-module .mod-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;background:var(--glass);flex-shrink:0;transition:all .3s}
+.nav-module.active .mod-num{background:var(--accent);color:#ffffff}
+.nav-module.completed .mod-num{background:var(--green);color:#ffffff}
+.nav-lessons{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(0.4,0,0.2,1);opacity:0;transform:translateY(-4px);transition:max-height .5s cubic-bezier(0.4,0,0.2,1),opacity .3s ease,transform .3s ease}
+.nav-lessons.open{max-height:600px;opacity:1;transform:translateY(0)}
+.nav-lesson{padding:6px 24px 6px 58px;font-size:.78rem;color:var(--text3);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.nav-lesson:hover{color:var(--text);background:var(--glass)}
+.nav-lesson.active{color:var(--accent)}
+.nav-lesson .check{width:14px;height:14px;border-radius:50%;border:2px solid var(--text3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;transition:all .3s}
+.nav-lesson.done .check{background:var(--green);border-color:var(--green);color:#ffffff}
+
+/* SIDEBAR TOGGLE (floating) */
+.sidebar-toggle{position:fixed;top:16px;left:16px;z-index:200;width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.06);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.sidebar-toggle:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);background:var(--card2)}
+.sidebar-toggle .toggle-arrow{font-size:.8rem;color:var(--text3);transition:all .25s ease;line-height:1}
+.sidebar-toggle.shifted{left:calc(var(--sidebar-w) + 16px)}
+
+/* ===== MAIN ===== */
+.app{display:none}
+.app.active{display:block}
+.main{margin-left:var(--sidebar-w);min-height:100vh;transition:margin-left .3s ease}
+.main.expanded{margin-left:0}
+
+/* ===== CONTENT ===== */
+.content-area{padding:40px 60px 80px;max-width:900px;margin:0 auto;transition:max-width .3s ease}
+.main.expanded .content-area{max-width:860px}
+.module-section{display:none}
+.module-section.visible{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.module-header{margin-bottom:36px;padding-top:16px}
+.module-tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.module-header h2{font-size:1.8rem;font-weight:800;letter-spacing:-.8px;margin-bottom:8px}
+.module-header p{color:var(--text2);font-size:.95rem}
+
+/* LESSON */
+.lesson{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:24px;overflow:hidden;transition:all .3s}
+.lesson-toggle{width:100%;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:none;border:none;color:var(--text);text-align:left}
+.lesson-toggle:hover{background:var(--glass)}
+.lesson-left{display:flex;align-items:center;gap:14px}
+.lesson-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.lesson-toggle h3{font-size:1.05rem;font-weight:700;letter-spacing:-.3px}
+.lesson-toggle .dur{font-size:.75rem;color:var(--text3);margin-top:2px}
+.lesson-arrow{font-size:.9rem;color:var(--text3);transition:transform .3s;flex-shrink:0}
+.lesson.open .lesson-arrow{transform:rotate(180deg)}
+.lesson-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.lesson.open .lesson-body{max-height:none}
+.lesson-content{padding:28px 40px 36px}
+
+/* OBJECTIVES */
+.objectives{background:rgba(73,107,227,.05);border:1px solid rgba(73,107,227,.12);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:28px}
+.objectives h4{font-size:.82rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.objectives h4::before{content:'🎯'}
+.objectives li{font-size:.9rem;color:var(--text2);margin:6px 0;padding-left:4px;list-style:none;display:flex;align-items:flex-start;gap:8px}
+.objectives li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+
+/* TEXT */
+.lesson-content h4{font-size:1.1rem;font-weight:700;margin:24px 0 10px;color:var(--text);display:flex;align-items:center;gap:8px}
+.lesson-content h4::before{content:'';width:4px;height:20px;background:var(--gradient1);border-radius:2px;flex-shrink:0}
+.lesson-content p{color:var(--text2);margin-bottom:14px;font-size:.92rem}
+
+/* TABLE */
+.info-table{width:100%;border-collapse:collapse;margin:20px 0 28px;border-radius:var(--radius-sm);overflow:hidden;font-size:.85rem}
+.info-table thead{background:var(--accent)}
+.info-table th{padding:12px 16px;text-align:left;font-weight:600;color:#ffffff;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.info-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text2)}
+.info-table tbody tr:hover{background:var(--glass)}
+
+/* TOOL LINKS */
+.info-table td a.tool-link{color:var(--accent);text-decoration:none;font-weight:700;border-bottom:1.5px solid rgba(73,107,227,.25);padding-bottom:1px;transition:all .2s}
+.info-table td a.tool-link:hover{border-bottom-color:var(--accent);color:var(--accent2)}
+
+/* PILLS */
+.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.3px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.pill-free{background:rgba(30,138,78,.1);color:#1e8a4e}
+.pill-freemium{background:rgba(73,107,227,.1);color:#496BE3}
+.pill-paid{background:rgba(224,168,22,.1);color:#b8860b}
+
+/* BOXES */
+.tip-box,.exercise-box,.resource-box{border-radius:var(--radius-sm);padding:22px 24px;margin:24px 0}
+.tip-box{background:rgba(224,168,22,.06);border:1px solid rgba(224,168,22,.16)}
+.tip-box .box-title{color:var(--gold);font-weight:700;font-size:.85rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.tip-box .box-title::before{content:'💡'}
+.tip-box p{color:var(--text2);font-size:.9rem}
+.exercise-box{background:rgba(30,138,78,.05);border:1px solid rgba(30,138,78,.15)}
+.exercise-box .box-title{color:var(--green);font-weight:700;font-size:.95rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.exercise-box .box-title::before{content:'🏋️'}
+.exercise-box .box-desc{color:var(--text2);font-size:.88rem;margin-bottom:12px;font-style:italic}
+.exercise-box ol{padding-left:0;list-style:none;counter-reset:step}
+.exercise-box li{counter-increment:step;font-size:.88rem;color:var(--text2);margin:10px 0;padding-left:34px;position:relative}
+.exercise-box li::before{content:counter(step);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:rgba(30,138,78,.1);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700}
+.resource-box{background:rgba(136,107,255,.05);border:1px solid rgba(136,107,255,.12)}
+.resource-box .box-title{color:var(--accent2);font-weight:700;font-size:.85rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.resource-box .box-title::before{content:'📚'}
+.resource-item{font-size:.85rem;color:var(--text2);margin:8px 0;display:flex;gap:10px;align-items:flex-start}
+.resource-item .r-type{color:var(--accent2);font-weight:600;flex-shrink:0;min-width:70px}
+.resource-item a{color:var(--accent);text-decoration:none;font-size:.78rem}
+.resource-item a:hover{text-decoration:underline}
+
+/* LESSON COMPLETE BAR */
+.lesson-complete{width:100%;border-radius:var(--radius);border:1px solid var(--border);padding:18px 24px;margin-top:28px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .35s ease;background:var(--card)}
+.lesson-complete:hover{border-color:rgba(30,138,78,.25);background:rgba(30,138,78,.02)}
+.lesson-complete .lc-check{width:26px;height:26px;border-radius:8px;border:2px solid var(--text3);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:transparent;transition:all .35s ease;flex-shrink:0}
+.lesson-complete:hover .lc-check{border-color:var(--green)}
+.lesson-complete .lc-text{font-size:.92rem;font-weight:600;color:var(--text2);transition:all .35s ease}
+.lesson-complete.done{background:rgba(30,138,78,.05);border-color:rgba(30,138,78,.2)}
+.lesson-complete.done .lc-check{background:var(--green);border-color:var(--green);color:#fff}
+.lesson-complete.done .lc-text{color:var(--green)}
+
+/* LESSON NAV BUTTONS */
+.lesson-nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:12px}
+.lesson-nav .nav-btn{flex:1;padding:14px 20px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);cursor:pointer;transition:all .25s ease;display:flex;align-items:center;gap:10px;text-decoration:none}
+.lesson-nav .nav-btn:hover{border-color:rgba(73,107,227,.25);box-shadow:0 2px 12px rgba(73,107,227,.06);background:rgba(73,107,227,.02)}
+.lesson-nav .nav-btn .nb-label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.lesson-nav .nav-btn .nb-title{font-size:.88rem;font-weight:600;color:var(--text);margin-top:2px}
+.lesson-nav .nav-btn.prev{text-align:left}
+.lesson-nav .nav-btn.next{text-align:right;flex-direction:row-reverse;border-color:rgba(73,107,227,.15);background:rgba(73,107,227,.02)}
+.lesson-nav .nav-btn.next:hover{background:rgba(73,107,227,.05);border-color:rgba(73,107,227,.3)}
+.lesson-nav .nav-btn.next .nb-title{color:var(--accent)}
+.lesson-nav .nav-btn .nb-arrow{font-size:1.1rem;color:var(--text3);flex-shrink:0}
+.lesson-nav .nav-btn.next .nb-arrow{color:var(--accent)}
+
+/* TL;DR BOX */
+.tldr{background:linear-gradient(135deg,rgba(73,107,227,.05),rgba(136,107,255,.04));border:1px solid rgba(73,107,227,.12);border-left:4px solid var(--accent);border-radius:var(--radius-sm);padding:20px 24px;margin-bottom:28px;position:relative}
+.tldr .tldr-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tldr .tldr-label::before{content:'⚡'}
+.tldr p{font-size:.9rem;color:var(--text2);margin:0;line-height:1.6}
+.module-tldr{background:linear-gradient(135deg,rgba(73,107,227,.03),rgba(136,107,255,.03));border:1px solid rgba(136,107,255,.1);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);padding:22px 24px;margin-bottom:28px}
+.module-tldr .tldr-label{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.module-tldr .tldr-label::before{content:'📋'}
+.module-tldr p{font-size:.9rem;color:var(--text2);margin:0;line-height:1.6}
+
+/* LESSON IMAGE */
+.lesson-img{width:100%;border-radius:var(--radius-sm);margin:24px 0;overflow:hidden;position:relative;background:var(--card2);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.lesson-img svg{width:100%;height:100%}
+
+/* VIDEO EMBED */
+.video-embed{margin:24px 0;border-radius:var(--radius-sm);overflow:hidden;position:relative;padding-bottom:56.25%;height:0;background:var(--card2)}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:var(--radius-sm)}
+.video-label{font-size:.78rem;color:var(--text3);margin-top:8px;display:flex;align-items:center;gap:6px}
+.video-label::before{content:'🎬'}
+
+/* CASE STUDY */
+.case-study{background:linear-gradient(135deg,rgba(73,107,227,.04),rgba(30,138,78,.02));border:1px solid rgba(73,107,227,.12);border-left:4px solid var(--accent);border-radius:var(--radius-sm);padding:22px 24px;margin:28px 0}
+.case-study .case-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.case-study .case-label::before{content:'🏢'}
+.case-study .case-company{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.case-study p{font-size:.9rem;color:var(--text2);margin-bottom:8px;line-height:1.6}
+.case-study p:last-child{margin-bottom:0}
+.case-study .case-takeaway{font-size:.85rem;color:var(--accent);font-weight:600;margin-top:10px;padding-top:10px;border-top:1px solid rgba(73,107,227,.08)}
+.case-study .case-takeaway::before{content:'💡 ';font-size:.9rem}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.sidebar{transform:translateX(-100%)}
+.sidebar.collapsed{transform:translateX(-100%)}
+.sidebar.mobile-open{transform:translateX(0)!important}
+.sidebar-toggle{left:16px!important}
+.sidebar-toggle.shifted{left:16px!important}
+.main{margin-left:0!important}
+.cover h1{font-size:2rem}
+.cover-grid{grid-template-columns:repeat(2,1fr)}
+.content-area{padding:24px 20px 60px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== COVER PAGE ===== -->
+<div class="cover" id="cover-page">
+<div class="cover-inner">
+<div class="cover-badge">Programa de Especialización · Edición 2026</div>
+<h1>Inteligencia Artificial en <span>Diseño de Productos Digitales</span></h1>
+<p>Programa para profesionales UX/UI que quieren dominar la integración de IA en su proceso de diseño y evolucionar su perfil profesional.</p>
+<div class="cover-stats">
+<div class="cover-stat"><div class="num">55h+</div><div class="label">De formación</div></div>
+<div class="cover-stat"><div class="num">11</div><div class="label">Módulos</div></div>
+<div class="cover-stat"><div class="num">34</div><div class="label">Lecciones</div></div>
+<div class="cover-stat"><div class="num">34</div><div class="label">Ejercicios</div></div>
+</div>
+<div class="cover-grid" id="cover-grid"></div>
+<button class="start-btn" onclick="enterCourse()">Comenzar el programa →</button>
+<div class="cover-author">Creado por <strong>Eli Trozzi</strong> · Armado con <strong>Claude</strong> de Anthropic</div>
+</div>
+</div>
+
+<!-- ===== APP (course view) ===== -->
+<div class="app" id="app-view">
+<button class="sidebar-toggle shifted" id="sidebar-toggle" onclick="toggleSidebar()">
+<span class="toggle-arrow">◀</span>
+</button>
+
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header" onclick="goToCover()" style="cursor:pointer" title="Volver a la portada">
+<div>
+<h2>IA en Diseño Digital</h2>
+<p>Especialización · 55h+</p>
+</div>
+</div>
+<div class="progress-bar-container">
+<div class="progress-label"><span>Progreso general</span><span id="progress-pct">0%</span></div>
+<div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+<nav class="sidebar-nav" id="sidebar-nav"></nav>
+</aside>
+
+<main class="main" id="main-content">
+<div class="content-area" id="content-area">
+<div class="module-section visible" id="overview" style="display:none"></div>
+</div>
+</main>
+</div>
+
+<script>
+// ============ COURSE DATA ============
+const MODULES = [
+{id:"m1",title:"Fundamentos de IA para Diseñadores",hours:"5h",color:"#496BE3",icon:"🧠",
+lessons:[
+{id:"l1_1",title:"¿Qué es la IA y cómo funciona?",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>La IA abarca desde Machine Learning hasta modelos generativos como GPT y Midjourney. Como diseñadora, tu valor está en entender posibilidades y limitaciones, no en programar modelos.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.15"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.1"/></linearGradient></defs><rect fill="url(#g1)" width="800" height="450" rx="12"/><circle cx="250" cy="200" r="60" fill="none" stroke="#496BE3" stroke-width="2" opacity=".6"/><circle cx="400" cy="225" r="80" fill="none" stroke="#886BFF" stroke-width="2" opacity=".5"/><circle cx="550" cy="200" r="60" fill="none" stroke="#3d5cc7" stroke-width="2" opacity=".6"/><line x1="310" y1="200" x2="340" y2="215" stroke="#496BE3" stroke-width="1.5" opacity=".4"/><line x1="460" y1="215" x2="490" y2="200" stroke="#3d5cc7" stroke-width="1.5" opacity=".4"/><text x="250" y="205" text-anchor="middle" font-family="system-ui" font-size="14" fill="#496BE3" opacity=".8">ML</text><text x="400" y="230" text-anchor="middle" font-family="system-ui" font-size="16" fill="#886BFF" opacity=".8">Deep Learning</text><text x="550" y="205" text-anchor="middle" font-family="system-ui" font-size="14" fill="#3d5cc7" opacity=".8">LLMs</text><text x="400" y="380" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">El ecosistema de la Inteligencia Artificial</text><circle cx="180" cy="120" r="4" fill="#496BE3" opacity=".3"/><circle cx="620" cy="130" r="6" fill="#886BFF" opacity=".2"/><circle cx="350" cy="100" r="3" fill="#3d5cc7" opacity=".3"/><circle cx="500" cy="350" r="5" fill="#496BE3" opacity=".2"/></svg></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Comprender qué es la inteligencia artificial y sus principales ramas</li>
+<li>Diferenciar entre IA estrecha, IA general e IA generativa</li>
+<li>Entender conceptos básicos de Machine Learning, Deep Learning y Redes Neuronales</li>
+<li>Identificar cómo cada tipo de IA impacta el diseño de productos</li>
+</ul></div>
+
+<h4>Inteligencia Artificial: definición y alcance</h4>
+<p>La inteligencia artificial (IA) es un campo de la informática dedicado a crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana: reconocer patrones, tomar decisiones, generar contenido, entender lenguaje natural y aprender de la experiencia. Para los diseñadores, la IA no es simplemente una tecnología; es un nuevo material de diseño con el que podemos construir experiencias que antes eran imposibles.</p>
+<p>Pensemos en la IA como un espectro. En un extremo tenemos sistemas muy específicos (IA Estrecha o Narrow AI) que son excelentes en una única tarea: un filtro de spam, un sistema de recomendación de Netflix, o el autocorrector de tu teléfono. En el otro extremo, está la IA General (AGI), que tendría capacidades cognitivas similares a las humanas en cualquier dominio. Hoy trabajamos casi exclusivamente con IA Estrecha, pero los avances en Large Language Models (LLMs) como GPT-4, Claude o Gemini están expandiendo enormemente lo que la IA puede hacer.</p>
+
+<h4>Machine Learning: la IA que aprende de datos</h4>
+<p>Machine Learning (ML) es la rama de la IA que permite a los sistemas aprender patrones a partir de datos sin ser programados explícitamente para cada regla. Imaginemos que queremos diseñar un sistema que detecte si un usuario está frustrado. En lugar de programar reglas como "si el usuario hace clic más de 5 veces en 10 segundos, está frustrado", le damos al sistema miles de ejemplos de sesiones donde usuarios estaban frustrados y le dejamos encontrar los patrones.</p>
+
+<table class="info-table"><thead><tr><th>Tipo</th><th>Cómo funciona</th><th>Ejemplo en diseño</th></tr></thead><tbody>
+<tr><td>Aprendizaje supervisado</td><td>Se entrena con datos etiquetados (input + respuesta correcta)</td><td>Clasificar feedback de usuarios como positivo/negativo/neutro</td></tr>
+<tr><td>Aprendizaje no supervisado</td><td>Encuentra patrones en datos sin etiquetas</td><td>Segmentar usuarios en grupos por comportamiento similar</td></tr>
+<tr><td>Aprendizaje por refuerzo</td><td>Aprende por prueba y error, recibiendo recompensas</td><td>Optimizar el orden de contenido para maximizar engagement</td></tr>
+</tbody></table>
+
+<h4>Deep Learning y Redes Neuronales</h4>
+<p>Las redes neuronales son modelos inspirados (de forma muy simplificada) en el cerebro humano. Están compuestas por capas de "neuronas" artificiales que procesan información. Cuando estas redes tienen muchas capas, hablamos de Deep Learning (aprendizaje profundo). Como diseñadora, no necesitas entender la matemática. Lo que necesitas saber es que son excelentes reconociendo patrones complejos en datos: pueden procesar imágenes, texto y audio. Su principal limitación es que necesitan grandes cantidades de datos y pueden reproducir sesgos presentes en esos datos.</p>
+
+<h4>Large Language Models (LLMs): la revolución generativa</h4>
+<p>Los LLMs como GPT-4, Claude, Gemini y Llama son modelos de deep learning entrenados con enormes cantidades de texto. Funcionan prediciendo la siguiente palabra en una secuencia, pero esta capacidad aparentemente simple les permite generar texto coherente, razonar sobre problemas, escribir código, analizar datos y mucho más. Para los diseñadores, representan una revolución: pueden generar UX copy en segundos, analizar transcripciones de entrevistas, crear user stories, y asistir en documentación de sistemas de diseño.</p>
+
+<h4>IA Generativa: crear contenido nuevo</h4>
+<p>La IA generativa crea contenido nuevo: imágenes (Midjourney, DALL-E), texto (ChatGPT, Claude), video (Runway, Sora), música (Suno, Udio) y código (GitHub Copilot, Cursor). Los modelos de difusión (como Midjourney) funcionan aprendiendo a "deshacer ruido" en una imagen: parten de ruido aleatorio y gradualmente lo transforman en una imagen coherente, guiados por tu prompt.</p>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>Cuando hables con equipos de desarrollo sobre IA, no necesitas pretender que sabes programar modelos. Tu valor está en entender las posibilidades y limitaciones. Usa preguntas como: "¿Qué precisión tiene el modelo?", "¿Cuánto tarda en responder?", "¿Qué pasa cuando se equivoca?"</p></div>
+
+<div class="resource-box"><div class="box-title">Recursos recomendados</div>
+<div class="resource-item"><span class="r-type">Video</span><span>"But what is a neural network?" de 3Blue1Brown — Visualización excepcional de redes neuronales <a href="https://youtube.com/watch?v=aircAruvnKk" target="_blank">→ Ver</a></span></div>
+<div class="resource-item"><span class="r-type">Video</span><span>"How Large Language Models Work" de IBM Technology <a href="https://youtube.com/watch?v=5sLYAQS9sWQ" target="_blank">→ Ver</a></span></div>
+<div class="resource-item"><span class="r-type">Curso</span><span>"Elements of AI" de la Universidad de Helsinki — Curso gratuito de fundamentos <a href="https://elementsofai.com" target="_blank">→ Ver</a></span></div>
+<div class="resource-item"><span class="r-type">Libro</span><span>"Designing Human-Centric AI Experiences" de Jesús Martín Barroso</span></div>
+</div>
+
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/aircAruvnKk" title="But what is a neural network? — 3Blue1Brown" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">3Blue1Brown — ¿Qué es una red neuronal?</div>
+<div class="case-study"><div class="case-label">Caso real: Google DeepMind</div>
+<div class="case-company">AlphaFold — IA que resolvió la estructura de proteínas</div>
+<p>En 2020, DeepMind (Google) presentó AlphaFold, un sistema de IA que predice la estructura tridimensional de proteínas con una precisión comparable a métodos experimentales que tomaban meses o años. Este avance, basado en deep learning, resolvió un problema de 50 años en biología.</p>
+<p>Para los diseñadores, AlphaFold es un ejemplo perfecto del potencial de la IA: no reemplazó a los biólogos, sino que les dio una herramienta que multiplicó su capacidad. La interfaz de AlphaFold Protein Structure Database fue diseñada para que científicos sin experiencia en IA pudieran explorar resultados visualmente, un desafío clásico de UX.</p>
+<div class="case-takeaway">Lección para UX: la IA más poderosa es inútil sin una interfaz que la haga accesible. El diseñador traduce complejidad técnica en experiencias comprensibles.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 1.1: Mapa del ecosistema IA en tu día a día</div>
+<div class="box-desc">Identifica cómo la IA ya está presente en tu vida como diseñadora y usuario.</div>
+<ol>
+<li>Haz una lista de 10 productos digitales que usas diariamente (Spotify, Instagram, Gmail, Google Maps, etc.)</li>
+<li>Para cada uno, identifica al menos una funcionalidad que usa IA (recomendaciones, autocompletado, filtros, búsqueda, etc.)</li>
+<li>Clasifica cada funcionalidad según el tipo de ML: supervisado, no supervisado o por refuerzo</li>
+<li>Analiza: ¿cuál impacta más en la experiencia del usuario? ¿Por qué?</li>
+<li>Crea un mapa visual (en Figma, FigJam o en papel) que muestre estas relaciones</li>
+<li>Bonus: identifica al menos un caso donde la IA haya fallado y propone cómo mejorarías la experiencia</li>
+</ol></div>`},
+
+{id:"l1_2",title:"El ecosistema de herramientas IA para diseño",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>El ecosistema de herramientas IA cubre investigación (Dovetail, Maze), ideación (Midjourney, DALL-E), diseño UI (Galileo, Figma AI) y desarrollo (v0, Bolt). Elige 3-4 herramientas y domínalas.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#886BFF;stop-opacity:.1"/><stop offset="100%" style="stop-color:#3d5cc7;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g2)" width="800" height="450" rx="12"/><rect x="100" y="80" width="130" height="80" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".5"/><rect x="280" y="80" width="130" height="80" rx="10" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".5"/><rect x="460" y="80" width="130" height="80" rx="10" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".5"/><rect x="190" y="230" width="130" height="80" rx="10" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".5"/><rect x="420" y="230" width="130" height="80" rx="10" fill="none" stroke="#3d5cc7" stroke-width="1.5" opacity=".5"/><text x="165" y="125" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Research</text><text x="345" y="125" text-anchor="middle" font-family="system-ui" font-size="12" fill="#886BFF" opacity=".8">Ideación</text><text x="525" y="125" text-anchor="middle" font-family="system-ui" font-size="12" fill="#1e8a4e" opacity=".8">UI Design</text><text x="255" y="275" text-anchor="middle" font-family="system-ui" font-size="12" fill="#e0a816" opacity=".8">Prototipado</text><text x="485" y="275" text-anchor="middle" font-family="system-ui" font-size="12" fill="#3d5cc7" opacity=".8">Desarrollo</text><line x1="230" y1="120" x2="280" y2="120" stroke="#aaa" stroke-width="1" stroke-dasharray="4"/><line x1="410" y1="120" x2="460" y2="120" stroke="#aaa" stroke-width="1" stroke-dasharray="4"/><line x1="320" y1="160" x2="270" y2="230" stroke="#aaa" stroke-width="1" stroke-dasharray="4"/><line x1="480" y1="160" x2="460" y2="230" stroke="#aaa" stroke-width="1" stroke-dasharray="4"/><text x="400" y="390" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Tu AI Design Stack: herramientas por fase</text></svg></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Conocer el mapa completo de herramientas IA para cada fase del proceso de diseño</li>
+<li>Evaluar herramientas según criterios profesionales: calidad, costo, integración y curva</li>
+<li>Construir tu propio stack tecnológico personalizado</li>
+<li>Entender las diferencias entre herramientas gratuitas, freemium y de pago</li>
+</ul></div>
+
+<h4>Mapa de herramientas por fase de diseño</h4>
+<p>El ecosistema de herramientas de IA para diseño ha crecido exponencialmente. Vamos a organizarlas según las fases del proceso de diseño.</p>
+
+<h4>Fase 1: Investigación de usuarios</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Función</th><th>Precio aprox.</th></tr></thead><tbody>
+<tr><td>Dovetail</td><td>Análisis cualitativo con IA: transcripción, codificación automática, insights</td><td>Desde $29/mes</td></tr>
+<tr><td>Maze</td><td>Testing remoto con análisis automatizado y heatmaps</td><td>Desde $0 (free tier)</td></tr>
+<tr><td>Notably</td><td>Síntesis de research con IA: agrupa hallazgos, genera insights</td><td>Desde $25/mes</td></tr>
+<tr><td>Otter.ai</td><td>Transcripción automática de entrevistas con resumen por IA</td><td>Desde $0 (free tier)</td></tr>
+<tr><td>ChatGPT / Claude</td><td>Análisis de datos cualitativos, generación de guías de entrevista</td><td>Desde $0 / $20/mes</td></tr>
+</tbody></table>
+
+<h4>Fase 2: Ideación y conceptualización</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Función</th><th>Precio aprox.</th></tr></thead><tbody>
+<tr><td>Midjourney</td><td>Generación de imágenes conceptuales, moodboards, ilustraciones</td><td>$10-60/mes</td></tr>
+<tr><td>DALL-E 3 (ChatGPT)</td><td>Generación de imágenes integrada en chat conversacional</td><td>Incluido en ChatGPT Plus</td></tr>
+<tr><td>Adobe Firefly</td><td>Generación con licencia comercial segura, integrada en Creative Cloud</td><td>Incluido en Adobe CC</td></tr>
+<tr><td>FigJam AI</td><td>Brainstorming, organización de ideas y generación de contenido</td><td>Incluido en Figma</td></tr>
+</tbody></table>
+
+<h4>Fase 3: Diseño visual y UI</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Función</th><th>Precio aprox.</th></tr></thead><tbody>
+<tr><td>Galileo AI</td><td>Genera interfaces completas a partir de descripciones en texto</td><td>Beta / Waitlist</td></tr>
+<tr><td>Uizard</td><td>Convierte bocetos en wireframes digitales y genera UI con texto</td><td>Desde $0</td></tr>
+<tr><td>Relume</td><td>Genera sitemaps y wireframes para sitios web con IA</td><td>Desde $38/mes</td></tr>
+<tr><td>Figma AI (nativo)</td><td>Renombrar capas, generar contenido, sugerir layouts</td><td>Incluido en Figma</td></tr>
+<tr><td>Musho</td><td>Plugin de Figma: genera landing pages completas con IA</td><td>Desde $0</td></tr>
+</tbody></table>
+
+<h4>Fase 4: Prototipado y desarrollo</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Función</th><th>Precio aprox.</th></tr></thead><tbody>
+<tr><td>v0 by Vercel</td><td>Genera componentes React/UI a partir de prompts o imágenes</td><td>Desde $0</td></tr>
+<tr><td>Bolt.new</td><td>Crea aplicaciones web completas desde una descripción</td><td>Desde $0</td></tr>
+<tr><td>Cursor</td><td>Editor de código con IA integrada</td><td>$20/mes</td></tr>
+<tr><td>Locofy</td><td>Convierte diseños de Figma a código production-ready</td><td>Desde $0</td></tr>
+</tbody></table>
+
+<h4>Cómo evaluar herramientas IA</h4>
+<p>Ante la avalancha de herramientas nuevas, necesitas un framework de 5 criterios: <strong>Calidad del output</strong> (¿profesional o solo exploración?), <strong>Integración</strong> (¿se conecta con Figma?), <strong>Curva de aprendizaje</strong> (¿cuánto tiempo para ser productiva?), <strong>Costo-beneficio</strong> (¿el tiempo que ahorra justifica la inversión?) y <strong>Fiabilidad</strong> (¿la empresa es estable?).</p>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>No intentes dominar todas las herramientas a la vez. Elige 3-4 que cubran tus necesidades más frecuentes. Stack mínimo recomendado: ChatGPT o Claude (ideación/análisis) + Midjourney o Adobe Firefly (visual) + Figma AI + Dovetail (research).</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Figma</div>
+<div class="case-company">Figma AI — herramientas nativas de IA en la plataforma de diseño líder</div>
+<p>En Config 2024, Figma presentó funciones nativas de IA: renombrado automático de capas, generación de diseños a partir de texto, búsqueda visual, y sugerencias de auto-layout. El equipo de Figma priorizó funciones que eliminan tareas repetitivas (renombrar 200 capas manualmente) en lugar de intentar "reemplazar" al diseñador.</p>
+<p>Internamente, Figma evaluó docenas de posibles integraciones IA y eligió las que tenían mayor ratio impacto/riesgo. La generación de UI desde texto está en beta porque la calidad aún no alcanza estándares profesionales — ejemplo de cómo evaluar herramientas con criterio.</p>
+<div class="case-takeaway">Lección para UX: al construir tu stack IA, prioriza herramientas que eliminan fricción real en tu flujo, no las más llamativas.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 1.2: Construye tu AI Design Stack</div>
+<div class="box-desc">Diseña tu stack tecnológico personalizado de herramientas IA.</div>
+<ol>
+<li>Define tu flujo de trabajo actual de diseño (las fases y herramientas que ya usas)</li>
+<li>Para cada fase, investiga al menos 2 herramientas IA de las tablas anteriores (regístrate en las versiones gratuitas)</li>
+<li>Prueba cada herramienta con una tarea real de tu trabajo</li>
+<li>Evalúa cada herramienta usando los 5 criterios profesionales con puntuación de 1-5</li>
+<li>Crea un mapa visual en Figma de tu stack ideal conectado a cada fase de tu proceso</li>
+<li>Documenta por qué elegiste cada herramienta sobre sus alternativas</li>
+</ol></div>`},
+
+{id:"l1_3",title:"Cómo la IA transforma el proceso de diseño",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>La IA transforma el Double Diamond: acelera research, potencia ideación, genera variaciones UI y automatiza handoff. Tu nuevo rol: estratega, curador, ético y comunicador.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Comprender cómo la IA impacta cada fase del Double Diamond</li>
+<li>Identificar oportunidades concretas para integrar IA en tu proceso actual</li>
+<li>Conocer casos de estudio de empresas líderes</li>
+<li>Desarrollar una visión estratégica sobre el futuro del diseño con IA</li>
+</ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_6418" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_uj4z)" width="800" height="400" rx="12"/><path d="M80 180 L200 80 L320 180 L200 280 Z" fill="none" stroke="#496BE3" stroke-width="2" opacity=".5"/>
+    <path d="M320 180 L440 80 L560 180 L440 280 Z" fill="none" stroke="#886BFF" stroke-width="2" opacity=".5"/>
+    <text x="200" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3">Descubrir</text>
+    <text x="200" y="215" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3">Definir</text>
+    <text x="440" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF">Desarrollar</text>
+    <text x="440" y="215" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF">Entregar</text>
+    <rect x="590" y="100" width="150" height="160" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".3"/>
+    <text x="665" y="135" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="bold" fill="#496BE3" opacity=".7">IA potencia</text>
+    <text x="665" y="165" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">⚡ Research +rápido</text>
+    <text x="665" y="185" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">⚡ Más variaciones</text>
+    <text x="665" y="205" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">⚡ Auto handoff</text>
+    <text x="665" y="225" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">⚡ Testing asistido</text>
+    <line x1="560" y1="180" x2="590" y2="180" stroke="#496BE3" stroke-width="1.5" stroke-dasharray="4" opacity=".4"/><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">El Double Diamond aumentado con IA</text></svg></div>
+
+
+<h4>El Double Diamond aumentado con IA</h4>
+<p>El modelo Double Diamond (Descubrir, Definir, Desarrollar, Entregar) sigue siendo válido, pero la IA transforma cómo ejecutamos cada fase.</p>
+<p>En <strong>Descubrir</strong>, la IA acelera la investigación exponencialmente. Analizar 50 entrevistas que antes tomaba semanas, hoy se procesa en horas con herramientas como Dovetail o ChatGPT. En <strong>Definir</strong>, la IA ayuda a sintetizar hallazgos y generar insights más rápidamente: mapas de afinidad, personas basadas en datos reales, problem statements más precisos.</p>
+<p>En <strong>Desarrollar</strong>, es donde la IA generativa brilla. Generar decenas de conceptos de UI en minutos, crear variaciones de layouts, explorar paletas de colores. En <strong>Entregar</strong>, la IA está transformando el handoff: herramientas como Locofy y v0 convierten diseños en código funcional.</p>
+
+<h4>Casos de estudio</h4>
+<p><strong>Airbnb</strong> fue pionera en integrar IA: su equipo desarrolló un sistema que convertía bocetos en papel en prototipos funcionales. Hoy usa IA para personalizar listados según historial y contexto. <strong>Spotify</strong> utiliza IA extensivamente en su UX: playlists personalizadas, generación de imágenes con IA. <strong>Figma</strong> ha integrado funciones nativas de IA: renombrar capas automáticamente, generar contenido, sugerir auto-layouts.</p>
+
+<h4>El nuevo rol del diseñador</h4>
+<p>La IA no reemplaza al diseñador; redefine su rol. Eres un estratega de experiencia que orquesta herramientas de IA, un curador que evalúa y refina outputs, un ético que asegura que los productos sean justos, y un comunicador que traduce posibilidades técnicas en experiencias humanas significativas.</p>
+
+<div class="tip-box"><div class="box-title">Caso de reflexión</div><p>Piensa en un proyecto reciente. ¿En qué momentos el proceso era lento, repetitivo o frustrante? Esas son exactamente las áreas donde la IA puede generar más impacto. La IA es mejor para tareas repetitivas; tú eres mejor para la estrategia, la empatía y las decisiones creativas ambiguas.</p></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 1.3: Auditoría de IA en tu proceso de diseño</div>
+<div class="box-desc">Analiza tu proceso actual e identifica oportunidades de integración de IA.</div>
+<ol>
+<li>Documenta tu proceso de diseño actual paso a paso (desde el brief hasta la entrega final)</li>
+<li>Para cada paso, estima cuánto tiempo te toma actualmente</li>
+<li>Identifica los 5 pasos que más tiempo consumen</li>
+<li>Para cada uno, investiga y propone al menos una herramienta o técnica de IA</li>
+<li>Estima cuánto tiempo podrías ahorrar con la integración de IA</li>
+<li>Crea un diagrama comparativo Before/After de tu proceso actual vs. aumentado con IA</li>
+<li>Calcula el ahorro total estimado como porcentaje de mejora</li>
+</ol></div>`}
+]},
+
+{id:"m2",title:"Prompt Engineering para Diseño",hours:"5h",color:"#886BFF",icon:"✍️",
+lessons:[
+{id:"l2_1",title:"Anatomía de un prompt efectivo",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>El framework CRAFT (Contexto, Rol, Acción, Formato, Tono) es tu base. Combínalo con few-shot, chain-of-thought e iteración progresiva para resultados profesionales.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#533483;stop-opacity:.1"/><stop offset="100%" style="stop-color:#496BE3;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g3)" width="800" height="450" rx="12"/><rect x="120" y="130" width="560" height="190" rx="14" fill="none" stroke="#886BFF" stroke-width="2" opacity=".3"/><text x="400" y="165" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="bold" fill="#886BFF" opacity=".7">CRAFT</text><text x="180" y="210" font-family="system-ui" font-size="13" fill="#496BE3" opacity=".8">C — Contexto</text><text x="180" y="240" font-family="system-ui" font-size="13" fill="#886BFF" opacity=".8">R — Rol</text><text x="180" y="270" font-family="system-ui" font-size="13" fill="#3d5cc7" opacity=".8">A — Acción</text><text x="450" y="210" font-family="system-ui" font-size="13" fill="#1e8a4e" opacity=".8">F — Formato</text><text x="450" y="240" font-family="system-ui" font-size="13" fill="#e0a816" opacity=".8">T — Tono</text><text x="400" y="390" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Framework CRAFT para prompts de diseño</text></svg></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Comprender la estructura óptima de un prompt para resultados profesionales</li>
+<li>Dominar las técnicas fundamentales: contexto, persona, restricciones y formato</li>
+<li>Aplicar el framework CRAFT (Contexto, Rol, Acción, Formato, Tono)</li>
+<li>Evitar los errores más comunes al formular prompts</li>
+</ul></div>
+
+<h4>Por qué el prompt engineering es esencial</h4>
+<p>Imagina que das instrucciones a un diseñador junior extremadamente talentoso pero que no conoce el contexto. Si le dices "haz una landing page", obtendrás algo genérico. Pero si le dices "diseña una landing page para una fintech argentina dirigida a millennials, tono profesional pero cercano, azul oscuro y blanco, priorizando conversión con CTA claro above the fold", obtendrás algo mucho más útil. La misma lógica aplica a los modelos de IA.</p>
+
+<h4>El framework CRAFT para prompts de diseño</h4>
+<table class="info-table"><thead><tr><th>Componente</th><th>Qué incluir</th><th>Ejemplo</th></tr></thead><tbody>
+<tr><td><strong>C - Contexto</strong></td><td>Proyecto, industria, plataforma, usuarios</td><td>"Estoy diseñando una app de delivery de comida saludable para LATAM"</td></tr>
+<tr><td><strong>R - Rol</strong></td><td>Quién quieres que sea la IA</td><td>"Actúa como un UX researcher senior con 10 años en e-commerce"</td></tr>
+<tr><td><strong>A - Acción</strong></td><td>La tarea específica</td><td>"Genera 5 user personas basadas en los siguientes datos..."</td></tr>
+<tr><td><strong>F - Formato</strong></td><td>Cómo quieres el output</td><td>"Presenta cada persona con: nombre, edad, frustraciones, necesidades, quote"</td></tr>
+<tr><td><strong>T - Tono</strong></td><td>Límites, estilo, lo que NO hacer</td><td>"Evita estereotipos. Cada persona debe ser única y basada en datos"</td></tr>
+</tbody></table>
+
+<h4>Técnicas avanzadas de prompting</h4>
+<p><strong>Few-shot prompting:</strong> incluir ejemplos de lo que esperas. Muestra 2-3 ejemplos del tono y formato que buscas, y pide que genere más en esa línea. Devastadoramente efectiva para mantener consistencia.</p>
+<p><strong>Chain-of-thought:</strong> pedir razonamiento paso a paso. "Antes de diseñar la solución, analiza el problema, luego lista posibles enfoques, evalúa pros y contras, y finalmente propone la mejor solución." Produce resultados mucho más reflexivos.</p>
+<p><strong>Iteración progresiva:</strong> empezar amplio, evaluar, y refinar progresivamente. Primer prompt: concepto general. Segundo: refinamiento. Tercero: ajustes finales. Refleja nuestro proceso iterativo natural.</p>
+<p><strong>Prompts negativos:</strong> especificar qué NO quieres es tan importante como decir qué sí. "No uses jerga técnica", "No incluyas fotos genéricas", "No hagas el layout simétrico".</p>
+
+<h4>Errores comunes</h4>
+<table class="info-table"><thead><tr><th>Error</th><th>Por qué falla</th><th>Cómo corregirlo</th></tr></thead><tbody>
+<tr><td>Prompt demasiado vago</td><td>Sin contexto suficiente</td><td>Agrega contexto: quién, para qué, dónde, restricciones</td></tr>
+<tr><td>Prompt demasiado largo</td><td>La IA se confunde</td><td>Divide en pasos secuenciales, una cosa a la vez</td></tr>
+<tr><td>No iterar</td><td>Aceptar el primer resultado</td><td>Siempre haz 2-3 iteraciones como mínimo</td></tr>
+<tr><td>Ignorar el formato</td><td>Output difícil de usar</td><td>Especifica formato: tabla, lista, JSON, etc.</td></tr>
+<tr><td>No dar ejemplos</td><td>Interpretación genérica</td><td>Incluye 1-2 ejemplos del estilo que buscas</td></tr>
+</tbody></table>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>Crea una biblioteca personal de prompts que funcionan bien. Cada vez que obtengas un resultado excelente, guarda el prompt. Organiza tu biblioteca por categorías: research, ideación, UI copy, documentación, etc.</p></div>
+
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/jC4v5AS4RIM" title="How to use ChatGPT for UX Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">Prompt Engineering para diseñadores</div>
+<div class="case-study"><div class="case-label">Caso real: Duolingo</div>
+<div class="case-company">Duolingo Max — GPT-4 integrado en la experiencia de aprendizaje</div>
+<p>Duolingo fue una de las primeras empresas en integrar GPT-4 en su producto con "Explain My Answer" y "Roleplay". El equipo de diseño desarrolló prompts extremadamente específicos: cada respuesta del chatbot debía mantenerse dentro del nivel del idioma del usuario, ser alentadora, corregir sin intimidar, y usar máximo 3 oraciones.</p>
+<p>El proceso de prompt engineering de Duolingo incluyó más de 6 meses de iteración con lingüistas, diseñadores y usuarios. Cada prompt pasó por A/B testing con métricas de retención y satisfacción. El framework que usaron es similar a CRAFT: definían contexto (nivel del usuario), rol (tutor paciente), acción específica, formato (máx. longitud) y tono (motivador).</p>
+<div class="case-takeaway">Lección para UX: los mejores prompts no se escriben una vez — se diseñan, testean e iteran como cualquier componente de UI.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 2.1: Laboratorio de prompts CRAFT</div>
+<div class="box-desc">Practica el framework CRAFT con tareas reales de diseño.</div>
+<ol>
+<li>Elige un proyecto real o ficticio (ej: rediseñar el checkout de un e-commerce)</li>
+<li>Escribe un prompt CRAFT completo para generar user personas</li>
+<li>Envíalo a ChatGPT o Claude y evalúa el resultado</li>
+<li>Reescribe el mismo prompt 3 veces, cada vez con más detalle</li>
+<li>Compara los 3 resultados: documenta mejoras y qué cambios tuvieron más impacto</li>
+<li>Aplica CRAFT para: a) UX copy de onboarding, b) Flujo de usuario, c) Criterios de aceptación</li>
+<li>Guarda todos los prompts exitosos como inicio de tu biblioteca personal</li>
+</ol></div>`},
+
+{id:"l2_2",title:"Prompting avanzado para generación visual",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Crea prompts específicos para cada fase de diseño: research (guías de entrevista, análisis), ideación (personas, user stories), UI (copy, microcopy) y documentación.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Dominar las técnicas de prompting para Midjourney, DALL-E y Adobe Firefly</li>
+<li>Entender los parámetros y modificadores de cada plataforma</li>
+<li>Generar imágenes de calidad profesional para moodboards y presentaciones</li>
+<li>Desarrollar ojo crítico para evaluar y refinar outputs visuales de IA</li>
+</ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_2bmp" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_k1d2)" width="800" height="400" rx="12"/><rect x="60" y="60" width="160" height="60" rx="8" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".5"/>
+    <text x="140" y="85" text-anchor="middle" font-family="system-ui" font-size="10" fill="#496BE3" opacity=".8">📝 Research</text>
+    <text x="140" y="105" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Guías, análisis, personas</text>
+    <rect x="240" y="60" width="160" height="60" rx="8" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".5"/>
+    <text x="320" y="85" text-anchor="middle" font-family="system-ui" font-size="10" fill="#886BFF" opacity=".8">💡 Ideación</text>
+    <text x="320" y="105" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">User stories, HMW</text>
+    <rect x="420" y="60" width="160" height="60" rx="8" fill="none" stroke="#6c5ce7" stroke-width="1.5" opacity=".5"/>
+    <text x="500" y="85" text-anchor="middle" font-family="system-ui" font-size="10" fill="#6c5ce7" opacity=".8">🎨 UI / Copy</text>
+    <text x="500" y="105" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Microcopy, variaciones</text>
+    <rect x="600" y="60" width="160" height="60" rx="8" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".5"/>
+    <text x="680" y="85" text-anchor="middle" font-family="system-ui" font-size="10" fill="#1e8a4e" opacity=".8">📄 Documentación</text>
+    <text x="680" y="105" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Specs, handoff</text>
+    <line x1="220" y1="90" x2="240" y2="90" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="400" y1="90" x2="420" y2="90" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="580" y1="90" x2="600" y2="90" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <rect x="150" y="170" width="500" height="140" rx="12" fill="none" stroke="#496BE3" stroke-width="2" opacity=".2"/>
+    <text x="400" y="200" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="bold" fill="#496BE3" opacity=".6">Ejemplo de prompt por fase</text>
+    <text x="400" y="230" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">"Actúa como UX researcher senior. Analiza estas 5 transcripciones</text>
+    <text x="400" y="250" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">y genera un mapa de afinidad con 4 categorías principales.</text>
+    <text x="400" y="270" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">Formato: tabla con categoría, hallazgo, cita textual, frecuencia."</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Biblioteca de prompts por fase de diseño</text></svg></div>
+
+
+<h4>Principios universales del prompting visual</h4>
+<p>Los modelos de imagen responden mejor a descripciones concretas y visuales. Piensa como un director de fotografía: describe lo que quieres <em>ver</em>, no lo que quieres <em>comunicar</em>. Estructura óptima: sujeto principal + estilo artístico + iluminación + composición + paleta de colores + detalles técnicos.</p>
+
+<h4>Midjourney: parámetros esenciales</h4>
+<table class="info-table"><thead><tr><th>Parámetro</th><th>Función</th><th>Ejemplo</th></tr></thead><tbody>
+<tr><td>--ar</td><td>Aspect ratio</td><td>--ar 16:9 para pantallas, --ar 9:16 para móvil</td></tr>
+<tr><td>--v</td><td>Versión del modelo</td><td>--v 6.1 (la más reciente)</td></tr>
+<tr><td>--style</td><td>Variación estética</td><td>--style raw para menos procesamiento artístico</td></tr>
+<tr><td>--no</td><td>Prompt negativo</td><td>--no text, watermark, blurry</td></tr>
+<tr><td>--s</td><td>Stylization (0-1000)</td><td>--s 250 para balance entre fidelidad y estilo</td></tr>
+</tbody></table>
+
+<h4>DALL-E 3 y Adobe Firefly</h4>
+<p>DALL-E 3 entiende instrucciones más conversacionales y complejas. Su punto fuerte: texto legible y relaciones espaciales. Adobe Firefly se distingue por licencia comercial segura (entrenado con contenido licenciado) y su función Generative Fill en Photoshop es extraordinariamente útil.</p>
+
+<h4>Aplicaciones prácticas</h4>
+<p><strong>Moodboards generativos:</strong> genera imágenes que reflejen exactamente la dirección visual. <strong>Hero images:</strong> genera fotos específicas para prototipos en lugar de stock genérico. <strong>Iconografía:</strong> herramientas como Recraft AI generan conjuntos consistentes. <strong>Ilustraciones:</strong> para onboarding, empty states, páginas de error.</p>
+
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 2.2: Moodboard generativo completo</div>
+<div class="box-desc">Crea un moodboard profesional usando únicamente imágenes generadas por IA.</div>
+<ol>
+<li>Elige un brief (ej: app de meditación para jóvenes profesionales)</li>
+<li>Define 3 direcciones visuales (ej: minimalista zen, naturaleza orgánica, geometría abstracta)</li>
+<li>Para cada dirección, genera al menos 4 imágenes experimentando con parámetros</li>
+<li>Organiza en un moodboard en Figma (3 secciones, una por dirección)</li>
+<li>Añade anotaciones explicando qué prompt usaste y por qué funciona</li>
+<li>Elige la dirección ganadora y genera 4 imágenes adicionales refinando el estilo</li>
+<li>Presenta el moodboard como lo harías a un cliente o stakeholder</li>
+</ol></div>`},
+
+{id:"l2_3",title:"Prompting para UX writing y contenido",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Domina mega-prompts para proyectos complejos, automatiza flujos con templates reutilizables, y aprende a encadenar prompts para tareas que requieren múltiples pasos.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Generar UX copy profesional y consistente con IA</li>
+<li>Crear sistemas de microcopy escalables usando prompts estructurados</li>
+<li>Adaptar tono y voz de marca en contenido generado por IA</li>
+<li>Construir una guía de voz y tono asistida por IA</li>
+</ul></div>
+
+<h4>UX writing con IA: más allá del copy genérico</h4>
+<p>Un prompt básico como "escribe el texto para un botón de registro" producirá "Regístrate". Pero un prompt contextualizado produce opciones mucho más ricas y alineadas con la marca.</p>
+
+<h4>Framework para prompts de UX copy</h4>
+<p>Incluye siempre: contexto del producto, voz y tono de la marca, el elemento específico, el estado emocional del usuario en ese momento, y restricciones técnicas (límite de caracteres, idioma, accesibilidad).</p>
+
+<div class="tip-box"><div class="box-title">Ejemplo de prompt avanzado</div><p>"Actúa como UX writer senior. App de banca digital para millennials en LATAM. Voz: profesional pero cercana, clara, nunca condescendiente. Tono en errores: empático y orientado a soluciones. Genera 5 variaciones del mensaje de error cuando una transferencia falla por fondos insuficientes. Máximo 50 caracteres en título, 120 en descripción, sugiere acción clara, evita tecnicismos."</p></div>
+
+<h4>Guía de voz y tono con IA</h4>
+<p>Alimenta 20-30 ejemplos de tu mejor copy existente a la IA y pídele que extraiga patrones de estilo. Luego usa esa guía como contexto en cada prompt futuro para mantener consistencia.</p>
+
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 2.3: Sistema de microcopy con IA</div>
+<div class="box-desc">Crea un sistema completo de microcopy para un producto digital.</div>
+<ol>
+<li>Define voz y tono del producto en un párrafo</li>
+<li>Genera una guía de voz completa con "sí hacer" y "no hacer" usando IA</li>
+<li>Con esa guía como contexto, genera copy para: CTA, bienvenida, 3 errores, 2 empty states, notificación de éxito, tooltip, confirmación destructiva</li>
+<li>Para cada elemento, genera 3 variaciones y elige la mejor, documentando por qué</li>
+<li>Crea un documento de referencia con todos los textos organizados por categoría</li>
+<li>Bonus: genera versiones en inglés y portugués manteniendo la voz de marca</li>
+</ol></div>`}
+]},
+
+{id:"m3",title:"IA Generativa para Diseño Visual y UI",hours:"6h",color:"#3d5cc7",icon:"🎨",
+lessons:[
+{id:"l3_1",title:"Generación de UI con IA: de texto a interfaz",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Midjourney, DALL-E y Firefly tienen fortalezas distintas. Aprende parámetros clave (--ar, --style, --v), técnicas de prompting visual, y cuándo usar cada herramienta.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.12"/><stop offset="100%" style="stop-color:#1e8a4e;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g4)" width="800" height="450" rx="12"/><rect x="100" y="100" width="180" height="120" rx="12" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/><rect x="310" y="100" width="180" height="120" rx="12" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".4"/><rect x="520" y="100" width="180" height="120" rx="12" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".4"/><text x="190" y="155" text-anchor="middle" font-family="system-ui" font-size="22" fill="#496BE3" opacity=".5">🎨</text><text x="190" y="185" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".7">Midjourney</text><text x="400" y="155" text-anchor="middle" font-family="system-ui" font-size="22" fill="#886BFF" opacity=".5">✨</text><text x="400" y="185" text-anchor="middle" font-family="system-ui" font-size="12" fill="#886BFF" opacity=".7">DALL-E</text><text x="610" y="155" text-anchor="middle" font-family="system-ui" font-size="22" fill="#e0a816" opacity=".5">🔥</text><text x="610" y="185" text-anchor="middle" font-family="system-ui" font-size="12" fill="#e0a816" opacity=".7">Firefly</text><rect x="200" y="280" width="400" height="80" rx="10" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".3"/><text x="400" y="325" text-anchor="middle" font-family="system-ui" font-size="13" fill="#1e8a4e" opacity=".7">Prompt → Imagen → Diseño</text><text x="400" y="400" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Herramientas de IA generativa visual</text></svg></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Usar herramientas de generación de UI (Galileo AI, Uizard, v0)</li><li>Comprender fortalezas y limitaciones de cada herramienta</li><li>Integrar outputs de IA en Figma</li><li>Desarrollar criterio para evaluar interfaces generadas</li></ul></div><h4>El paradigma text-to-UI</h4><p>Las herramientas de generación de UI transforman el inicio del proceso. Ya no partís de una pantalla en blanco: describís lo que necesitás y obtenés un punto de partida sólido. Esto transforma tu trabajo de "construir desde cero" a "curar, refinar y elevar".</p><h4>Galileo AI, v0 y Uizard</h4><p><strong>Galileo AI</strong> genera diseños de alta fidelidad desde descripciones textuales. <strong>v0 (Vercel)</strong> genera código React funcional con Tailwind — revolucionario para el handoff. <strong>Uizard</strong> convierte bocetos en papel en wireframes digitales. <strong>Relume</strong> genera sitemaps + wireframes completos exportables a Figma.</p><h4>Flujo óptimo</h4><p>1) Genera 3-5 variaciones con diferentes prompts. 2) Evalúa con ojo crítico. 3) Importa a Figma la mejor. 4) Refina manualmente: spacing, tipografía, colores. 5) Integra con tu design system.</p><div class="tip-box"><div class="box-title">Tip profesional</div><p>Nunca presentes un output de IA sin refinar a un cliente. La IA genera excelentes puntos de partida, pero carece de tu comprensión contextual. Tu valor está en el refinamiento estratégico.</p></div><div class="video-embed"><iframe src="https://www.youtube.com/embed/SVcsDDABEkM" title="Midjourney for UI Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">IA generativa para diseño visual</div>
+<div class="case-study"><div class="case-label">Caso real: Coca-Cola</div>
+<div class="case-company">"Create Real Magic" — campaña con DALL-E y GPT-4</div>
+<p>En 2023, Coca-Cola lanzó "Create Real Magic", una plataforma donde los usuarios podían generar arte con IA usando elementos icónicos de la marca (la botella, el oso polar, el logo). Usaron DALL-E y GPT-4 a través de una interfaz diseñada específicamente para no-expertos.</p>
+<p>El equipo de diseño enfrentó desafíos críticos: ¿cómo dar libertad creativa sin que se generen imágenes inapropiadas con la marca? La solución fue un sistema de guardrails visuales: prompts pre-cargados con assets de marca, filtros de contenido, y un flujo de "inspiración guiada" que limitaba outputs sin que el usuario sintiera restricción.</p>
+<div class="case-takeaway">Lección para UX: diseñar con IA generativa requiere definir guardrails creativos — el desafío no es solo generar, sino controlar la calidad y coherencia de marca.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 3.1: App completa con IA</div><div class="box-desc">Diseña las 5 pantallas principales de una app usando IA como punto de partida.</div><ol><li>Define un brief: app de hábitos con pantallas Home, Lista, Detalle, Estadísticas, Perfil</li><li>Genera cada pantalla con al menos 2 herramientas y compara</li><li>Selecciona la mejor versión e importa a Figma</li><li>Refina: grid 8px, paleta coherente, tipografía consistente</li><li>Conecta las pantallas con navegación lógica</li><li>Documenta qué generó la IA, qué cambiaste y por qué</li></ol></div>`},
+{id:"l3_2",title:"Design systems potenciados por IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Genera componentes UI, iconografía y elementos visuales con IA. Herramientas como Galileo AI y plugins de Figma crean interfaces completas a partir de descripciones de texto.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Automatizar creación y mantenimiento de componentes con IA</li><li>Generar documentación de componentes automáticamente</li><li>Crear tokens de diseño con asistencia de IA</li><li>Implementar controles de calidad automatizados</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_kmc1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_4iyw)" width="800" height="400" rx="12"/><rect x="60" y="110" width="160" height="80" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/>
+    <text x="140" y="140" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3" opacity=".7">📝 Prompt</text>
+    <text x="140" y="165" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">"Dashboard minimalista</text>
+    <text x="140" y="180" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">con gráficos de ventas"</text>
+    <text x="255" y="150" text-anchor="middle" font-family="system-ui" font-size="16" fill="#496BE3" opacity=".4">→</text>
+    <rect x="280" y="90" width="160" height="120" rx="10" fill="none" stroke="#886BFF" stroke-width="2" opacity=".3"/>
+    <text x="360" y="125" text-anchor="middle" font-family="system-ui" font-size="22" fill="#886BFF" opacity=".4">🤖</text>
+    <text x="360" y="155" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".7">Galileo AI</text>
+    <text x="360" y="175" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Genera UI completa</text>
+    <text x="360" y="195" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">en segundos</text>
+    <text x="475" y="150" text-anchor="middle" font-family="system-ui" font-size="16" fill="#886BFF" opacity=".4">→</text>
+    <rect x="500" y="90" width="240" height="120" rx="10" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".4"/>
+    <rect x="520" y="110" width="90" height="60" rx="4" fill="none" stroke="#8888a0" stroke-width="1" opacity=".25"/>
+    <rect x="625" y="110" width="90" height="60" rx="4" fill="none" stroke="#8888a0" stroke-width="1" opacity=".25"/>
+    <text x="565" y="145" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Variación A</text>
+    <text x="670" y="145" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Variación B</text>
+    <text x="620" y="195" text-anchor="middle" font-family="system-ui" font-size="9" fill="#1e8a4e" opacity=".7">Refinar en Figma →</text>
+    <rect x="200" y="260" width="400" height="55" rx="8" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".25"/>
+    <text x="400" y="285" text-anchor="middle" font-family="system-ui" font-size="10" fill="#e0a816" opacity=".7">💡 La IA genera el 80% → Vos refinás el 20% que importa</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">De un prompt a UI: generación de interfaces con IA</text></svg></div>
+<h4>Generación de tokens con IA</h4><p>La IA puede generar escalas de color completas (50-900) a partir de tu color primario con ratios WCAG, escalas tipográficas basadas en ratios matemáticos, y sistemas de spacing con nombres semánticos. Para documentación: genera descripción, variantes, props, guías de uso, accesibilidad y ejemplos de código de cada componente.</p><div class="exercise-box"><div class="box-title">Ejercicio práctico 3.2: Mini design system con IA</div><div class="box-desc">Crea los fundamentos de un design system usando IA como asistente.</div><ol><li>Define identidad visual: nombre, industria, valores</li><li>Genera paleta de colores completa con ratios de contraste usando ChatGPT/Claude</li><li>Genera escala tipográfica y sistema de spacing basado en 8px</li><li>Diseña 5 componentes básicos en Figma usando los tokens generados</li><li>Genera documentación de cada componente con IA</li><li>Publica todo en una página de Figma como documentación viva</li></ol></div>`},
+{id:"l3_3",title:"Imagen, ilustración y assets con IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Usa IA para mantener consistencia visual: genera paletas, tipografías, tokens de diseño, y crea variaciones temáticas manteniendo coherencia de marca.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Generar assets visuales profesionales con IA</li><li>Mantener consistencia visual en conjuntos de assets</li><li>Entender implicaciones legales del uso de imágenes de IA</li><li>Crear flujos eficientes de producción de assets</li></ul></div><h4>Iconografía, ilustración y fotografía con IA</h4><p>Para iconos consistentes, define un "style anchor": grosor de línea, esquinas, paleta, nivel de detalle. Para ilustraciones: genera una que te encante y úsala como referencia image-to-image para el set completo. Adobe Firefly ofrece licencia comercial segura.</p><div class="exercise-box"><div class="box-title">Ejercicio práctico 3.3: Kit de assets visual con IA</div><div class="box-desc">Produce un kit completo de assets visuales para un producto digital.</div><ol><li>Define producto e identidad visual</li><li>Genera set de 8 iconos consistentes</li><li>Genera 4 ilustraciones para: onboarding, empty state, error 404, features</li><li>Genera 3 fotografías lifestyle</li><li>Genera 2 hero images (desktop y mobile)</li><li>Organiza todo en Figma con nomenclatura profesional</li><li>Documenta licencias de cada asset</li></ol></div>`}
+]},
+
+{id:"m4",title:"IA en UX Research",hours:"6h",color:"#27ae60",icon:"🔬",
+lessons:[
+{id:"l4_1",title:"Análisis cualitativo con IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Usa LLMs para analizar transcripciones de entrevistas, identificar patrones automáticamente, y generar mapas de afinidad en minutos en lugar de horas.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#3d5cc7;stop-opacity:.1"/><stop offset="100%" style="stop-color:#1e8a4e;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g5)" width="800" height="450" rx="12"/><rect x="80" y="120" width="250" height="40" rx="8" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/><rect x="80" y="175" width="250" height="40" rx="8" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/><rect x="80" y="230" width="250" height="40" rx="8" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/><text x="205" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Entrevista 1</text><text x="205" y="200" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Entrevista 2</text><text x="205" y="255" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Entrevista 3</text><path d="M340 190 L420 190" stroke="#496BE3" stroke-width="2" opacity=".4" marker-end="url(#arr)"/><text x="380" y="180" text-anchor="middle" font-family="system-ui" font-size="20" fill="#496BE3" opacity=".5">🤖</text><rect x="440" y="140" width="280" height="160" rx="12" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".3"/><text x="580" y="195" text-anchor="middle" font-family="system-ui" font-size="12" fill="#1e8a4e" opacity=".7">Patrones + Insights</text><text x="580" y="220" text-anchor="middle" font-family="system-ui" font-size="12" fill="#1e8a4e" opacity=".7">Mapa de afinidad</text><text x="580" y="245" text-anchor="middle" font-family="system-ui" font-size="12" fill="#1e8a4e" opacity=".7">Personas</text><text x="400" y="390" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">IA en UX Research: de datos a insights</text></svg></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Usar IA para transcribir, codificar y analizar entrevistas</li><li>Aplicar análisis temático asistido por IA</li><li>Generar insights accionables de grandes volúmenes de datos</li><li>Conocer limitaciones y sesgos del análisis con IA</li></ul></div><h4>Transcripción y análisis temático</h4><p>Herramientas como Dovetail y Otter.ai ofrecen transcripción automática con +95% de precisión. Luego, alimenta transcripciones a Claude/ChatGPT pidiendo: temas principales, pain points, necesidades no satisfechas, citas relevantes y frecuencia de cada tema.</p><h4>De datos a insights</h4><p>Un insight no es un dato: Dato → "7 de 10 mencionaron dificultad para encontrar el botón de pago". Insight → "La arquitectura del checkout no refleja el modelo mental del usuario". Acción → "Rediseñar como stepper visible con progreso claro".</p><h4>Limitaciones</h4><p>La IA puede malinterpretar sarcasmo, hallucinar patrones, y sobre-generalizar. Siempre verifica contra tu propia lectura de los datos.</p><div class="case-study"><div class="case-label">Caso real: Spotify</div>
+<div class="case-company">Spotify Research — análisis de millones de sesiones con IA</div>
+<p>El equipo de UX Research de Spotify procesa datos de más de 600 millones de usuarios activos. Utilizan modelos de NLP para analizar feedback cualitativo de app stores (millones de reviews), transcripciones de entrevistas, y encuestas abiertas. Un sistema interno clasifica automáticamente el sentimiento y tema de cada comentario.</p>
+<p>Cuando diseñaron Spotify Wrapped, el equipo usó análisis de IA sobre datos de escucha para identificar patrones emocionales: no solo "qué escuchaste" sino "qué momentos musicales definieron tu año". La combinación de datos cuantitativos (horas, skips) con análisis cualitativo (letras, mood) creó una experiencia profundamente personal.</p>
+<div class="case-takeaway">Lección para UX: la IA en research no reemplaza la empatía — potencia tu capacidad de encontrar patrones en volúmenes de datos que serían imposibles de analizar manualmente.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio práctico 4.1: Análisis cualitativo con IA</div><div class="box-desc">Analiza datos cualitativos usando IA como herramienta de análisis.</div><ol><li>Genera 3 transcripciones ficticias de entrevistas con ChatGPT sobre una app de delivery</li><li>Realiza análisis temático individual de cada una con IA</li><li>Pide un análisis cruzado: patrones comunes, diferencias, priorización</li><li>Genera tabla de insights priorizados con evidencia y recomendaciones</li><li>Crea un reporte visual de research en Figma</li><li>Reflexiona: ¿qué pasó por alto la IA que tú detectaste?</li></ol></div>`},
+{id:"l4_2",title:"Testing y analytics predictivo con IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Crea personas y journey maps con datos reales procesados por IA. Combina datos cuantitativos y cualitativos para generar artefactos de research precisos y accionables.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Usar herramientas de testing automatizado (mapas de atención predictivos)</li><li>Interpretar datos de analytics con asistencia de IA</li><li>Diseñar planes de testing que combinen métodos tradicionales y IA</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_dng4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_p5dt)" width="800" height="400" rx="12"/><rect x="60" y="60" width="300" height="190" rx="12" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/>
+    <text x="210" y="90" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#496BE3" opacity=".7">Persona generada con IA</text>
+    <circle cx="120" cy="145" r="25" fill="none" stroke="#496BE3" stroke-width="1" opacity=".3"/>
+    <text x="120" y="150" text-anchor="middle" font-family="system-ui" font-size="18" fill="#496BE3" opacity=".4">👩</text>
+    <text x="230" y="125" text-anchor="start" font-family="system-ui" font-size="10" fill="#8888a0">María, 32, Product Manager</text>
+    <text x="230" y="145" text-anchor="start" font-family="system-ui" font-size="9" fill="#8888a0">Frustración: reportes manuales</text>
+    <text x="230" y="162" text-anchor="start" font-family="system-ui" font-size="9" fill="#8888a0">Necesidad: insights automáticos</text>
+    <text x="230" y="179" text-anchor="start" font-family="system-ui" font-size="9" fill="#8888a0">Quote: "Paso 4h por semana"</text>
+    <text x="210" y="215" text-anchor="middle" font-family="system-ui" font-size="8" fill="#496BE3" opacity=".5">Basada en datos reales de entrevistas</text>
+    <rect x="420" y="60" width="320" height="190" rx="12" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".4"/>
+    <text x="580" y="90" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#886BFF" opacity=".7">Journey Map asistido por IA</text>
+    <line x1="450" y1="140" x2="710" y2="140" stroke="#8888a0" stroke-width="1" opacity=".2"/>
+    <circle cx="475" cy="130" r="5" fill="#1e8a4e" opacity=".5"/>
+    <circle cx="530" cy="120" r="5" fill="#1e8a4e" opacity=".5"/>
+    <circle cx="585" cy="155" r="5" fill="#e0a816" opacity=".5"/>
+    <circle cx="640" cy="165" r="5" fill="#e74c3c" opacity=".5"/>
+    <circle cx="695" cy="125" r="5" fill="#1e8a4e" opacity=".5"/>
+    <text x="475" y="170" text-anchor="middle" font-family="system-ui" font-size="7" fill="#8888a0">Descubre</text>
+    <text x="530" y="170" text-anchor="middle" font-family="system-ui" font-size="7" fill="#8888a0">Registra</text>
+    <text x="585" y="170" text-anchor="middle" font-family="system-ui" font-size="7" fill="#8888a0">Configura</text>
+    <text x="640" y="170" text-anchor="middle" font-family="system-ui" font-size="7" fill="#8888a0">Frustra</text>
+    <text x="695" y="170" text-anchor="middle" font-family="system-ui" font-size="7" fill="#8888a0">Resuelve</text>
+    <text x="580" y="215" text-anchor="middle" font-family="system-ui" font-size="8" fill="#886BFF" opacity=".5">Pain points detectados por IA</text>
+    <rect x="180" y="280" width="440" height="50" rx="8" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".25"/>
+    <text x="400" y="305" text-anchor="middle" font-family="system-ui" font-size="10" fill="#1e8a4e" opacity=".7">Datos cuanti (analytics) + cuali (entrevistas) → artefactos UX accionables</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Personas y Journey Maps generados con IA a partir de datos reales</text></svg></div>
+<h4>Mapas de atención predictivos</h4><p>Attention Insight y Neurons usan visión por computadora entrenada con eye-tracking real para predecir dónde mirarán los usuarios. Evalúa jerarquía visual antes del testing con personas reales.</p><h4>Análisis de datos con LLMs</h4><p>Exporta datos de Google Analytics o Hotjar en CSV y aliméntalos a la IA pidiendo: identificar caídas en el embudo, hipótesis de por qué abandonan, y 3 mejoras de diseño por punto de caída.</p><div class="exercise-box"><div class="box-title">Ejercicio práctico 4.2: Evaluación predictiva</div><div class="box-desc">Evalúa y optimiza un diseño con herramientas de IA antes del testing con usuarios.</div><ol><li>Sube un diseño a Attention Insight para obtener mapa de atención</li><li>Analiza el heatmap: ¿el CTA recibe atención? ¿Hay distracciones?</li><li>Rediseña basada en los hallazgos y evalúa de nuevo</li><li>Compara ambos mapas y documenta mejoras</li><li>Crea un test en Maze con 3 tareas específicas</li><li>Analiza datos de analytics con ChatGPT/Claude pidiendo insights de diseño</li></ol></div>`},
+{id:"l4_3",title:"Encuestas, personas y journey maps con IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Sintetiza hallazgos de múltiples fuentes con IA: surveys, analytics, entrevistas. Genera reportes de research, identifica insights y prioriza oportunidades de diseño.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Diseñar encuestas optimizadas con asistencia de IA</li><li>Generar personas basadas en datos reales</li><li>Crear journey maps detallados con insights de IA</li></ul></div><h4>Encuestas inteligentes</h4><p>La IA ayuda en diseño (genera preguntas optimizadas, evita sesgos), distribución (identifica audiencia y timing), y análisis (procesa respuestas abiertas, identifica temas, cuantifica sentimiento).</p><h4>Personas basadas en datos</h4><p>Recopila datos de múltiples fuentes → alimenta a la IA pidiendo clusters de comportamiento → genera personas detalladas para cada cluster → valida con el equipo y usuarios reales.</p><div class="exercise-box"><div class="box-title">Ejercicio práctico 4.3: Research toolkit con IA</div><div class="box-desc">Crea un kit completo de investigación usando IA para cada entregable.</div><ol><li>Elige un producto digital real que uses frecuentemente</li><li>Genera una encuesta de 10 preguntas con IA</li><li>Genera 3 user personas detalladas</li><li>Crea un journey map completo con etapas, emociones, oportunidades</li><li>Genera un informe de 2 páginas con recomendaciones priorizadas</li><li>Presenta los entregables en Figma para tu equipo</li></ol></div>`}
+]},
+
+{id:"m5",title:"Interfaces Conversacionales e IA",hours:"5h",color:"#496BE3",icon:"💬",
+lessons:[
+{id:"l5_1",title:"Principios de diseño conversacional",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Diseña conversaciones efectivas entendiendo NLP, intents, entities y contexto. Los principios de cooperación de Grice aplican tanto a humanos como a chatbots.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Comprender cuándo usar (y no usar) interfaces conversacionales</li><li>Diseñar flujos de conversación naturales y útiles</li><li>Definir personalidad, tono y límites de un agente</li><li>Manejar errores y edge cases</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_i4hu" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_xx95)" width="800" height="400" rx="12"/><rect x="100" y="60" width="200" height="45" rx="20" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".5"/>
+    <text x="200" y="87" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3">Usuario: "Quiero devolver esto"</text>
+    <rect x="320" y="130" width="280" height="45" rx="20" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".5"/>
+    <text x="460" y="157" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF">Bot: Detecta intent → devolución</text>
+    <rect x="280" y="200" width="240" height="45" rx="20" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".5"/>
+    <text x="400" y="227" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF">Bot: "¿Podés darme el N° de pedido?"</text>
+    <rect x="100" y="270" width="220" height="45" rx="20" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".5"/>
+    <text x="210" y="297" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3">Usuario: "No sé cuál es"</text>
+    <rect x="350" y="340" width="300" height="35" rx="16" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".5"/>
+    <text x="500" y="362" text-anchor="middle" font-family="system-ui" font-size="10" fill="#e0a816">⚠️ Fallback → escalamiento humano</text>
+    <line x1="200" y1="105" x2="340" y2="130" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="460" y1="175" x2="420" y2="200" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="350" y1="245" x2="220" y2="270" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="210" y1="315" x2="380" y2="340" stroke="#8888a0" stroke-width="1" stroke-dasharray="4"/>
+    <rect x="620" y="80" width="130" height="180" rx="10" fill="none" stroke="#6c5ce7" stroke-width="1" opacity=".25"/>
+    <text x="685" y="105" text-anchor="middle" font-family="system-ui" font-size="9" font-weight="bold" fill="#6c5ce7" opacity=".7">Componentes</text>
+    <text x="685" y="130" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">→ Intent</text>
+    <text x="685" y="150" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">→ Entity</text>
+    <text x="685" y="170" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">→ Context</text>
+    <text x="685" y="190" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">→ Fallback</text>
+    <text x="685" y="210" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">→ Escalamiento</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Anatomía de un flujo conversacional con IA</text></svg></div>
+<h4>Cuándo usar una interfaz conversacional</h4><p>Son ideales cuando la tarea es variable, el usuario necesita orientación personalizada, o la interacción es de consulta. Son menos ideales cuando la tarea es simple (un botón es mejor) o se necesita comparar visualmente.</p><h4>Personalidad del agente</h4><p>Define: nombre, avatar, tono de voz, nivel de proactividad, transparencia (¿revela que es IA?), y límites claros. La personalidad debe ser coherente con la marca del producto.</p><h4>Patrones de UI para chat con IA</h4><p>Respuestas con formato enriquecido (cards, botones de acción rápida), indicadores de "escribiendo", sugerencias predefinidas (chips), transiciones fluidas entre chat y UI, y feedback inline.</p><div class="video-embed"><iframe src="https://www.youtube.com/embed/s5Mj7jMkOFk" title="Conversational Design" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">Principios de diseño conversacional</div>
+<div class="case-study"><div class="case-label">Caso real: Mercado Libre</div>
+<div class="case-company">Asistente IA de compras — diseño conversacional en e-commerce LATAM</div>
+<p>Mercado Libre integró un asistente de IA conversacional que ayuda a compradores a encontrar productos, comparar opciones y resolver dudas post-compra. El desafío principal fue diseñar para la diversidad lingüística de LATAM: modismos argentinos, mexicanos, brasileños y colombianos son radicalmente distintos.</p>
+<p>El equipo de diseño conversacional creó "personalidades regionales" del bot: mismo core de IA pero con adaptaciones de tono, vocabulario y convenciones sociales por país. Además, implementaron un sistema de escalamiento inteligente: el bot detecta frustración (mensajes cortos, repeticiones, palabras clave) y transfiere a un agente humano antes de que el usuario lo pida.</p>
+<div class="case-takeaway">Lección para UX: las interfaces conversacionales efectivas no son solo técnicas — requieren diseño cultural, emocional y de escalamiento.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 5.1: Diseña un agente conversacional</div><div class="box-desc">Diseña la experiencia completa de un chatbot con IA.</div><ol><li>Elige contexto: asistente de compras, bot de soporte, o asistente de salud</li><li>Define personalidad en un "Character Sheet"</li><li>Crea flujos para: happy path, error path, y escalamiento a humano</li><li>Diseña wireframes de la interfaz de chat en Figma</li><li>Escribe scripts de conversación para cada escenario</li><li>Testea el flujo con 2-3 personas</li></ol></div>`},
+{id:"l5_2",title:"Experiencias multi-modales con IA",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Crea flujos conversacionales robustos: manejo de errores, fallbacks, escalamiento humano. Diseña personalidad de bot consistente y experiencias multimodales.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Diseñar experiencias que combinen chat, voz y UI visual</li><li>Entender principios de Voice UI (VUI)</li><li>Crear transiciones naturales entre modalidades</li></ul></div><h4>Convergencia de modalidades</h4><p>Un usuario puede iniciar por voz, refinar con texto, ver resultados visuales y completar con un toque. Diseña en términos de "intenciones del usuario" más que "pantallas".</p><h4>Voice UI (VUI)</h4><p>Brevedad, confirmación progresiva, salidas de escape, y opciones memorizables (pocas y fáciles de recordar).</p><div class="exercise-box"><div class="box-title">Ejercicio 5.2: Prototipo multi-modal</div><div class="box-desc">Diseña una experiencia que combine chat, voz y UI visual.</div><ol><li>Elige caso de uso: ordenar comida, agendar cita o buscar producto</li><li>Diseña el flujo en 3 modalidades: texto, voz y UI visual</li><li>Crea un flujo híbrido indicando cuándo y por qué transiciona</li><li>Diseña las pantallas clave en Figma</li><li>Escribe scripts de voz</li><li>Documenta reglas de transición</li></ol></div>`},
+{id:"l5_3",title:"IA embebida en el producto",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Integra asistentes de IA en productos existentes: widgets de chat, búsqueda conversacional, onboarding asistido. Mide éxito con métricas conversacionales.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Diseñar funcionalidades de IA que se integren nativamente</li><li>Aplicar patrones de autocompletado, sugerencias e inline</li><li>Manejar confianza del usuario en features de IA</li></ul></div><h4>Patrones de IA embebida</h4><p>Autocompletado inteligente (Gmail Smart Compose), sugerencias contextuales (respuestas sugeridas en Slack), organización automática (carpeta Destacados de Gmail), resumen automático. El mejor diseño de IA es el que el usuario ni nota que es IA.</p><h4>Confianza y transparencia</h4><p>Etiquetas claras ("Generado por IA"), niveles de confianza visuales, explicaciones on-demand, y mecanismos de feedback.</p><div class="exercise-box"><div class="box-title">Ejercicio 5.3: Feature de IA embebida</div><div class="box-desc">Diseña una feature de IA embebida para un producto existente.</div><ol><li>Elige un producto que actualmente NO tenga IA obvia</li><li>Identifica 3 oportunidades para agregar IA embebida</li><li>Para la más prometedora, diseña todos los estados en Figma</li><li>Incluye indicador "generado por IA" sutil pero claro</li><li>Escribe la lógica de cuándo aparece la sugerencia</li></ol></div>`}
+]},
+
+{id:"m6",title:"Personalización y Sistemas Adaptativos",hours:"5h",color:"#886BFF",icon:"🎯",
+lessons:[
+{id:"l6_1",title:"Frameworks de personalización",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Los sistemas de recomendación usan filtrado colaborativo, basado en contenido, o híbrido. Diseña interfaces que presenten recomendaciones de forma útil y transparente.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Comprender niveles y tipos de personalización</li><li>Aplicar personalización progresiva</li><li>Diseñar sistemas que aprenden del comportamiento</li><li>Equilibrar personalización con serendipity</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_ylty" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_q4zz)" width="800" height="400" rx="12"/><rect x="50" y="60" width="210" height="230" rx="12" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/>
+    <text x="155" y="90" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#496BE3" opacity=".7">Colaborativo</text>
+    <circle cx="110" cy="140" r="16" fill="none" stroke="#496BE3" stroke-width="1" opacity=".4"/>
+    <circle cx="155" cy="140" r="16" fill="none" stroke="#496BE3" stroke-width="1" opacity=".4"/>
+    <circle cx="200" cy="140" r="16" fill="none" stroke="#496BE3" stroke-width="1" opacity=".4"/>
+    <text x="110" y="144" text-anchor="middle" font-family="system-ui" font-size="10" fill="#496BE3">👤</text>
+    <text x="155" y="144" text-anchor="middle" font-family="system-ui" font-size="10" fill="#496BE3">👤</text>
+    <text x="200" y="144" text-anchor="middle" font-family="system-ui" font-size="10" fill="#496BE3">👤</text>
+    <text x="155" y="185" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">"Usuarios similares</text>
+    <text x="155" y="200" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">también vieron..."</text>
+    <text x="155" y="235" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Ej: Netflix, Spotify</text>
+    <rect x="295" y="60" width="210" height="230" rx="12" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".4"/>
+    <text x="400" y="90" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#886BFF" opacity=".7">Por contenido</text>
+    <rect x="340" y="115" width="120" height="20" rx="4" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/>
+    <rect x="340" y="145" width="120" height="20" rx="4" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/>
+    <text x="400" y="130" text-anchor="middle" font-family="system-ui" font-size="9" fill="#886BFF">tags: thriller, 90s</text>
+    <text x="400" y="160" text-anchor="middle" font-family="system-ui" font-size="9" fill="#886BFF">tags: thriller, 80s</text>
+    <text x="400" y="200" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">"Porque te gustó</text>
+    <text x="400" y="215" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">este género..."</text>
+    <text x="400" y="250" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Ej: YouTube, Amazon</text>
+    <rect x="540" y="60" width="210" height="230" rx="12" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".4"/>
+    <text x="645" y="90" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#1e8a4e" opacity=".7">Híbrido</text>
+    <circle cx="620" cy="150" r="30" fill="none" stroke="#496BE3" stroke-width="1" opacity=".3"/>
+    <circle cx="670" cy="150" r="30" fill="none" stroke="#886BFF" stroke-width="1" opacity=".3"/>
+    <text x="645" y="155" text-anchor="middle" font-family="system-ui" font-size="14" fill="#1e8a4e" opacity=".5">+</text>
+    <text x="645" y="200" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Combina señales</text>
+    <text x="645" y="215" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">de usuario + contenido</text>
+    <text x="645" y="250" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Ej: Spotify Discover</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Tipos de sistemas de recomendación</text></svg></div>
+<h4>Personalización progresiva</h4><p>Empieza con "obvia" (nombre, idioma, contenido local), avanza a "útil" (recomendaciones, atajos, notificaciones), y finalmente "mágica" (anticipar necesidades, adaptar la interfaz dinámicamente).</p><h4>Diseñando para la incertidumbre</h4><p>Cuando acierta: experiencia fluida. Cuando falla: corrección fácil. Patrones: "no me interesa", "ver más como esto", opciones de reset. Cuidado con las burbujas de filtro: diseña secciones de "explorar" y contenido sorpresa.</p><div class="case-study"><div class="case-label">Caso real: Netflix</div>
+<div class="case-company">Sistema de personalización — cómo Netflix diseña para 200M+ de gustos distintos</div>
+<p>Netflix no tiene una sola homepage: tiene más de 200 millones de versiones personalizadas. Su sistema de recomendación combina filtrado colaborativo ("usuarios similares a vos vieron..."), basado en contenido (género, director, duración) y contextual (hora del día, dispositivo, día de la semana).</p>
+<p>Lo más interesante desde el punto de vista de UX es cómo diseñan las "filas" (rows): cada fila es una hipótesis de personalización. "Porque viste X" es transparente sobre el razonamiento. El equipo de diseño testea constantemente el balance entre relevancia y descubrimiento — si solo muestran lo predecible, el usuario se aburre.</p>
+<div class="case-takeaway">Lección para UX: personalizar no es solo mostrar lo que el usuario ya conoce — es diseñar el equilibrio entre familiaridad y descubrimiento.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 6.1: Estrategia de personalización</div><div class="box-desc">Diseña una estrategia completa para un producto.</div><ol><li>Elige: app de noticias, plataforma e-learning, o marketplace</li><li>Define 3 segmentos de usuarios</li><li>Diseña plan progresivo con 3 niveles (semana 1, mes 1, mes 3)</li><li>Diseña pantalla principal para cada segmento</li><li>Incluye mecanismos anti-filter-bubble</li><li>Diseña controles de privacidad y transparencia</li></ol></div>`},
+{id:"l6_2",title:"Sistemas de recomendación: diseño UX",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Las interfaces adaptativas cambian layout, contenido y funcionalidad según el usuario. Diseña para múltiples estados y asegura que la adaptación sea predecible.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Entender cómo funcionan las recomendaciones</li><li>Diseñar la presentación visual de recomendaciones</li><li>Crear onboardings que alimenten el sistema</li><li>Manejar el "cold start problem"</li></ul></div><h4>Presentación de recomendaciones</h4><p>Titulares que explican el "por qué" ("Porque te gustó X"), agrupación por razón, indicadores de confianza ("98% match"), mezcla de personalizado con popular general. Onboarding: rápido (3-5 pasos), visual (imágenes > texto), gratificante (mostrar resultado inmediato).</p><div class="exercise-box"><div class="box-title">Ejercicio 6.2: Sistema de recomendaciones</div><div class="box-desc">Diseña la experiencia completa de un sistema de recomendaciones.</div><ol><li>Elige: streaming de música, app de recetas, o marketplace de cursos</li><li>Diseña onboarding de 3 pasos que recopile preferencias</li><li>Crea 3 variaciones de cómo mostrar recomendaciones</li><li>Diseña experiencia de "cold start"</li><li>Crea flujo de "no me gusta"</li></ol></div>`},
+{id:"l6_3",title:"A/B testing e iteración con IA",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Equilibra personalización con privacidad. Implementa controles de usuario, transparencia sobre datos usados, y opciones de opt-out en cada punto del sistema.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Diseñar experimentos de A/B testing para features de IA</li><li>Usar IA para analizar resultados y generar insights</li><li>Implementar ciclos de iteración rápida</li></ul></div><h4>Métricas clave para experiencias con IA</h4><p>Además de conversión/retención/NPS: precisión percibida, tasa de aceptación de sugerencias, tiempo ahorrado, tasa de corrección, confianza declarada. Ciclo: datos → hipótesis (IA) → diseño variantes → test → análisis (IA) → decisión (humana) → implementación.</p><div class="exercise-box"><div class="box-title">Ejercicio 6.3: Plan de experimentación</div><div class="box-desc">Diseña un plan completo de experimentación para una feature de IA.</div><ol><li>Elige una feature de personalización de ejercicios anteriores</li><li>Formula 3 hipótesis testables</li><li>Diseña variantes A y B (mockups en Figma)</li><li>Define métricas de éxito primarias y secundarias</li><li>Genera datos ficticios con IA y analízalos</li><li>Decide qué variante "ganaría" y diseña la siguiente iteración</li></ol></div>`}
+]},
+
+{id:"m7",title:"Accesibilidad e Inclusión con IA",hours:"4h",color:"#2196F3",icon:"♿",
+lessons:[
+{id:"l7_1",title:"Auditorías automatizadas de accesibilidad",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>La IA puede generar alt-text, transcripciones y descripciones automáticas. Combina WCAG 2.2 con capacidades IA para auditar y mejorar accesibilidad sistémicamente.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1e8a4e;stop-opacity:.1"/><stop offset="100%" style="stop-color:#3d5cc7;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g7)" width="800" height="450" rx="12"/><circle cx="400" cy="200" r="100" fill="none" stroke="#1e8a4e" stroke-width="2" opacity=".3"/><text x="400" y="185" text-anchor="middle" font-family="system-ui" font-size="32" fill="#1e8a4e" opacity=".4">♿</text><text x="400" y="220" text-anchor="middle" font-family="system-ui" font-size="14" fill="#1e8a4e" opacity=".6">WCAG + IA</text><text x="250" y="140" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Alt-text automático</text><text x="550" y="140" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Contraste adaptativo</text><text x="250" y="280" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Navegación por voz</text><text x="550" y="280" text-anchor="middle" font-family="system-ui" font-size="11" fill="#886BFF" opacity=".6">Simplificación cognitiva</text><text x="400" y="390" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Accesibilidad potenciada por IA</text></svg></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Usar herramientas de IA para auditar accesibilidad WCAG</li><li>Interpretar resultados y priorizar correcciones</li><li>Integrar verificaciones en tu flujo diario</li><li>Generar alt text y etiquetas ARIA con IA</li></ul></div><h4>Herramientas de auditoría</h4><p>Stark (Figma plugin) verifica contrastes, simula daltonismo, genera reportes WCAG. axe DevTools y Lighthouse evalúan páginas web automáticamente. La IA genera alt text descriptivo automáticamente, adaptando detalle según contexto.</p><h4>Accesibilidad en el flujo</h4><p>Wireframe → verificar estructura y jerarquía. Diseño visual → verificar contrastes y tamaños. Prototipado → verificar navegación por teclado. Contenido → generar y verificar alt text.</p><div class="case-study"><div class="case-label">Caso real: Microsoft</div>
+<div class="case-company">Seeing AI — IA de accesibilidad para personas con discapacidad visual</div>
+<p>Microsoft lanzó "Seeing AI", una app que usa visión por computadora para describir el mundo a personas ciegas o con baja visión. La app lee texto, identifica productos por código de barras, describe escenas, reconoce caras y sus emociones, e incluso describe imágenes en redes sociales.</p>
+<p>El proceso de diseño fue ejemplar: el equipo incluyó personas con discapacidad visual desde la investigación inicial. Descubrieron que las descripciones de IA demasiado detalladas eran tan problemáticas como las insuficientes. Diseñaron niveles de detalle progresivos: primero un resumen breve, luego el usuario puede pedir más información si lo desea.</p>
+<div class="case-takeaway">Lección para UX: diseñar accesibilidad con IA requiere co-diseño con usuarios reales — las suposiciones sobre lo que "necesitan" suelen ser incorrectas.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 7.1: Auditoría con IA</div><div class="box-desc">Realiza una auditoría completa de accesibilidad usando herramientas de IA.</div><ol><li>Elige un diseño propio o de Figma Community</li><li>Instala Stark y ejecuta auditoría completa</li><li>Documenta problemas con capturas</li><li>Genera alt text para todas las imágenes con IA</li><li>Corrige los 5 problemas más críticos</li><li>Genera reporte de accesibilidad</li></ol></div>`},
+{id:"l7_2",title:"Diseño inclusivo potenciado por IA",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Diseña interfaces que se adaptan a diferentes capacidades: tamaño de texto, contraste, navegación por voz, simplificación cognitiva. La IA detecta necesidades y ajusta la experiencia.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Aplicar principios de diseño inclusivo con IA</li><li>Diseñar experiencias adaptativas para diferentes capacidades</li><li>Usar IA para personalizar la accesibilidad</li></ul></div><h4>IA adaptativa</h4><p>Ajustar tamaño de texto según patrones de lectura, simplificar interfaz para dificultades cognitivas, ofrecer navegación por voz como alternativa, adaptar contraste según iluminación. Pero cuidado: modelos sesgados pueden discriminar, interfaces demasiado automatizadas pueden excluir.</p><div class="exercise-box"><div class="box-title">Ejercicio 7.2: Diseño inclusivo</div><div class="box-desc">Diseña una experiencia accesible y adaptativa.</div><ol><li>Analiza una app desde 3 perspectivas: baja visión, dificultades motoras, dificultades cognitivas</li><li>Identifica 3 barreras para cada tipo de usuario</li><li>Diseña 3 adaptaciones potenciadas por IA</li><li>Crea mockups para cada tipo de usuario</li><li>Revisa copy con IA para hacerlo más inclusivo</li></ol></div>`},
+{id:"l7_3",title:"Herramientas y workflows de accesibilidad",dur:"1h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Los datasets sesgados producen IA excluyente. Aprende a auditar modelos con perspectiva inclusiva, testear con usuarios diversos, y diseñar para los casos extremos.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Configurar workflow de accesibilidad automatizado</li><li>Conocer las mejores herramientas por aspecto</li><li>Crear checklists personalizados para tu equipo</li></ul></div><h4>Stack de herramientas</h4><table class="info-table"><thead><tr><th>Herramienta</th><th>Uso</th><th>Fase</th></tr></thead><tbody><tr><td>Stark</td><td>Contraste, simulaciones, reportes WCAG</td><td>Diseño</td></tr><tr><td>axe DevTools</td><td>Auditoría de código web</td><td>Desarrollo</td></tr><tr><td>WAVE</td><td>Evaluación visual de accesibilidad</td><td>Testing</td></tr><tr><td>ChatGPT/Claude</td><td>Alt text, lenguaje inclusivo</td><td>Contenido</td></tr><tr><td>Lighthouse</td><td>Auditoría integral</td><td>Desarrollo</td></tr></tbody></table><div class="exercise-box"><div class="box-title">Ejercicio 7.3: Workflow automatizado</div><div class="box-desc">Configura un workflow de accesibilidad para tu proceso.</div><ol><li>Genera checklist WCAG 2.1 AA personalizado con IA</li><li>Instala y configura Stark en Figma</li><li>Crea página "Accesibilidad" en Figma con: checklist, colores aprobados, tamaños mínimos</li><li>Pasa el checklist a un diseño existente y corrige problemas</li><li>Documenta como guía reproducible para tu equipo</li></ol></div>`}
+]},
+
+{id:"m8",title:"IA en el Flujo de Trabajo de Diseño",hours:"5h",color:"#5a7fd4",icon:"⚡",
+lessons:[
+{id:"l8_1",title:"IA nativa en Figma y plugins esenciales",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Integra plugins IA en Figma: Musho, Magician, Ando. Automatiza renombrado de capas, generación de contenido, y creación de variantes para multiplicar tu productividad.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Dominar funcionalidades de IA nativas de Figma</li><li>Usar los plugins de IA más útiles</li><li>Automatizar tareas repetitivas</li><li>Crear workflows combinando plugins</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_o9pn" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_sbte)" width="800" height="400" rx="12"/><rect x="80" y="80" width="160" height="100" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/>
+    <text x="160" y="115" text-anchor="middle" font-family="system-ui" font-size="22" fill="#496BE3" opacity=".4">🎨</text>
+    <text x="160" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#496BE3" opacity=".7">Diseño en Figma</text>
+    <text x="160" y="165" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Layers, componentes</text>
+    <path d="M240 130 L300 130" stroke="#496BE3" stroke-width="1.5" opacity=".4" marker-end="none"/>
+    <text x="270" y="122" text-anchor="middle" font-family="system-ui" font-size="14" fill="#496BE3" opacity=".5">→</text>
+    <rect x="300" y="60" width="200" height="140" rx="10" fill="none" stroke="#886BFF" stroke-width="2" opacity=".3"/>
+    <text x="400" y="95" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#886BFF" opacity=".7">Plugins IA</text>
+    <text x="400" y="120" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">🪄 Magician → iconos</text>
+    <text x="400" y="140" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">🏠 Musho → landings</text>
+    <text x="400" y="160" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">📝 Content Reel → datos</text>
+    <text x="400" y="180" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">♿ Stark → accesibilidad</text>
+    <text x="530" y="130" text-anchor="middle" font-family="system-ui" font-size="14" fill="#886BFF" opacity=".5">→</text>
+    <rect x="560" y="80" width="160" height="100" rx="10" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".4"/>
+    <text x="640" y="115" text-anchor="middle" font-family="system-ui" font-size="22" fill="#1e8a4e" opacity=".4">✅</text>
+    <text x="640" y="145" text-anchor="middle" font-family="system-ui" font-size="11" fill="#1e8a4e" opacity=".7">Output optimizado</text>
+    <text x="640" y="165" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">-60% tiempo manual</text>
+    <rect x="200" y="240" width="400" height="80" rx="10" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".3"/>
+    <text x="400" y="270" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="bold" fill="#e0a816" opacity=".7">💡 Clave: la IA opera dentro de tu Design System</text>
+    <text x="400" y="295" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">Las restricciones del sistema mejoran la calidad del output IA</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Flujo de trabajo Figma + plugins de IA</text></svg></div>
+<h4>Figma AI + Plugins</h4><table class="info-table"><thead><tr><th>Plugin</th><th>Función</th><th>Caso de uso</th></tr></thead><tbody><tr><td>Magician</td><td>Genera iconos, imágenes y copy</td><td>Iconos que no existen en tu biblioteca</td></tr><tr><td>Musho</td><td>Genera landing pages completas</td><td>Conceptos rápidos para clientes</td></tr><tr><td>Content Reel</td><td>Datos realistas (nombres, fotos)</td><td>Poblar prototipos</td></tr><tr><td>Stark</td><td>Accesibilidad: contraste, WCAG</td><td>Verificar durante el diseño</td></tr><tr><td>Similayer</td><td>Selecciona capas similares</td><td>Cambiar propiedades masivamente</td></tr></tbody></table><div class="video-embed"><iframe src="https://www.youtube.com/embed/pkz_hyjEo1U" title="AI Tools for Figma" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">Plugins de IA en Figma</div>
+<div class="case-study"><div class="case-label">Caso real: Airbnb</div>
+<div class="case-company">Design System + IA — automatización del flujo de diseño</div>
+<p>Airbnb fue pionera en explorar IA para diseño con su proyecto que convertía sketches en papel en prototipos funcionales usando redes neuronales. Aunque ese proyecto experimental evolucionó, sentó las bases para su enfoque actual: un design system (DLS) profundamente integrado con herramientas de automatización.</p>
+<p>Hoy, los diseñadores de Airbnb usan IA para generar variaciones de layouts automáticamente dentro de las restricciones de su design system, testear accesibilidad en componentes, y generar documentación de componentes. La clave fue que la IA no opera "libre" sino dentro de las reglas del design system — esto garantiza consistencia.</p>
+<div class="case-takeaway">Lección para UX: la IA es más potente cuando opera dentro de un design system bien definido — las restricciones mejoran la calidad del output.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 8.1: Figma potenciado</div><div class="box-desc">Optimiza tu workflow en Figma integrando IA.</div><ol><li>Instala al menos 4 plugins de IA</li><li>Usa Figma AI para renombrar capas automáticamente</li><li>Pobla un prototipo con Content Reel</li><li>Genera 3 iconos con Magician</li><li>Ejecuta auditoría con Stark</li><li>Mide tiempo ahorrado vs. manual</li><li>Crea guía "AI Plugins que uso" para tu equipo</li></ol></div>`},
+{id:"l8_2",title:"Design-to-code con IA",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Genera design tokens, documenta componentes automáticamente, y mantén tu sistema de diseño actualizado con asistencia de IA. Agiliza el handoff a desarrollo.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Usar herramientas de IA para convertir diseños en código</li><li>Entender posibilidades y limitaciones actuales</li><li>Colaborar mejor con desarrolladores</li></ul></div><h4>Herramientas clave</h4><p>v0 genera componentes React con Tailwind desde prompts. Locofy convierte Figma en código optimizado. Builder.io conecta diseño y desarrollo con IA que genera y mantiene código. El código generado es excelente punto de partida, pero rara vez está listo para producción sin ajustes.</p><div class="exercise-box"><div class="box-title">Ejercicio 8.2: Design-to-code</div><div class="box-desc">Convierte un diseño en código funcional con IA.</div><ol><li>Sube un diseño a v0.dev</li><li>Evalúa: ¿responsivo? ¿estructura lógica? ¿fiel al diseño?</li><li>Itera conversacionalmente pidiendo ajustes</li><li>Compara con Locofy si tienes el diseño en Figma</li><li>Documenta qué hace mejor cada herramienta</li><li>Crea "handoff checklist": qué puede generarse con IA y qué necesita desarrollo</li></ol></div>`},
+{id:"l8_3",title:"Documentación y colaboración con IA",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Herramientas como v0, Locofy y Anima convierten diseños en código. Aprende a optimizar tus archivos de Figma para exportación IA y colaborar mejor con desarrolladores.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Generar documentación profesional con IA</li><li>Crear especificaciones claras y completas</li><li>Mejorar comunicación con stakeholders</li><li>Automatizar reportes de progreso</li></ul></div><h4>Documentación y comunicación</h4><p>La IA genera especificaciones de componentes, guías de estilo automatizadas, traduce jerga de diseño a lenguaje de negocio, y prepara respuestas a objeciones comunes. Configura reportes automáticos: progreso semanal, comparativas before/after, resúmenes de testing.</p><div class="exercise-box"><div class="box-title">Ejercicio 8.3: Documentación profesional</div><div class="box-desc">Genera documentación de diseño profesional con IA.</div><ol><li>Elige un proyecto de diseño completo</li><li>Genera especificación de 2 páginas con decisiones y justificaciones</li><li>Documenta 3 componentes principales con IA</li><li>Crea resumen ejecutivo orientado a stakeholders</li><li>Genera changelog visual</li><li>Organiza en formato profesional</li></ol></div>`}
+]},
+
+{id:"m9",title:"Ética, Sesgo y Diseño Responsable",hours:"4h",color:"#7c5bbf",icon:"⚖️",
+lessons:[
+{id:"l9_1",title:"Sesgos algorítmicos y su impacto en UX",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Los sesgos de datos (representación, medición, históricos) se amplifican en productos de IA. Aprende a detectarlos con auditorías sistemáticas y herramientas como AI Fairness 360.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e0a816;stop-opacity:.1"/><stop offset="100%" style="stop-color:#496BE3;stop-opacity:.08"/></linearGradient></defs><rect fill="url(#g9)" width="800" height="450" rx="12"/><rect x="200" y="100" width="400" height="250" rx="14" fill="none" stroke="#e0a816" stroke-width="2" opacity=".3"/><text x="400" y="145" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="bold" fill="#e0a816" opacity=".7">Ética en IA</text><line x1="240" y1="170" x2="560" y2="170" stroke="#e0a816" stroke-width="1" opacity=".2"/><text x="310" y="205" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".6">Sesgo</text><text x="490" y="205" text-anchor="middle" font-family="system-ui" font-size="12" fill="#886BFF" opacity=".6">Transparencia</text><text x="310" y="260" text-anchor="middle" font-family="system-ui" font-size="12" fill="#3d5cc7" opacity=".6">Privacidad</text><text x="490" y="260" text-anchor="middle" font-family="system-ui" font-size="12" fill="#1e8a4e" opacity=".6">Impacto social</text><text x="400" y="320" text-anchor="middle" font-family="system-ui" font-size="11" fill="#e0a816" opacity=".5">⚖️ Diseño responsable</text><text x="400" y="400" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Pilares del diseño ético con IA</text></svg></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Identificar tipos de sesgo comunes en IA</li><li>Comprender cómo los sesgos crean experiencias injustas</li><li>Aplicar técnicas de detección de sesgo</li><li>Diseñar mecanismos de mitigación</li></ul></div><h4>Tipos de sesgo</h4><p><strong>Sesgo de representación:</strong> datos que no representan a todos (reconocimiento facial que falla con pieles oscuras). <strong>Sesgo de confirmación:</strong> refuerza patrones existentes (algoritmo de contratación que descarta CVs de mujeres). <strong>Sesgo de automatización:</strong> confiar ciegamente en el sistema.</p><h4>Tu rol como diseñadora</h4><p>Diseña para la transparencia, crea válvulas de escape, implementa diversidad en outputs, y aboga por auditorías de sesgo regulares. Framework: ¿Quién podría verse perjudicado? ¿Qué grupos están sub-representados? ¿Qué pasa cuando la IA se equivoca? ¿El usuario puede corregir?</p><div class="resource-box"><div class="box-title">Recursos esenciales</div><div class="resource-item"><span class="r-type">Libro</span><span>"Weapons of Math Destruction" de Cathy O'Neil</span></div><div class="resource-item"><span class="r-type">Framework</span><span>Google PAIR Guidelines <a href="https://pair.withgoogle.com" target="_blank">→ Ver</a></span></div></div><div class="video-embed"><iframe src="https://www.youtube.com/embed/59bMh59JQDo" title="AI Ethics and Bias" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">Ética y sesgo en IA</div>
+<div class="case-study"><div class="case-label">Caso real: Amazon</div>
+<div class="case-company">Sesgo en contratación — cuando la IA replicó discriminación de género</div>
+<p>En 2018 se reveló que Amazon había desarrollado una herramienta de IA para filtrar CVs de candidatos que discriminaba sistemáticamente a mujeres. El modelo fue entrenado con 10 años de CVs de contrataciones exitosas en la empresa — que eran mayoritariamente hombres en roles técnicos. La IA aprendió que "mujer" era un predictor negativo.</p>
+<p>Amazon abandonó el proyecto, pero el caso se convirtió en referencia mundial sobre sesgo algorítmico. El error no fue técnico sino de diseño del sistema: nadie cuestionó si los datos históricos reflejaban mérito real o simplemente reproducían sesgos de la industria tech. Faltó una auditoría ética desde la fase de definición del producto.</p>
+<div class="case-takeaway">Lección para UX: como diseñadores, somos la primera línea de defensa contra el sesgo. Preguntá siempre: "¿qué sesgos tienen los datos con los que se entrenó este modelo?"</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 9.1: Auditoría de sesgo</div><div class="box-desc">Realiza una auditoría de sesgo en un producto con IA.</div><ol><li>Elige un producto con IA que uses frecuentemente</li><li>Realiza 10 interacciones variando género, edad, ubicación, idioma</li><li>Documenta patrones de sesgo encontrados</li><li>Genera 10 imágenes de "profesional exitoso" en diferentes industrias y analiza diversidad</li><li>Propone solución de diseño para cada sesgo</li><li>Escribe reporte de 1 página con hallazgos</li></ol></div>`},
+{id:"l9_2",title:"Transparencia, privacidad y confianza",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>La transparencia en IA no es opcional: los usuarios merecen saber cuándo interactúan con IA, cómo se usan sus datos, y por qué un sistema tomó una decisión.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Diseñar experiencias transparentes</li><li>Implementar consentimiento informado</li><li>Manejar datos de usuario éticamente</li><li>Construir confianza del usuario</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_7i3e" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_2lkh)" width="800" height="400" rx="12"/><rect x="60" y="55" width="200" height="140" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/>
+    <text x="160" y="85" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="bold" fill="#496BE3" opacity=".7">🏷️ Etiqueta IA</text>
+    <rect x="90" y="100" width="140" height="28" rx="6" fill="none" stroke="#496BE3" stroke-width="1" opacity=".3"/>
+    <text x="160" y="119" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">🤖 Generado por IA</text>
+    <text x="160" y="150" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">El usuario sabe que</text>
+    <text x="160" y="165" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">interactúa con IA</text>
+    <rect x="300" y="55" width="200" height="140" rx="10" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".4"/>
+    <text x="400" y="85" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="bold" fill="#886BFF" opacity=".7">🔍 Explicabilidad</text>
+    <text x="400" y="115" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">"Te recomendamos esto</text>
+    <text x="400" y="130" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">porque viste X e Y"</text>
+    <text x="400" y="160" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Razón visible de</text>
+    <text x="400" y="175" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">cada decisión IA</text>
+    <rect x="540" y="55" width="200" height="140" rx="10" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".4"/>
+    <text x="640" y="85" text-anchor="middle" font-family="system-ui" font-size="11" font-weight="bold" fill="#1e8a4e" opacity=".7">⚙️ Control</text>
+    <text x="640" y="115" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Panel de privacidad</text>
+    <text x="640" y="135" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">con ajustes granulares</text>
+    <text x="640" y="160" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Opt-out parcial</text>
+    <text x="640" y="175" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Derecho al olvido</text>
+    <rect x="150" y="240" width="500" height="60" rx="10" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".25"/>
+    <text x="400" y="268" text-anchor="middle" font-family="system-ui" font-size="11" fill="#e0a816" opacity=".7">Transparencia → Comprensión → Confianza → Adopción</text>
+    <text x="400" y="288" text-anchor="middle" font-family="system-ui" font-size="10" fill="#8888a0">Cada nivel construye sobre el anterior</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Patrones de transparencia en productos con IA</text></svg></div>
+<h4>Patrones de transparencia y confianza</h4><p>Etiquetas "Generado por IA", páginas de explicación del algoritmo, paneles de control de privacidad, y logs de actividad. Privacy by Design: minimizar datos, anonimizar, dar control granular, ofrecer "derecho al olvido". Confianza: explicaciones progresivas, control del usuario, feedback visible, consistencia.</p><div class="exercise-box"><div class="box-title">Ejercicio 9.2: Transparencia y privacidad</div><div class="box-desc">Diseña la experiencia de transparencia para un producto con IA.</div><ol><li>Diseña pantalla "Cómo funciona nuestra IA" en lenguaje simple</li><li>Crea panel de control de privacidad con ajustes granulares</li><li>Diseña 3 variaciones de etiquetas "Generado por IA"</li><li>Crea flujo de consentimiento para una feature nueva de IA</li><li>Presenta todo en Figma con anotaciones</li></ol></div>`},
+{id:"l9_3",title:"Regulación, frameworks éticos y futuro",dur:"1h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Frameworks como Responsible AI de Microsoft y los principios de IA de la EU te guían para diseñar productos éticamente sólidos. Crea tu propio checklist de ética en IA.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Conocer el panorama regulatorio (EU AI Act)</li><li>Aplicar frameworks éticos reconocidos</li><li>Anticipar tendencias regulatorias</li><li>Posicionarte como líder en diseño ético</li></ul></div><h4>EU AI Act</h4><p>Clasifica IA por riesgo: inaceptable (prohibidos), alto (regulados: contratación, crédito, salud), limitado (transparencia: chatbots deben declarar que son IA), y mínimo (sin regulación: filtros de spam).</p><h4>Tu rol</h4><p>Crea un "AI Ethics Checklist" para tu equipo, propone revisiones éticas como parte del proceso, y educa a stakeholders sobre riesgos y responsabilidades.</p><div class="exercise-box"><div class="box-title">Ejercicio 9.3: Framework ético</div><div class="box-desc">Crea un framework ético práctico para tu equipo.</div><ol><li>Clasifica 5 productos conocidos según nivel de riesgo EU AI Act</li><li>Crea checklist de 15-20 ítems (sesgo, transparencia, privacidad, accesibilidad)</li><li>Para cada ítem: pregunta, ejemplo de cumplimiento/incumplimiento, acción correctiva</li><li>Diseña el checklist como documento visual atractivo</li><li>Escribe propuesta de 1 página para presentar a tu equipo</li></ol></div>`}
+]},
+
+{id:"m10",title:"Estrategia, Portfolio y Capstone",hours:"5h",color:"#e0a816",icon:"🏆",
+lessons:[
+{id:"l10_1",title:"Estrategia de producto con IA",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Posiciona la IA como diferenciador estratégico: roadmaps de IA en producto, métricas de valor, y cómo presentar propuestas de integración IA a stakeholders.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Evaluar oportunidades de IA en productos</li><li>Aplicar el "AI Opportunity Canvas"</li><li>Comunicar el valor de la IA a stakeholders</li><li>Crear roadmaps con IA</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_m8o6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_37rr)" width="800" height="400" rx="12"/><rect x="120" y="40" width="560" height="300" rx="14" fill="none" stroke="#496BE3" stroke-width="2" opacity=".2"/>
+    <text x="400" y="72" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="bold" fill="#496BE3" opacity=".7">AI Opportunity Canvas</text>
+    <line x1="400" y1="85" x2="400" y2="330" stroke="#496BE3" stroke-width="1" opacity=".12"/>
+    <line x1="120" y1="200" x2="680" y2="200" stroke="#496BE3" stroke-width="1" opacity=".12"/>
+    <rect x="145" y="100" width="230" height="85" rx="8" fill="none" stroke="#496BE3" stroke-width="1" opacity=".2"/>
+    <text x="260" y="120" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#496BE3" opacity=".6">Problema del usuario</text>
+    <text x="260" y="140" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">¿Qué resuelve la IA que</text>
+    <text x="260" y="155" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">no se podía antes?</text>
+    <rect x="425" y="100" width="230" height="85" rx="8" fill="none" stroke="#886BFF" stroke-width="1" opacity=".2"/>
+    <text x="540" y="120" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#886BFF" opacity=".6">Datos disponibles</text>
+    <text x="540" y="140" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">¿Tenemos los datos</text>
+    <text x="540" y="155" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">necesarios?</text>
+    <rect x="145" y="215" width="230" height="85" rx="8" fill="none" stroke="#1e8a4e" stroke-width="1" opacity=".2"/>
+    <text x="260" y="235" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#1e8a4e" opacity=".6">Impacto en UX</text>
+    <text x="260" y="255" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">¿Cómo mejora la</text>
+    <text x="260" y="270" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">experiencia?</text>
+    <rect x="425" y="215" width="230" height="85" rx="8" fill="none" stroke="#e0a816" stroke-width="1" opacity=".2"/>
+    <text x="540" y="235" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#e0a816" opacity=".6">Riesgos éticos</text>
+    <text x="540" y="255" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">¿Qué puede</text>
+    <text x="540" y="270" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">salir mal?</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">AI Opportunity Canvas para evaluar oportunidades de IA en producto</text></svg></div>
+<h4>AI Opportunity Canvas</h4><table class="info-table"><thead><tr><th>Dimensión</th><th>Pregunta clave</th></tr></thead><tbody><tr><td>Problema del usuario</td><td>¿Qué resuelve la IA que no se podía antes?</td></tr><tr><td>Datos disponibles</td><td>¿Tenemos los datos necesarios?</td></tr><tr><td>Viabilidad técnica</td><td>¿La tecnología actual puede resolverlo?</td></tr><tr><td>Impacto en UX</td><td>¿Cómo mejora la experiencia?</td></tr><tr><td>Riesgos éticos</td><td>¿Qué puede salir mal?</td></tr><tr><td>Métricas de éxito</td><td>¿Cómo medimos si funciona?</td></tr></tbody></table><h4>Roadmapping</h4><p>Quick wins (APIs existentes: ChatGPT API, Google Vision) → Medium-term (datos propios, modelos personalizados) → Long-term (infraestructura ML dedicada).</p><div class="exercise-box"><div class="box-title">Ejercicio 10.1: AI Opportunity Canvas</div><div class="box-desc">Aplica el Canvas a un producto real.</div><ol><li>Elige un producto que conozcas bien</li><li>Identifica 5 oportunidades de IA</li><li>Completa las 6 dimensiones del Canvas para cada una</li><li>Prioriza con matriz impacto vs. esfuerzo</li><li>Crea roadmap visual de 3 meses</li><li>Prepara pitch de 5 minutos para stakeholder ficticio</li><li>Usa IA como VP de Producto escéptico para practicar</li></ol></div>`},
+{id:"l10_2",title:"Portfolio AI-first",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Tu portfolio debe mostrar proceso + resultado con IA. Documenta cómo usaste IA en cada fase, qué decisiones tomaste, y el impacto medible en el producto.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Estructurar un portfolio que demuestre expertise en IA</li><li>Documentar proyectos resaltando pensamiento estratégico</li><li>Crear case studies convincentes con resultados medibles</li><li>Posicionarte como especialista UX + IA</li></ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg_eokc" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.06"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.04"/></linearGradient></defs><rect fill="url(#bg_uwj1)" width="800" height="400" rx="12"/><rect x="100" y="50" width="600" height="55" rx="8" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".3"/>
+    <text x="400" y="83" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="bold" fill="#496BE3" opacity=".7">Estructura de Case Study para Portfolio IA</text>
+    <rect x="60" y="130" width="130" height="70" rx="8" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".35"/>
+    <text x="125" y="158" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#496BE3" opacity=".7">1. Contexto</text>
+    <text x="125" y="178" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Problema + por qué IA</text>
+    <text x="200" y="165" font-family="system-ui" font-size="12" fill="#8888a0" opacity=".4">→</text>
+    <rect x="210" y="130" width="130" height="70" rx="8" fill="none" stroke="#886BFF" stroke-width="1.5" opacity=".35"/>
+    <text x="275" y="158" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#886BFF" opacity=".7">2. Proceso</text>
+    <text x="275" y="178" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">IA en cada fase</text>
+    <text x="350" y="165" font-family="system-ui" font-size="12" fill="#8888a0" opacity=".4">→</text>
+    <rect x="360" y="130" width="130" height="70" rx="8" fill="none" stroke="#6c5ce7" stroke-width="1.5" opacity=".35"/>
+    <text x="425" y="158" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#6c5ce7" opacity=".7">3. Decisiones</text>
+    <text x="425" y="178" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Herramientas y por qué</text>
+    <text x="500" y="165" font-family="system-ui" font-size="12" fill="#8888a0" opacity=".4">→</text>
+    <rect x="510" y="130" width="130" height="70" rx="8" fill="none" stroke="#1e8a4e" stroke-width="1.5" opacity=".35"/>
+    <text x="575" y="158" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#1e8a4e" opacity=".7">4. Resultados</text>
+    <text x="575" y="178" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Métricas, before/after</text>
+    <text x="650" y="165" font-family="system-ui" font-size="12" fill="#8888a0" opacity=".4">→</text>
+    <rect x="660" y="130" width="100" height="70" rx="8" fill="none" stroke="#e0a816" stroke-width="1.5" opacity=".35"/>
+    <text x="710" y="158" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="bold" fill="#e0a816" opacity=".7">5. Reflexión</text>
+    <text x="710" y="178" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8888a0">Aprendizajes</text>
+    <rect x="150" y="240" width="500" height="70" rx="10" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".2"/>
+    <text x="400" y="268" text-anchor="middle" font-family="system-ui" font-size="10" fill="#496BE3" opacity=".6">💡 Mostrar pensamiento crítico + proceso &gt; pantallas bonitas</text>
+    <text x="400" y="290" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8888a0">Los reclutadores buscan cómo pensás, no solo qué diseñás</text><text x="400" y="378" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Estructura de portfolio AI-first</text></svg></div>
+<h4>Qué buscan los reclutadores</h4><p>Evidencia de que usas IA en tu proceso, pensamiento crítico sobre cuándo y cómo usar IA, comprensión de limitaciones, capacidad de trabajar con equipos de ML, y resultados medibles.</p><h4>Estructura de case study</h4><p>Contexto (problema + por qué IA) → Proceso (cómo integraste IA en cada fase) → Decisiones (qué herramientas y por qué) → Resultados (métricas, before/after) → Reflexiones (qué funcionó, qué harías diferente).</p><div class="tip-box"><div class="box-title">Tip profesional</div><p>3-4 case studies profundos son más valiosos que 10 superficiales. Asegúrate de que al menos 2 muestren explícitamente cómo integraste IA en tu proceso.</p></div><div class="case-study"><div class="case-label">Caso real: IBM</div>
+<div class="case-company">IBM Design — portfolios de diseñadores que integran IA</div>
+<p>El equipo de IBM Design publicó guías sobre cómo documentar proyectos de IA en portfolios de diseño. Su recomendación principal: no mostrar solo el output visual, sino documentar las decisiones de diseño frente a la incertidumbre de la IA. ¿Qué pasa cuando el modelo se equivoca? ¿Cómo diseñaste para el error?</p>
+<p>Los diseñadores senior de IBM que evalúan portfolios buscan: evidencia de pensamiento sistémico (no solo pantallas bonitas), cómo se manejó la transparencia con el usuario, y la capacidad de articular trade-offs entre automatización y control humano. Un buen case study de IA muestra el proceso completo: desde la exploración ética hasta el testing con usuarios reales.</p>
+<div class="case-takeaway">Lección para UX: tu portfolio de IA debe mostrar pensamiento crítico y proceso, no solo interfaces pulidas — eso es lo que te diferencia.</div></div>
+<div class="exercise-box"><div class="box-title">Ejercicio 10.2: Case study para portfolio</div><div class="box-desc">Crea un case study completo demostrando expertise en IA.</div><ol><li>Elige el proyecto más completo del programa</li><li>Estructura: Contexto → Proceso → Decisiones → Resultados → Reflexiones</li><li>Documenta explícitamente cómo usaste IA en cada fase</li><li>Incluye métricas: tiempo ahorrado, variaciones exploradas, mejoras</li><li>Usa IA para revisar tu narrativa</li><li>Diseña en formato web/portfolio</li><li>Pide feedback a 2 personas</li></ol></div>`},
+{id:"l10_3",title:"Proyecto Capstone: Producto AI-native",dur:"2h+",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>El proyecto capstone integra todo: research con IA, ideación asistida, UI generativa, prototipo funcional y documentación profesional. Tu obra maestra para el portfolio.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#496BE3;stop-opacity:.12"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.1"/></linearGradient></defs><rect fill="url(#g10)" width="800" height="450" rx="12"/><rect x="250" y="100" width="300" height="200" rx="16" fill="none" stroke="#496BE3" stroke-width="2" opacity=".4"/><text x="400" y="170" text-anchor="middle" font-family="system-ui" font-size="36" fill="#496BE3" opacity=".4">🏆</text><text x="400" y="220" text-anchor="middle" font-family="system-ui" font-size="16" font-weight="bold" fill="#886BFF" opacity=".7">Proyecto Capstone</text><text x="400" y="250" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Tu obra maestra profesional</text><text x="400" y="380" text-anchor="middle" font-family="system-ui" font-size="13" fill="#8888a0">Integración de todas las competencias IA + UX/UI</text></svg></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul><li>Integrar todos los conocimientos del programa</li><li>Demostrar competencia en research, diseño, prototipado y documentación con IA</li><li>Crear una pieza de portfolio de alto impacto</li></ul></div><h4>Descripción del proyecto</h4><p>Vas a diseñar, desde cero, un producto digital donde la IA sea fundamental para la propuesta de valor. No se trata de agregar IA a algo existente, sino de pensar en un producto donde la IA sea central.</p><h4>Requisitos</h4><table class="info-table"><thead><tr><th>Área</th><th>Entregable</th></tr></thead><tbody><tr><td>Research</td><td>Resumen con insights y personas (asistidos por IA)</td></tr><tr><td>Estrategia</td><td>AI Opportunity Canvas + priorización</td></tr><tr><td>Diseño UI</td><td>Mínimo 8 pantallas en alta fidelidad</td></tr><tr><td>Design System</td><td>Mini system con 5+ componentes documentados</td></tr><tr><td>Accesibilidad</td><td>Auditoría completa + correcciones</td></tr><tr><td>Ética</td><td>AI Ethics Checklist completado</td></tr><tr><td>Prototipo</td><td>Prototipo interactivo en Figma</td></tr><tr><td>Case Study</td><td>Documentación formato portfolio</td></tr></tbody></table><h4>Ideas de proyecto</h4><p>• App de salud mental que adapta ejercicios al estado emocional del usuario<br>• Plataforma de educación que personaliza el camino de aprendizaje<br>• Herramienta de productividad para freelancers con IA predictiva<br>• App de cocina con recetas personalizadas basadas en ingredientes disponibles<br>• Plataforma de moda sostenible con IA de visión</p><h4>Evaluación</h4><table class="info-table"><thead><tr><th>Criterio</th><th>Peso</th></tr></thead><tbody><tr><td>Integración de IA en el proceso</td><td>25%</td></tr><tr><td>Calidad del diseño</td><td>25%</td></tr><tr><td>Pensamiento crítico</td><td>20%</td></tr><tr><td>Documentación</td><td>15%</td></tr><tr><td>Accesibilidad e inclusión</td><td>15%</td></tr></tbody></table><div class="tip-box"><div class="box-title">Mensaje final</div><p>Felicitaciones por completar este programa. La IA es tu aliada, no tu reemplazo. Tu empatía, tu pensamiento crítico, tu sensibilidad estética y tu comprensión profunda de las personas son exactamente lo que la IA no puede replicar. Combiná esas habilidades con el poder de la IA, y vas a ser imparable. 🚀</p></div>`}
+]}
+];
+
+// Insert new tools module after m2
+MODULES.splice(2, 0, {id:"m_tools",title:"Caja de Herramientas IA para UXers",hours:"6h",color:"#496BE3",icon:"🧰",
+lessons:[
+{id:"lt_1",title:"Herramientas IA para UX Writing y Contenido",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>ChatGPT y Claude lideran para UX writing, microcopy y content strategy. Jasper y Writer son alternativas especializadas en brand voice. Para traducciones, DeepL supera ampliamente a Google Translate.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Dominar las herramientas IA más efectivas para UX writing</li>
+<li>Saber cuándo usar cada herramienta según el tipo de contenido</li>
+<li>Evaluar herramientas gratuitas vs. de pago según tu contexto</li>
+</ul></div>
+
+<h4>Herramientas para UX Writing y microcopy</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Generación de UX copy, variaciones de microcopy, tone of voice, A/B testing de textos</td><td>Gratis (GPT-3.5) / $20/mes (GPT-4)</td></tr>
+<tr><td><strong><a href="https://claude.ai" target="_blank" class="tool-link">Claude</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Copy largo y matizado, análisis de tono, consistencia narrativa, documentación UX</td><td>Gratis / $20/mes (Pro)</td></tr>
+<tr><td><strong><a href="https://jasper.ai" target="_blank" class="tool-link">Jasper</a></strong> <span class="pill pill-paid">De pago</span></td><td>Brand voice consistency, templates de marketing, copy para landing pages</td><td>Desde $49/mes</td></tr>
+<tr><td><strong><a href="https://writer.com" target="_blank" class="tool-link">Writer</a></strong> <span class="pill pill-paid">De pago</span></td><td>Style guides empresariales, consistencia de marca, tone checker</td><td>Desde $18/mes</td></tr>
+<tr><td><strong><a href="https://deepl.com" target="_blank" class="tool-link">DeepL</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Traducción de alta calidad para localización UX</td><td>Gratis / $9/mes (Pro)</td></tr>
+<tr><td><strong><a href="https://hemingwayapp.com" target="_blank" class="tool-link">Hemingway Editor</a></strong> <span class="pill pill-free">Gratis</span></td><td>Simplificación de textos, legibilidad, claridad</td><td>Gratis (web)</td></tr>
+</tbody></table>
+
+<h4>¿Cuándo usar cuál?</h4>
+<p><strong>Para microcopy de botones, tooltips, empty states:</strong> ChatGPT o Claude con un prompt CRAFT específico. Pedí 10 variaciones y elegí la mejor. <strong>Para onboarding flows completos:</strong> Claude es excelente porque mantiene coherencia en textos largos. <strong>Para mantener brand voice en equipos grandes:</strong> Writer o Jasper permiten configurar guías de estilo que la IA respeta. <strong>Para localización:</strong> DeepL + revisión humana supera a cualquier alternativa actual.</p>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>Nunca publiques UX copy generado por IA sin revisión humana. La IA genera texto gramaticalmente correcto pero puede fallar en tono, contexto cultural o sensibilidad. Tu criterio editorial es irremplazable.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Booking.com</div>
+<div class="case-company">Testing de microcopy a escala con IA</div>
+<p>Booking.com es famosa por su cultura de A/B testing. Su equipo de UX writing genera cientos de variaciones de copy con IA para testear en sus más de 200 millones de usuarios. Un cambio de "Reserve ahora" a "Asegure su lugar" aumentó conversiones un 3.2% en ciertos mercados. Usan LLMs para generar variaciones culturalmente adaptadas por país.</p>
+<div class="case-takeaway">Lección para UX: la IA no reemplaza el testing — lo potencia generando más variaciones para testear en menos tiempo.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio: UX Writing con IA</div>
+<div class="box-desc">Genera y evalúa UX copy profesional con diferentes herramientas.</div>
+<ol>
+<li>Elige un flujo de onboarding (real o ficticio)</li>
+<li>Genera el copy completo con ChatGPT usando CRAFT</li>
+<li>Genera el mismo copy con Claude y compara tono y calidad</li>
+<li>Crea 5 variaciones de CTA para la acción principal</li>
+<li>Pasa todos los textos por Hemingway Editor y simplifica</li>
+<li>Documenta qué herramienta funcionó mejor para cada tipo de texto</li>
+</ol></div>`},
+
+{id:"lt_2",title:"Herramientas IA para Diseño Visual e Ilustración",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Midjourney domina en calidad estética, DALL-E en facilidad de uso, Adobe Firefly en licencia comercial segura. Para UI, Galileo AI y Figma AI son las más prácticas. Para iconos, usa Magician o genera con Midjourney.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Elegir la herramienta correcta según el tipo de asset visual</li>
+<li>Generar ilustraciones, iconos y UI de calidad profesional</li>
+<li>Entender las implicaciones de licencia de cada herramienta</li>
+</ul></div>
+
+<h4>Generación de imágenes e ilustraciones</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://midjourney.com" target="_blank" class="tool-link">Midjourney</a></strong> <span class="pill pill-paid">De pago</span></td><td>Ilustraciones estilizadas, moodboards, arte conceptual, fotografía editorial</td><td>Desde $10/mes</td></tr>
+<tr><td><strong><a href="https://openai.com/dall-e-3" target="_blank" class="tool-link">DALL-E 3</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Imágenes rápidas en chat, iteración conversacional, conceptos iniciales</td><td>Incluido en ChatGPT Plus ($20/mes)</td></tr>
+<tr><td><strong><a href="https://firefly.adobe.com" target="_blank" class="tool-link">Adobe Firefly</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Assets con licencia comercial segura, integración con Photoshop/Illustrator</td><td>Incluido en Adobe CC / Gratis limitado</td></tr>
+<tr><td><strong><a href="https://stability.ai" target="_blank" class="tool-link">Stable Diffusion</a></strong> <span class="pill pill-free">Gratis</span></td><td>Control total, modelos custom, uso local sin costo</td><td>Gratis (open source, requiere GPU)</td></tr>
+<tr><td><strong><a href="https://leonardo.ai" target="_blank" class="tool-link">Leonardo AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Game art, texturas, assets estilizados</td><td>Gratis (150 tokens/día) / $12/mes</td></tr>
+<tr><td><strong><a href="https://ideogram.ai" target="_blank" class="tool-link">Ideogram</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Texto dentro de imágenes, tipografía creativa, logos</td><td>Gratis limitado / $8/mes</td></tr>
+</tbody></table>
+
+<h4>Generación de UI y componentes</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://galileo.ai" target="_blank" class="tool-link">Galileo AI</a></strong> <span class="pill pill-paid">De pago</span></td><td>Genera interfaces completas desde descripción de texto</td><td>Desde $19/mes</td></tr>
+<tr><td><strong><a href="https://figma.com" target="_blank" class="tool-link">Figma AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Renombrar capas, auto-layout sugerido, generación de contenido</td><td>Incluido en Figma</td></tr>
+<tr><td><strong><a href="https://uizard.io" target="_blank" class="tool-link">Uizard</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Wireframes desde bocetos, generación rápida de pantallas</td><td>Gratis (3 proyectos) / $12/mes</td></tr>
+<tr><td><strong><a href="https://relume.io" target="_blank" class="tool-link">Relume</a></strong> <span class="pill pill-paid">De pago</span></td><td>Sitemaps y wireframes web automatizados</td><td>Desde $38/mes</td></tr>
+<tr><td><strong><a href="https://magician.design" target="_blank" class="tool-link">Magician (Figma)</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Iconos generados por IA, copy e imágenes dentro de Figma</td><td>Gratis limitado / $5/mes</td></tr>
+<tr><td><strong><a href="https://musho.ai" target="_blank" class="tool-link">Musho (Figma)</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Landing pages completas generadas en Figma</td><td>Gratis limitado</td></tr>
+</tbody></table>
+
+<h4>Guía rápida: ¿qué herramienta para qué?</h4>
+<p><strong>Moodboard / dirección artística:</strong> Midjourney (máxima calidad estética). <strong>Hero images para landing:</strong> Midjourney o Firefly (si necesitás licencia comercial segura). <strong>Iconos custom:</strong> Magician en Figma o Midjourney con --style raw. <strong>Wireframes rápidos:</strong> Uizard o Relume. <strong>UI completa desde cero:</strong> Galileo AI + ajuste manual en Figma. <strong>Variaciones de un diseño existente:</strong> Figma AI + plugins.</p>
+
+<div class="tip-box"><div class="box-title">Sobre licencias</div><p>Midjourney y DALL-E permiten uso comercial de las imágenes generadas con plan de pago. Adobe Firefly es la opción más segura legalmente porque fue entrenada exclusivamente con Adobe Stock y contenido licenciado. Para proyectos de clientes, verificá siempre los términos de servicio actualizados.</p></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio: Battle de herramientas visuales</div>
+<div class="box-desc">Compara herramientas generativas con la misma tarea.</div>
+<ol>
+<li>Define un brief visual: "Hero image para app de meditación, estilo minimalista, paleta cálida"</li>
+<li>Genera la imagen en Midjourney, DALL-E y Firefly con el mismo prompt</li>
+<li>Genera un set de 5 iconos para la misma app con Magician</li>
+<li>Crea un wireframe de la home con Uizard o Galileo AI</li>
+<li>Evalúa cada resultado: calidad, velocidad, editabilidad, costo</li>
+<li>Crea una tabla comparativa visual en Figma con tus hallazgos</li>
+</ol></div>`},
+
+{id:"lt_3",title:"Herramientas IA para Research y Testing",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Dovetail y Notably lideran en análisis cualitativo. Maze y Hotjar en testing automatizado. Para encuestas y síntesis rápida, ChatGPT/Claude son sorprendentemente efectivos si les das los datos correctos.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Conocer herramientas IA específicas para cada fase de research</li>
+<li>Automatizar análisis cualitativo y cuantitativo</li>
+<li>Optimizar testing con IA sin perder rigor metodológico</li>
+</ul></div>
+
+<h4>Research cualitativo</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://dovetail.com" target="_blank" class="tool-link">Dovetail</a></strong> <span class="pill pill-paid">De pago</span></td><td>Transcripción, codificación automática, mapas de afinidad, insights</td><td>Desde $29/mes</td></tr>
+<tr><td><strong><a href="https://notably.ai" target="_blank" class="tool-link">Notably</a></strong> <span class="pill pill-paid">De pago</span></td><td>Síntesis de research, clustering de hallazgos, generación de reportes</td><td>Desde $25/mes</td></tr>
+<tr><td><strong><a href="https://otter.ai" target="_blank" class="tool-link">Otter.ai</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Transcripción en tiempo real, resúmenes automáticos de reuniones</td><td>Gratis (600 min/mes) / $17/mes</td></tr>
+<tr><td><strong><a href="https://grain.com" target="_blank" class="tool-link">Grain</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Clips de entrevistas, highlights automáticos, resúmenes</td><td>Gratis limitado / $19/mes</td></tr>
+<tr><td><strong><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT / Claude</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Análisis de transcripciones, generación de guías de entrevista, síntesis</td><td>Gratis / $20/mes</td></tr>
+</tbody></table>
+
+<h4>Testing y analytics</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://maze.co" target="_blank" class="tool-link">Maze</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Usability testing remoto, task analysis, heatmaps de prototipo</td><td>Gratis (1 proyecto) / $99/mes</td></tr>
+<tr><td><strong><a href="https://hotjar.com" target="_blank" class="tool-link">Hotjar</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Heatmaps, session recordings, encuestas in-app con análisis IA</td><td>Gratis (35 sesiones/día) / $39/mes</td></tr>
+<tr><td><strong><a href="https://usertesting.com" target="_blank" class="tool-link">UserTesting</a></strong> <span class="pill pill-paid">De pago</span></td><td>Panel de testers reales, análisis de video con IA, insights automáticos</td><td>Desde $49/test (pay-per-test)</td></tr>
+<tr><td><strong><a href="https://lookback.io" target="_blank" class="tool-link">Lookback</a></strong> <span class="pill pill-paid">De pago</span></td><td>Entrevistas remotas con notas en tiempo real, transcripción automática</td><td>Desde $99/mes</td></tr>
+<tr><td><strong><a href="https://attentioninsight.com" target="_blank" class="tool-link">Attention Insight</a></strong> <span class="pill pill-paid">De pago</span></td><td>Predicción de atención visual con IA (sin usuarios reales)</td><td>Desde $58/mes</td></tr>
+</tbody></table>
+
+<h4>Flujo recomendado de research con IA</h4>
+<p><strong>1. Planificación:</strong> Genera guía de entrevista con Claude/ChatGPT. <strong>2. Ejecución:</strong> Graba con Otter.ai o Grain para transcripción automática. <strong>3. Análisis:</strong> Sube transcripciones a Dovetail para codificación o analiza con Claude para patrones. <strong>4. Síntesis:</strong> Genera mapa de afinidad, personas y journey maps asistidos por IA. <strong>5. Validación:</strong> Testea prototipos con Maze, analiza con Hotjar.</p>
+
+<div class="case-study"><div class="case-label">Caso real: Atlassian</div>
+<div class="case-company">Research Ops con IA — cómo Atlassian escala investigación UX</div>
+<p>El equipo de Research de Atlassian (Jira, Confluence, Trello) procesa más de 500 entrevistas de usuario por trimestre. Implementaron un pipeline automatizado: transcripción con Otter.ai → análisis en Dovetail → síntesis asistida con LLMs. Redujeron el tiempo de síntesis de 2 semanas a 3 días sin perder profundidad de insights.</p>
+<div class="case-takeaway">Lección para UX: automatizar la parte mecánica del research (transcripción, codificación) te libera tiempo para la parte humana — interpretar, empatizar, decidir.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio: Pipeline de research con IA</div>
+<div class="box-desc">Configura un flujo de investigación asistido por IA.</div>
+<ol>
+<li>Genera una guía de entrevista con Claude para un producto que estés diseñando</li>
+<li>Graba una entrevista de prueba (puede ser con un colega) y transcribe con Otter.ai</li>
+<li>Analiza la transcripción con Claude: pide patrones, insights y citas clave</li>
+<li>Compara el análisis de IA con tu propia interpretación manual</li>
+<li>Prueba Maze con un prototipo de Figma y analiza los resultados</li>
+<li>Documenta tu pipeline recomendado con pros, contras y costos</li>
+</ol></div>`},
+
+{id:"lt_4",title:"Herramientas IA para Flujos, Prototipado y Handoff",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>v0 de Vercel genera componentes React desde prompts. Bolt.new crea apps completas. Para flujos y diagramas, FigJam AI y Whimsical AI son las mejores opciones. Locofy y Anima optimizan el design-to-code.</p></div>
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Acelerar la creación de flujos y diagramas con IA</li>
+<li>Generar prototipos funcionales con herramientas de IA</li>
+<li>Optimizar el handoff a desarrollo con IA</li>
+</ul></div>
+
+<h4>Flujos, diagramas y arquitectura de información</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://figma.com/figjam" target="_blank" class="tool-link">FigJam AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Brainstorming, diagramas de flujo, organización de ideas con IA</td><td>Incluido en Figma</td></tr>
+<tr><td><strong><a href="https://whimsical.com" target="_blank" class="tool-link">Whimsical AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Flowcharts, mind maps, wireframes generados con texto</td><td>Gratis (límite) / $10/mes</td></tr>
+<tr><td><strong><a href="https://miro.com" target="_blank" class="tool-link">Miro AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Brainstorming colaborativo, mapas mentales, clustering de ideas</td><td>Gratis limitado / $8/mes</td></tr>
+<tr><td><strong><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT / Claude</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Generar lógica de flujos en texto, validar decisiones de arquitectura</td><td>Gratis / $20/mes</td></tr>
+</tbody></table>
+
+<h4>Prototipado y código con IA</h4>
+<table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
+<tr><td><strong><a href="https://v0.dev" target="_blank" class="tool-link">v0 (Vercel)</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Componentes React/Next.js desde prompts o imágenes</td><td>Gratis limitado / $20/mes</td></tr>
+<tr><td><strong><a href="https://bolt.new" target="_blank" class="tool-link">Bolt.new</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Apps web completas desde descripción, deploy instantáneo</td><td>Gratis limitado / $20/mes</td></tr>
+<tr><td><strong><a href="https://cursor.com" target="_blank" class="tool-link">Cursor</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Editor de código con IA, ideal para diseñadores que tocan código</td><td>Gratis limitado / $20/mes</td></tr>
+<tr><td><strong><a href="https://locofy.ai" target="_blank" class="tool-link">Locofy</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Convierte Figma a React/HTML production-ready</td><td>Gratis limitado / $25/mes</td></tr>
+<tr><td><strong><a href="https://animaapp.com" target="_blank" class="tool-link">Anima</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Figma a código con interacciones, responsive automático</td><td>Gratis limitado / $39/mes</td></tr>
+</tbody></table>
+
+<h4>¿Cuándo usar cuál?</h4>
+<p><strong>Para explorar flujos rápidamente:</strong> FigJam AI o Whimsical — genera un primer borrador con texto y refina visualmente. <strong>Para prototipos interactivos rápidos:</strong> v0 genera código funcional que podés mostrar al equipo en minutos. <strong>Para handoff profesional:</strong> Locofy o Anima exportan tu diseño de Figma con código limpio. <strong>Para una demo funcional:</strong> Bolt.new crea una app real desplegable.</p>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>v0 y Bolt.new son herramientas de prototipado, no de producción. El código que generan es excelente para demos y validación, pero necesita revisión de un desarrollador antes de ir a producción. Comunica esto claramente a tu equipo.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Vercel</div>
+<div class="case-company">v0 — cómo Vercel democratizó el design-to-code con IA</div>
+<p>Vercel lanzó v0 en 2023 y revolucionó el flujo de trabajo de diseñadores y desarrolladores. La herramienta genera componentes React con Tailwind CSS desde un simple prompt o una imagen. Equipos de diseño en startups como Linear y Resend reportaron que redujeron el tiempo de prototipado en un 60%, pasando de "diseñar en Figma → esperar a desarrollo" a "generar prototipo funcional → validar con usuarios → iterar".</p>
+<div class="case-takeaway">Lección para UX: las herramientas de IA para code no te convierten en developer — te dan superpoderes para validar ideas más rápido y comunicarte mejor con tu equipo de desarrollo.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio: Del flujo al prototipo con IA</div>
+<div class="box-desc">Usa IA en todo el camino: de la idea al prototipo funcional.</div>
+<ol>
+<li>Describe una feature de producto a FigJam AI y genera el diagrama de flujo</li>
+<li>Refina el flujo y genera wireframes con Whimsical AI</li>
+<li>Toma una pantalla del wireframe y genera UI en Figma con Galileo AI o Musho</li>
+<li>Exporta una pantalla a v0 y genera el componente funcional</li>
+<li>Compara: Locofy vs. v0 para la misma pantalla</li>
+<li>Documenta el pipeline completo con tiempos y calidad de cada paso</li>
+</ol></div>`}
+]});
+
+const MODULE_TLDRS = {"m1":"En este módulo aprenderás qué es la IA, sus tipos (ML, Deep Learning, LLMs, IA Generativa), el ecosistema completo de herramientas para diseñadores, y cómo la IA está transformando cada fase del proceso de diseño (Double Diamond). Saldrás con tu propio AI Design Stack configurado.","m2":"Dominarás el arte de comunicarte con modelos de IA usando el framework CRAFT (Contexto, Rol, Acción, Formato, Tono), técnicas avanzadas de prompting (few-shot, chain-of-thought, iteración), y construirás una biblioteca de prompts específicos para UX/UI que usarás en tu día a día.","m3":"Explorarás herramientas de IA generativa (Midjourney, DALL-E, Firefly, Galileo AI) para crear UI, ilustraciones, iconografía y sistemas visuales completos. Aprenderás a generar assets profesionales, crear variaciones de diseño en minutos, e integrar IA en tu flujo visual.","m4":"La IA revoluciona la investigación de usuarios: aprenderás a analizar entrevistas con LLMs, crear personas basadas en datos reales, sintetizar hallazgos cualitativos automáticamente, y usar herramientas como Dovetail y Maze para research asistido por IA.","m5":"Diseñarás interfaces conversacionales efectivas (chatbots, asistentes de voz), comprenderás los principios de diseño conversacional, y aprenderás a crear flujos que integran IA de forma natural en la experiencia del usuario.","m6":"Aprenderás a diseñar experiencias que se adaptan al usuario en tiempo real: sistemas de recomendación, interfaces adaptativas, contenido personalizado. Entenderás los modelos de datos detrás de la personalización y sus implicaciones éticas.","m7":"Descubrirás cómo la IA puede hacer productos más accesibles e inclusivos: desde generación automática de alt-text hasta interfaces adaptativas para diversas capacidades. Combinarás WCAG con IA para crear diseños universales.","m8":"Integrarás la IA en tu flujo de trabajo diario en Figma: plugins de IA, automatización de tareas repetitivas, generación de design tokens, documentación automática, y optimización del handoff design-to-code.","m9":"Abordarás los desafíos éticos de diseñar con IA: sesgo algorítmico, transparencia, privacidad, impacto social. Aprenderás frameworks para evaluar y mitigar riesgos éticos en productos que usan IA.","m10":"Culminarás el programa con estrategia de producto con IA, construcción de tu portfolio profesional mostrando proyectos IA, y un proyecto capstone integrador que demuestre todas las competencias adquiridas."};
+MODULE_TLDRS["m_tools"] = "Tu guía completa de herramientas IA organizadas por función: writing, visual, research, flujos y prototipado. Con precios actualizados y recomendaciones de cuándo usar cada una según tu necesidad específica.";
+
+// ============ STATE ============
+let completedLessons = JSON.parse(localStorage.getItem('ai_course_progress')||'[]');
+let activeModule = null;
+let activeLesson = null;
+let sidebarOpen = true;
+
+// ============ COVER ============
+function renderCover(){
+const grid = document.getElementById('cover-grid');
+grid.innerHTML = MODULES.map((m,i)=>`
+<div class="cover-mod" style="border-top:3px solid ${m.color}">
+<span class="cm-icon">${m.icon}</span>
+<div class="cm-num">${String(i+1).padStart(2,'0')}</div>
+<div class="cm-text">${m.title}</div>
+<div class="cm-hours"><span>⏱ ${m.hours}</span><span>${m.lessons.length} lecciones</span></div>
+</div>`).join('');
+}
+
+function enterCourse(){
+document.getElementById('cover-page').style.display='none';
+document.getElementById('app-view').classList.add('active');
+showLesson(MODULES[0].id, MODULES[0].lessons[0].id);
+}
+
+function goToCover(){
+document.getElementById('app-view').classList.remove('active');
+document.getElementById('cover-page').style.display='';
+activeModule=null; activeLesson=null;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ============ SIDEBAR ============
+function toggleSidebar(){
+sidebarOpen = !sidebarOpen;
+const sb = document.getElementById('sidebar');
+const mn = document.getElementById('main-content');
+const tg = document.getElementById('sidebar-toggle');
+const arrow = tg.querySelector('.toggle-arrow');
+if(sidebarOpen){
+sb.classList.remove('collapsed');
+mn.classList.remove('expanded');
+tg.classList.add('shifted');
+arrow.textContent='◀';
+} else {
+sb.classList.add('collapsed');
+mn.classList.add('expanded');
+tg.classList.remove('shifted');
+arrow.textContent='▶';
+}
+}
+
+function renderSidebar(){
+const nav = document.getElementById('sidebar-nav');
+nav.innerHTML = '';
+MODULES.forEach((m,mi)=>{
+const mLessons = m.lessons.map(l=>l.id);
+const allDone = mLessons.every(id=>completedLessons.includes(id));
+const someActive = activeModule===m.id;
+nav.innerHTML += `
+<div class="nav-module ${someActive?'active':''} ${allDone?'completed':''}" onclick="toggleModuleNav('${m.id}')" id="nav-${m.id}">
+<span class="mod-num">${allDone?'✓':(mi+1)}</span>
+<span style="flex:1;font-size:.82rem">${m.title}</span>
+</div>
+<div class="nav-lessons ${someActive?'open':''}" id="navl-${m.id}">
+${m.lessons.map(l=>`
+<div class="nav-lesson ${activeLesson===l.id?'active':''} ${completedLessons.includes(l.id)?'done':''}" onclick="showLesson('${m.id}','${l.id}')">
+<span class="check">${completedLessons.includes(l.id)?'✓':''}</span>
+<span>${l.title}</span>
+</div>`).join('')}
+</div>`;
+});
+updateProgress();
+}
+
+function toggleModuleNav(mid){
+if(activeModule===mid){showModule(mid);return;}
+document.querySelectorAll('.nav-lessons').forEach(el=>el.classList.remove('open'));
+document.querySelectorAll('.nav-module').forEach(el=>el.classList.remove('active'));
+const navl=document.getElementById('navl-'+mid);
+const navm=document.getElementById('nav-'+mid);
+if(navl)navl.classList.add('open');
+if(navm)navm.classList.add('active');
+showModule(mid);
+}
+
+function updateProgress(){
+const total = MODULES.reduce((s,m)=>s+m.lessons.length,0);
+const done = completedLessons.length;
+const pct = Math.round((done/total)*100);
+document.getElementById('progress-pct').textContent = pct+'%';
+document.getElementById('progress-fill').style.width = pct+'%';
+}
+
+// ============ RENDER CONTENT ============
+function showModule(mid){
+activeModule=mid;
+const m=MODULES.find(x=>x.id===mid);
+if(!m)return;
+if(!activeLesson||!m.lessons.find(l=>l.id===activeLesson)){
+showLesson(mid,m.lessons[0].id);
+}
+}
+
+function showLesson(mid,lid){
+activeModule=mid; activeLesson=lid;
+const m=MODULES.find(x=>x.id===mid);
+const mi=MODULES.indexOf(m);
+const l=m.lessons.find(x=>x.id===lid);
+const li=m.lessons.indexOf(l);
+document.querySelectorAll('.module-section').forEach(s=>{s.classList.remove('visible');s.style.display='none'});
+
+let existing=document.getElementById('section-'+lid);
+if(!existing){
+existing=document.createElement('div');
+existing.id='section-'+lid;
+existing.className='module-section';
+existing.innerHTML=`
+<div class="module-header">
+<div class="module-tag" style="background:${m.color}18;color:${m.color}">Módulo ${mi+1} · Lección ${li+1}</div>
+<h2>${l.title}</h2>
+<p style="display:flex;align-items:center;gap:16px;margin-top:8px">
+<span style="display:flex;align-items:center;gap:4px;color:var(--text3);font-size:.88rem">⏱ ${l.dur}</span>
+</p>
+</div>
+${MODULE_TLDRS[m.id]?'<div class="module-tldr"><div class="tldr-label">Resumen del módulo</div><p>'+MODULE_TLDRS[m.id]+'</p></div>':''}
+<div class="lesson"><div class="lesson-content">${l.content}</div></div>
+<div class="lesson-complete ${completedLessons.includes(lid)?'done':''}" onclick="toggleComplete('${lid}')" id="cbtn-${lid}">
+<div class="lc-check">${completedLessons.includes(lid)?'✓':''}</div>
+<div class="lc-text">${completedLessons.includes(lid)?'Lección completada':'Marcar lección como completada'}</div>
+</div>
+${getNavButtons(mid,lid)}`;
+document.getElementById('content-area').appendChild(existing);
+}
+existing.style.display='block';
+setTimeout(()=>existing.classList.add('visible'),10);
+renderSidebar();
+window.scrollTo({top:0,behavior:'smooth'});
+// Close sidebar on mobile
+if(window.innerWidth<=900){
+document.getElementById('sidebar').classList.remove('mobile-open');
+}
+}
+
+function getNavButtons(mid,lid){
+const m=MODULES.find(x=>x.id===mid);
+const mi=MODULES.indexOf(m);
+const li=m.lessons.indexOf(m.lessons.find(x=>x.id===lid));
+let prevBtn='<div></div>';
+let nextBtn='<div></div>';
+if(li>0){
+const prev=m.lessons[li-1];
+prevBtn=`<div class="nav-btn prev" onclick="showLesson('${mid}','${prev.id}')"><span class="nb-arrow">←</span><div><div class="nb-label">Anterior</div><div class="nb-title">${prev.title}</div></div></div>`;
+} else if(mi>0){
+const prevM=MODULES[mi-1];
+const prevL=prevM.lessons[prevM.lessons.length-1];
+prevBtn=`<div class="nav-btn prev" onclick="showLesson('${prevM.id}','${prevL.id}')"><span class="nb-arrow">←</span><div><div class="nb-label">Módulo anterior</div><div class="nb-title">${prevL.title}</div></div></div>`;
+}
+if(li<m.lessons.length-1){
+const next=m.lessons[li+1];
+nextBtn=`<div class="nav-btn next" onclick="showLesson('${mid}','${next.id}')"><span class="nb-arrow">→</span><div><div class="nb-label">Siguiente</div><div class="nb-title">${next.title}</div></div></div>`;
+} else if(mi<MODULES.length-1){
+const nextM=MODULES[mi+1];
+nextBtn=`<div class="nav-btn next" onclick="toggleModuleNav('${nextM.id}')"><span class="nb-arrow">→</span><div><div class="nb-label">Siguiente módulo</div><div class="nb-title">${nextM.title}</div></div></div>`;
+}
+return '<div class="lesson-nav">'+prevBtn+nextBtn+'</div>';
+}
+
+function toggleComplete(lid){
+if(completedLessons.includes(lid)){
+completedLessons=completedLessons.filter(x=>x!==lid);
+}else{
+completedLessons.push(lid);
+}
+localStorage.setItem('ai_course_progress',JSON.stringify(completedLessons));
+const bar=document.getElementById('cbtn-'+lid);
+if(bar){
+const isDone=completedLessons.includes(lid);
+bar.className='lesson-complete'+(isDone?' done':'');
+bar.querySelector('.lc-check').textContent=isDone?'✓':'';
+bar.querySelector('.lc-text').textContent=isDone?'Lección completada':'Marcar lección como completada';
+}
+renderSidebar();
+}
+
+// ============ MOBILE SIDEBAR ============
+document.getElementById('sidebar-toggle').addEventListener('click', function(){
+if(window.innerWidth<=900){
+document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+});
+
+// ============ INIT ============
+renderCover();
+renderSidebar();
+</script>
+</body>
+</html>
