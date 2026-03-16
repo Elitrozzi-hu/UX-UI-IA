@@ -138,7 +138,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .info-table td a.tool-link:hover{border-bottom-color:var(--accent);color:var(--accent2)}
 
 /* PILLS */
-.pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.3px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.pill{display:block;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.3px;margin-top:6px;width:fit-content;white-space:nowrap}
 .pill-free{background:rgba(30,138,78,.1);color:#1e8a4e}
 .pill-freemium{background:rgba(73,107,227,.1);color:#496BE3}
 .pill-paid{background:rgba(224,168,22,.1);color:#b8860b}
@@ -970,8 +970,8 @@ lessons:[
 <table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
 <tr><td><strong><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Generación de UX copy, variaciones de microcopy, tone of voice, A/B testing de textos</td><td>Gratis (GPT-3.5) / $20/mes (GPT-4)</td></tr>
 <tr><td><strong><a href="https://claude.ai" target="_blank" class="tool-link">Claude</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Copy largo y matizado, análisis de tono, consistencia narrativa, documentación UX</td><td>Gratis / $20/mes (Pro)</td></tr>
-<tr><td><strong><a href="https://jasper.ai" target="_blank" class="tool-link">Jasper</a></strong> <span class="pill pill-paid">De pago</span></td><td>Brand voice consistency, templates de marketing, copy para landing pages</td><td>Desde $49/mes</td></tr>
-<tr><td><strong><a href="https://writer.com" target="_blank" class="tool-link">Writer</a></strong> <span class="pill pill-paid">De pago</span></td><td>Style guides empresariales, consistencia de marca, tone checker</td><td>Desde $18/mes</td></tr>
+<tr><td><strong><a href="https://jasper.ai" target="_blank" class="tool-link">Jasper</a></strong> <span class="pill pill-paid">Paga</span></td><td>Brand voice consistency, templates de marketing, copy para landing pages</td><td>Desde $49/mes</td></tr>
+<tr><td><strong><a href="https://writer.com" target="_blank" class="tool-link">Writer</a></strong> <span class="pill pill-paid">Paga</span></td><td>Style guides empresariales, consistencia de marca, tone checker</td><td>Desde $18/mes</td></tr>
 <tr><td><strong><a href="https://deepl.com" target="_blank" class="tool-link">DeepL</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Traducción de alta calidad para localización UX</td><td>Gratis / $9/mes (Pro)</td></tr>
 <tr><td><strong><a href="https://hemingwayapp.com" target="_blank" class="tool-link">Hemingway Editor</a></strong> <span class="pill pill-free">Gratis</span></td><td>Simplificación de textos, legibilidad, claridad</td><td>Gratis (web)</td></tr>
 </tbody></table>
@@ -1007,7 +1007,7 @@ lessons:[
 
 <h4>Generación de imágenes e ilustraciones</h4>
 <table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
-<tr><td><strong><a href="https://midjourney.com" target="_blank" class="tool-link">Midjourney</a></strong> <span class="pill pill-paid">De pago</span></td><td>Ilustraciones estilizadas, moodboards, arte conceptual, fotografía editorial</td><td>Desde $10/mes</td></tr>
+<tr><td><strong><a href="https://midjourney.com" target="_blank" class="tool-link">Midjourney</a></strong> <span class="pill pill-paid">Paga</span></td><td>Ilustraciones estilizadas, moodboards, arte conceptual, fotografía editorial</td><td>Desde $10/mes</td></tr>
 <tr><td><strong><a href="https://openai.com/dall-e-3" target="_blank" class="tool-link">DALL-E 3</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Imágenes rápidas en chat, iteración conversacional, conceptos iniciales</td><td>Incluido en ChatGPT Plus ($20/mes)</td></tr>
 <tr><td><strong><a href="https://firefly.adobe.com" target="_blank" class="tool-link">Adobe Firefly</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Assets con licencia comercial segura, integración con Photoshop/Illustrator</td><td>Incluido en Adobe CC / Gratis limitado</td></tr>
 <tr><td><strong><a href="https://stability.ai" target="_blank" class="tool-link">Stable Diffusion</a></strong> <span class="pill pill-free">Gratis</span></td><td>Control total, modelos custom, uso local sin costo</td><td>Gratis (open source, requiere GPU)</td></tr>
@@ -1017,10 +1017,10 @@ lessons:[
 
 <h4>Generación de UI y componentes</h4>
 <table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
-<tr><td><strong><a href="https://galileo.ai" target="_blank" class="tool-link">Galileo AI</a></strong> <span class="pill pill-paid">De pago</span></td><td>Genera interfaces completas desde descripción de texto</td><td>Desde $19/mes</td></tr>
+<tr><td><strong><a href="https://galileo.ai" target="_blank" class="tool-link">Galileo AI</a></strong> <span class="pill pill-paid">Paga</span></td><td>Genera interfaces completas desde descripción de texto</td><td>Desde $19/mes</td></tr>
 <tr><td><strong><a href="https://figma.com" target="_blank" class="tool-link">Figma AI</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Renombrar capas, auto-layout sugerido, generación de contenido</td><td>Incluido en Figma</td></tr>
 <tr><td><strong><a href="https://uizard.io" target="_blank" class="tool-link">Uizard</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Wireframes desde bocetos, generación rápida de pantallas</td><td>Gratis (3 proyectos) / $12/mes</td></tr>
-<tr><td><strong><a href="https://relume.io" target="_blank" class="tool-link">Relume</a></strong> <span class="pill pill-paid">De pago</span></td><td>Sitemaps y wireframes web automatizados</td><td>Desde $38/mes</td></tr>
+<tr><td><strong><a href="https://relume.io" target="_blank" class="tool-link">Relume</a></strong> <span class="pill pill-paid">Paga</span></td><td>Sitemaps y wireframes web automatizados</td><td>Desde $38/mes</td></tr>
 <tr><td><strong><a href="https://magician.design" target="_blank" class="tool-link">Magician (Figma)</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Iconos generados por IA, copy e imágenes dentro de Figma</td><td>Gratis limitado / $5/mes</td></tr>
 <tr><td><strong><a href="https://musho.ai" target="_blank" class="tool-link">Musho (Figma)</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Landing pages completas generadas en Figma</td><td>Gratis limitado</td></tr>
 </tbody></table>
@@ -1051,8 +1051,8 @@ lessons:[
 
 <h4>Research cualitativo</h4>
 <table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
-<tr><td><strong><a href="https://dovetail.com" target="_blank" class="tool-link">Dovetail</a></strong> <span class="pill pill-paid">De pago</span></td><td>Transcripción, codificación automática, mapas de afinidad, insights</td><td>Desde $29/mes</td></tr>
-<tr><td><strong><a href="https://notably.ai" target="_blank" class="tool-link">Notably</a></strong> <span class="pill pill-paid">De pago</span></td><td>Síntesis de research, clustering de hallazgos, generación de reportes</td><td>Desde $25/mes</td></tr>
+<tr><td><strong><a href="https://dovetail.com" target="_blank" class="tool-link">Dovetail</a></strong> <span class="pill pill-paid">Paga</span></td><td>Transcripción, codificación automática, mapas de afinidad, insights</td><td>Desde $29/mes</td></tr>
+<tr><td><strong><a href="https://notably.ai" target="_blank" class="tool-link">Notably</a></strong> <span class="pill pill-paid">Paga</span></td><td>Síntesis de research, clustering de hallazgos, generación de reportes</td><td>Desde $25/mes</td></tr>
 <tr><td><strong><a href="https://otter.ai" target="_blank" class="tool-link">Otter.ai</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Transcripción en tiempo real, resúmenes automáticos de reuniones</td><td>Gratis (600 min/mes) / $17/mes</td></tr>
 <tr><td><strong><a href="https://grain.com" target="_blank" class="tool-link">Grain</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Clips de entrevistas, highlights automáticos, resúmenes</td><td>Gratis limitado / $19/mes</td></tr>
 <tr><td><strong><a href="https://chat.openai.com" target="_blank" class="tool-link">ChatGPT / Claude</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Análisis de transcripciones, generación de guías de entrevista, síntesis</td><td>Gratis / $20/mes</td></tr>
@@ -1062,9 +1062,9 @@ lessons:[
 <table class="info-table"><thead><tr><th>Herramienta</th><th>Mejor para</th><th>Precio</th></tr></thead><tbody>
 <tr><td><strong><a href="https://maze.co" target="_blank" class="tool-link">Maze</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Usability testing remoto, task analysis, heatmaps de prototipo</td><td>Gratis (1 proyecto) / $99/mes</td></tr>
 <tr><td><strong><a href="https://hotjar.com" target="_blank" class="tool-link">Hotjar</a></strong> <span class="pill pill-freemium">Freemium</span></td><td>Heatmaps, session recordings, encuestas in-app con análisis IA</td><td>Gratis (35 sesiones/día) / $39/mes</td></tr>
-<tr><td><strong><a href="https://usertesting.com" target="_blank" class="tool-link">UserTesting</a></strong> <span class="pill pill-paid">De pago</span></td><td>Panel de testers reales, análisis de video con IA, insights automáticos</td><td>Desde $49/test (pay-per-test)</td></tr>
-<tr><td><strong><a href="https://lookback.io" target="_blank" class="tool-link">Lookback</a></strong> <span class="pill pill-paid">De pago</span></td><td>Entrevistas remotas con notas en tiempo real, transcripción automática</td><td>Desde $99/mes</td></tr>
-<tr><td><strong><a href="https://attentioninsight.com" target="_blank" class="tool-link">Attention Insight</a></strong> <span class="pill pill-paid">De pago</span></td><td>Predicción de atención visual con IA (sin usuarios reales)</td><td>Desde $58/mes</td></tr>
+<tr><td><strong><a href="https://usertesting.com" target="_blank" class="tool-link">UserTesting</a></strong> <span class="pill pill-paid">Paga</span></td><td>Panel de testers reales, análisis de video con IA, insights automáticos</td><td>Desde $49/test (pay-per-test)</td></tr>
+<tr><td><strong><a href="https://lookback.io" target="_blank" class="tool-link">Lookback</a></strong> <span class="pill pill-paid">Paga</span></td><td>Entrevistas remotas con notas en tiempo real, transcripción automática</td><td>Desde $99/mes</td></tr>
+<tr><td><strong><a href="https://attentioninsight.com" target="_blank" class="tool-link">Attention Insight</a></strong> <span class="pill pill-paid">Paga</span></td><td>Predicción de atención visual con IA (sin usuarios reales)</td><td>Desde $58/mes</td></tr>
 </tbody></table>
 
 <h4>Flujo recomendado de research con IA</h4>
