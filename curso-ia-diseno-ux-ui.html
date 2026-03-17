@@ -50,6 +50,16 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .cover-author{margin-top:40px;font-size:.82rem;color:var(--text3);line-height:1.6}
 .cover-author strong{color:var(--text2);font-weight:600}
 
+/* ===== RECIPE CARDS ===== */
+.recipe-block{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+.recipe-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.recipe-num{display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.recipe-when{font-size:.85rem;color:var(--text2);margin:10px 0 14px;padding:10px 14px;background:rgba(73,107,227,.05);border-radius:8px;border-left:3px solid var(--accent)}
+.prompt-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin:14px 0 6px}
+.prompt-block{background:#1e1e2e;color:#cdd6f4;padding:18px 20px;border-radius:var(--radius-sm);font-family:'Courier New',monospace;font-size:.78rem;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.prompt-block strong{color:#89b4fa}
+.recipe-category{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;padding:8px 0;border-bottom:2px solid var(--border);margin:40px 0 28px;color:var(--accent)}
+
 /* ===== REFS SECTION ===== */
 .refs-section{margin-top:32px;padding:24px 28px;background:var(--card2);border-radius:var(--radius);border-left:4px solid var(--accent)}
 .refs-section h5{font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
@@ -1193,6 +1203,617 @@ lessons:[
 <li>Documentá en Figma o Notion los outputs generados y cómo los integrarías en tu flujo real</li>
 </ol></div>`},
 
+{id:"lc_rec",title:"El Recetario: 25 flujos concretos para tu equipo UX",dur:"3h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>No necesitás saber todo sobre IA para sacarle valor a Claude. Necesitás saber <em>cuándo llamarlo</em>. Este recetario te da 25 situaciones concretas de tu trabajo diario — con el proceso y el prompt exacto para cada una. Compartílo con todo tu equipo: cada receta es un disparador.</p></div>
+
+<div class="objectives"><h4>Cómo usar este recetario</h4><ul>
+<li>Cada receta tiene: <strong>cuándo usarla</strong> (el disparador), el <strong>proceso</strong> paso a paso, y el <strong>prompt de inicio</strong> listo para copiar</li>
+<li>Los prompts son plantillas — reemplazá los textos entre corchetes con tu contexto real</li>
+<li>Cuanto más contexto le des a Claude, mejor va a ser el output</li>
+<li>Si el primer resultado no es perfecto, pedile que lo refine: "hacé esto más conciso", "cambiá el tono", "agregá ejemplos"</li>
+</ul></div>
+
+<div class="recipe-category">📋 Categoría 1 — Research</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 01</div>
+<h4>Benchmark competitivo automatizado</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al inicio de un proyecto, o cada trimestre para monitorear competidores. Un colega creó un template de benchmark y Claude lo completa por él con cada competidor — siempre con el mismo criterio.</div>
+<p>El secreto del benchmark con Claude no es pedirle que "analice" — es darle una estructura y pedirle que la complete. Primero definís los criterios junto a Claude, después lo alimentás con información de cada competidor (screenshots, descripciones de App Store, reviews, features) y Claude llena la tabla con consistencia imposible de lograr manualmente.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos un UX researcher experto en análisis competitivo. Voy a hacer un benchmark de [mi producto] vs [Competidor A, B, C].
+
+Paso 1: Primero ayudame a definir los criterios de evaluación. El área que me interesa analizar es [onboarding / búsqueda / checkout / personalización / accesibilidad — elegí el que aplique]. Proponé 8 criterios específicos y medibles, y para cada uno definí una escala de 1 a 5 con descripción de qué significa cada puntaje.
+
+Paso 2 (voy a ejecutarlo por separado para cada competidor): Una vez que tengamos los criterios, voy a darte información de cada producto y vas a completar la tabla con los mismos criterios y escala.
+
+Paso 3: Al final, generás el análisis comparativo con: quién lidera en cada criterio, los patrones comunes del mercado, y las oportunidades de diferenciación para mi producto.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 02</div>
+<h4>Síntesis de entrevistas de usuarios</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Después de 3 o más entrevistas. Lo que antes tomaba 2 días de affinity mapping, con Claude lo tenés en 20 minutos.</div>
+<p>La clave es separar el análisis en pasos: primero Claude identifica temas, después busca patrones entre entrevistas, después selecciona las mejores citas. No le pidas todo junto en un solo prompt.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos un UX researcher senior especializado en análisis cualitativo. Voy a pegarte fragmentos de [N] entrevistas con usuarios de [descripción del producto]. Voy a marcar el inicio de cada entrevista con "=== ENTREVISTA [N] ===".
+
+Al terminar de leer todas, quiero que me des:
+1. Los 5 insights más relevantes, cada uno con 2-3 citas textuales que lo soporten
+2. Los patrones que se repiten en más de 2 entrevistas (con frecuencia: ej. "4/5 usuarios mencionaron...")
+3. Las contradicciones o tensiones que encontraste entre entrevistados
+4. Las 3 frases que mejor capturan el problema central desde la voz del usuario
+5. Lo que NO encontraste pero esperabas encontrar
+
+Aquí van las entrevistas:
+[pegar transcripciones o fragmentos clave]</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 03</div>
+<h4>Análisis de reviews de App Store y Google Play</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para entender pain points reales de usuarios sin salir a campo. También es excelente para analizar reviews de competidores.</div>
+<p>Copiás 50-100 reviews (seleccioná variedad: 1 estrella, 3 estrellas, 5 estrellas) y Claude las clasifica por tema, sentimiento y urgencia. En 10 minutos tenés un reporte listo para presentar.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos analista de UX research. Voy a pegarte reviews reales de usuarios de [nombre de la app]. El objetivo es entender los problemas principales de la experiencia actual.
+
+Analizalas y entregame:
+1. Las 5 categorías temáticas principales con cantidad de menciones
+2. Para cada categoría: sentimiento predominante (positivo/negativo/mixto) y las 2 citas más representativas
+3. Top 10 quejas ordenadas por frecuencia (de más a menos mencionada)
+4. Top 5 elogios (qué están haciendo bien)
+5. Los "momentos de ruptura" — situaciones donde el usuario decidió dejar de usar la app
+6. Resumen ejecutivo de 3 párrafos listo para presentar al equipo
+
+Reviews:
+[pegar reviews — podés copiarlas directamente del App Store/Play Store]</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 04</div>
+<h4>Guía de entrevista con hipótesis integradas</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Antes de salir a campo. Especialmente útil cuando necesitás validar hipótesis específicas sin que el usuario lo perciba.</div>
+<p>Le das a Claude el problema, las hipótesis y el perfil de usuario, y genera una guía completa con preguntas de seguimiento para cada sección.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos investigador UX con experiencia en entrevistas semiestructuradas. Ayudame a crear una guía de entrevista de 45 minutos.
+
+Contexto:
+- Producto: [descripción]
+- Hipótesis que quiero validar: [H1: los usuarios no entienden X / H2: el principal problema es Y / H3: los usuarios prefieren Z]
+- Perfil del entrevistado: [descripción del usuario]
+- Lo que YA sé y no necesito validar: [contexto previo]
+
+Necesito una guía que:
+1. Empiece con warm-up para bajar las defensas (5 min)
+2. Explore el contexto de uso actual sin mencionar nuestra solución (15 min)
+3. Valide cada hipótesis de forma indirecta — nunca preguntas sí/no (15 min)
+4. Explore necesidades latentes que no anticipamos (10 min)
+
+Para cada sección: objetivo de la sección, 3-4 preguntas principales, y 2-3 preguntas de seguimiento si la respuesta es superficial.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 05</div>
+<h4>Personas basadas en datos reales de research</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al terminar un ciclo de research. A diferencia de las personas genéricas, estas están ancladas en datos reales.</div>
+<p>Pegás los hallazgos del research y Claude identifica arquetipos emergentes. Iterás hasta que las personas reflejen fielmente lo que encontraste.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Basándote en estos hallazgos de research [pegar hallazgos, citas, patrones], identificá los arquetipos de usuario que emergen naturalmente de los datos y creá 3 personas.
+
+Para cada persona usá este formato:
+- Nombre y descripción visual (sin imagen, describí con palabras)
+- Edad, ocupación, contexto de vida
+- La frase que define su relación con [producto/problema]
+- Objetivos principales (3) — anclados en citas reales del research
+- Frustraciones principales (3) — con cita textual de una entrevista si existe
+- Comportamiento digital: cómo usa tecnología, dispositivos, apps frecuentes
+- Cómo usa [producto] o cómo resuelve este problema hoy
+- Nivel de expertise en [dominio] (1-5)
+- Su mayor miedo respecto a [tema del producto]
+
+Al final: una tabla de comparación de las 3 personas en los 5 atributos más diferenciadores.
+
+Importante: si no tenés suficientes datos para un atributo, decílo explícitamente en lugar de inventar.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 06</div>
+<h4>Journey map desde datos de research</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para visualizar la experiencia end-to-end. Claude genera la estructura; vos la refinás en Figma o FigJam.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Necesito mapear el journey de [nombre de la persona] cuando [tarea o objetivo principal]. Tengo estos datos de research: [pegar datos, citas, observaciones].
+
+Generame el journey map como tabla con estas columnas:
+Etapa | Acciones del usuario | Qué piensa | Qué siente (emoción + emoji) | Touchpoints | Pain points | Oportunidades de diseño
+
+Incluí al menos 6-8 etapas, desde [momento inicial] hasta [momento final].
+
+Para cada oportunidad de diseño: especificá si es una oportunidad de (a) eliminar fricción, (b) agregar valor, o (c) prevenir abandono.
+
+Al final del mapa: los 3 "momentos de la verdad" — los puntos de mayor impacto emocional en todo el journey.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 07</div>
+<h4>Jobs to be Done desde citas de entrevistas</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para reformular los hallazgos de research en el framework JTBD. Ideal para alinear al equipo en el problema real antes de idear soluciones.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Basándote en estas citas de entrevistas con usuarios [pegar citas], generame los Jobs to be Done usando el formato:
+"Cuando [situación específica], quiero [motivación u objetivo], para poder [resultado esperado]."
+
+Necesito:
+1. El Main Job (el trabajo central que el usuario está tratando de hacer)
+2. 3-4 Related Jobs (trabajos secundarios relacionados)
+3. 2 Emotional Jobs (la dimensión emocional: cómo quiere sentirse)
+4. 2 Social Jobs (cómo quiere ser percibido)
+5. Para cada job: una cita textual del research que lo respalda
+6. Una estimación de la "importancia" y "satisfacción actual" de cada job (del 1-10), para identificar oportunidades de underserved jobs</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 08</div>
+<h4>Análisis heurístico de una pantalla o flujo</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para una primera pasada de evaluación de usabilidad, propia o de un competidor. En minutos tenés una lista priorizada de problemas.</div>
+<p>Describís la pantalla con el mayor detalle posible: qué elementos hay, cómo están organizados, qué hace cada uno, qué texto tienen. Si podés compartir capturas, mejor.</p>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos un experto en usabilidad con experiencia en evaluaciones heurísticas. Voy a describirte esta pantalla/flujo: [descripción detallada: elementos presentes, jerarquía visual, textos, interacciones].
+
+Evaluala contra las 10 Heurísticas de Nielsen. Para cada problema encontrado:
+- Qué heurística viola (nombre + número)
+- Severidad: 1 (cosmético) / 2 (menor) / 3 (mayor) / 4 (catástrofe)
+- Descripción del problema
+- Propuesta de solución concreta
+
+Terminá con:
+1. Tabla resumen ordenada por severidad (de mayor a menor)
+2. Los 3 problemas que solucionarías primero y por qué
+3. Lo que la pantalla hace BIEN (heurísticas cumplidas correctamente)</div>
+</div>
+
+<div class="recipe-category">🎨 Categoría 2 — Diseño y decisiones</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 09</div>
+<h4>Exploración de alternativas de diseño</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cuando estás bloqueado en una solución o el equipo converge demasiado rápido en una sola idea. Ideal para el inicio de la fase de ideación.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos un UX designer senior con experiencia en ideación. Estamos diseñando [feature o pantalla] para [producto].
+
+El problema del usuario es: [descripción]
+La solución que tenemos hasta ahora es: [descripción — o "ninguna todavía"]
+Restricciones conocidas: [técnicas, de tiempo, de negocio]
+
+Generame 6 alternativas de diseño conceptualmente distintas (no variaciones de la misma idea — que vengan de enfoques radicalmente diferentes). Para cada alternativa:
+1. Nombre del concepto (2-3 palabras)
+2. Descripción en 2-3 oraciones de cómo funciona
+3. Principal ventaja para el usuario
+4. Principal riesgo o desventaja
+5. Nivel de complejidad de implementación (bajo/medio/alto)
+6. En qué contexto o para qué segmento de usuario funcionaría mejor</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 10</div>
+<h4>Preparación para una design critique difícil</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Antes de presentar diseños a stakeholders, especialmente cuando anticipás resistencia. Claude actúa como el crítico más exigente para que llegues preparado.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Voy a presentar este diseño: [descripción del diseño].
+
+Contexto: producto [X], usuario objetivo [Y], objetivo de negocio que resuelve [Z].
+
+Actuá como 4 stakeholders distintos y generame las preguntas o críticas más difíciles que probablemente van a hacer:
+1. El CEO (enfocado en impacto de negocio y ROI)
+2. El CTO o Tech Lead (enfocado en complejidad de implementación)
+3. El PM (enfocado en scope, prioridades y métricas)
+4. Un usuario power user escéptico (enfocado en si realmente resuelve su problema)
+
+Para cada pregunta difícil: dame también la mejor respuesta que podría dar el diseñador, con datos o argumentos que la soporten.
+
+Al final: los 2 puntos débiles reales del diseño que debería reforzar antes de la presentación.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 11</div>
+<h4>Design Decision Record (DDR)</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Después de tomar cualquier decisión de diseño importante. El DDR previene que el equipo vuelva a debatir lo mismo en 3 meses.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Ayudame a documentar esta decisión de diseño para nuestro registro de decisiones.
+
+La decisión fue: [descripción de la decisión tomada]
+Las alternativas que consideramos: [A, B, C con descripción breve de cada una]
+Elegimos esta opción porque: [razonamiento — podés ser informal acá, Claude lo va a estructurar]
+El contexto del producto: [descripción breve]
+Quién participó en la decisión: [roles, sin necesidad de nombres]
+
+Generame un Design Decision Record con estas secciones:
+- Título (claro y memorable)
+- Estado: Aprobada
+- Fecha y contexto del proyecto
+- El problema que motivó la decisión
+- La decisión tomada (1-2 oraciones claras)
+- Razonamiento (por qué esta opción y no las otras)
+- Consecuencias positivas esperadas
+- Trade-offs aceptados
+- Señales que indicarían que fue la decisión equivocada (y cuándo revisarla)
+- Alternativas descartadas y por qué</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 12</div>
+<h4>Especificaciones de accesibilidad para un componente</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Antes del handoff de cualquier componente interactivo. Evita que accesibilidad sea un afterthought de desarrollo.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Voy a hacer el handoff del componente [tipo: dropdown / modal / date picker / carousel / tabs / accordion — describí cuál es].
+
+Generame las especificaciones de accesibilidad completas para WCAG 2.1 nivel AA, incluyendo:
+
+Semántica HTML:
+- Elemento HTML nativo a usar (si aplica)
+- Roles ARIA necesarios
+- Atributos aria-* requeridos y opcionales
+
+Comportamiento con teclado:
+- Cómo llega el foco al componente (Tab)
+- Navegación dentro del componente (flechas, Tab, Shift+Tab)
+- Acción de confirmación (Enter/Space)
+- Cómo se cierra o abandona (Escape)
+- Manejo del focus trap (si aplica)
+
+Lectores de pantalla:
+- Qué debe anunciar al recibir foco
+- Qué debe anunciar al cambiar de estado
+- Cómo comunicar el estado actual (expanded/collapsed, selected, etc.)
+
+Visual:
+- Contraste mínimo requerido para texto y elementos gráficos
+- Indicador de foco visible (descripción del estilo)
+- Consideraciones para modo de alto contraste
+
+Formato: lista técnica lista para pegar en Figma como anotaciones o en Confluence.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 13</div>
+<h4>Análisis de trade-offs entre opciones de diseño</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cuando el equipo está dividido entre dos opciones y necesitás una análisis estructurado para tomar la decisión (o para presentarla).</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Enfrentamos este dilema de diseño: [descripción del problema].
+
+Las opciones son:
+- Opción A: [descripción]
+- Opción B: [descripción]
+
+Contexto: usuarios afectados [descripción], objetivo de negocio [descripción], restricciones técnicas [descripción].
+
+Hacé un análisis de trade-offs desde 5 perspectivas:
+1. Experiencia del usuario a corto plazo (primeras sesiones)
+2. Experiencia del usuario a largo plazo (uso habitual)
+3. Objetivos de negocio (conversión, retención, etc.)
+4. Viabilidad técnica y costo de implementación
+5. Deuda de diseño y escalabilidad futura
+
+Para cada perspectiva: ventaja de A, ventaja de B, y quién "gana" en esa dimensión.
+
+Terminá con:
+- Una recomendación fundamentada
+- Los 2 indicadores que deberían medir en los primeros 30 días para saber si fue la decisión correcta
+- Un escenario donde cambiarían de decisión</div>
+</div>
+
+<div class="recipe-category">✍️ Categoría 3 — UX Writing</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 14</div>
+<h4>Microcopy completo de un componente UI</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cuando diseñás un componente nuevo. En lugar de poner placeholders genéricos en el diseño, generás el copy real desde el principio.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos UX writer senior en [tipo de producto: fintech / salud / e-commerce / educación].
+Tono de voz del producto: [describir: cercano y directo / formal y confiable / empático y motivador].
+
+Generame el microcopy completo para el componente [tipo de componente: formulario de pago / campo de búsqueda / pantalla de perfil / formulario de registro].
+
+Para cada elemento del componente necesito copy en todos sus estados:
+- Label del campo
+- Placeholder (si aplica)
+- Texto de ayuda contextual (hint text)
+- Error: campo vacío
+- Error: formato inválido
+- Error: [error específico del contexto — ej. "tarjeta rechazada", "email ya registrado"]
+- Estado loading
+- Estado éxito
+- Tooltip de ayuda (si aplica)
+
+Reglas: sin jerga técnica, sin "Por favor", sin "Oops", sin "Uh oh". Que cada mensaje de error diga qué pasó Y qué hacer.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 15</div>
+<h4>Empty states que inspiran acción</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para cualquier pantalla que puede aparecer vacía: primer uso, sin resultados de búsqueda, sin notificaciones, después de completar una lista.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Necesito copy para los empty states de [nombre de la pantalla] en [producto].
+
+Esta pantalla queda vacía en estos escenarios:
+- Escenario A: [primera vez que el usuario llega, no tiene contenido aún]
+- Escenario B: [búsqueda sin resultados]
+- Escenario C: [usuario borró todo el contenido / completó todas las tareas]
+
+Para cada escenario, generame 3 variantes de empty state con:
+- Titular (máx 6 palabras, sin signos de exclamación)
+- Subtítulo (máx 20 palabras, explica por qué está vacío o qué puede hacer)
+- Texto del CTA (máx 3 palabras)
+
+Las 3 variantes de cada escenario deben variar en tono: una motivacional, una práctica, una que genere curiosidad.
+
+El usuario que ve el escenario A probablemente se siente [emoción: perdido / curioso / con expectativas]. Tené eso en cuenta.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 16</div>
+<h4>Mensajes de error que no frustran</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al diseñar cualquier flujo transaccional: registro, pago, envío de formularios. Los errores son el momento más crítico de la experiencia.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos UX writer experto en comunicación de errores. Estoy diseñando el flujo de [nombre del flujo] de [producto].
+
+Los errores que pueden ocurrir son:
+- [Error técnico 1: ej. timeout de conexión]
+- [Error técnico 2: ej. datos de tarjeta inválidos]
+- [Error técnico 3: ej. email ya registrado]
+- [Error técnico 4: ej. límite de intentos superado]
+- [Error técnico 5: ej. archivo demasiado grande]
+
+Para cada error, escribí el mensaje siguiendo estas reglas:
+1. Máximo 2 oraciones
+2. Primera oración: qué pasó (en lenguaje humano, no técnico)
+3. Segunda oración: qué puede hacer el usuario ahora
+4. Nunca culpar al usuario ("ingresaste mal" → "los datos no coinciden")
+5. Nunca usar: "Error", "Fallo", "Inválido", "Incorrecto" como primera palabra
+6. Tono: [describir el tono del producto]
+
+Formato de entrega: tabla con columnas Código de error | Mensaje de UI | Notas para el diseñador</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 17</div>
+<h4>Copy de onboarding que activa al usuario</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al diseñar o rediseñar el primer uso. El onboarding es la primera impresión — y con Claude podés iterar 10 versiones en 10 minutos.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Sos UX writer especializado en activation y onboarding. Necesito el copy para el onboarding de [producto].
+
+Contexto:
+- Propuesta de valor: [qué hace el producto y por qué importa]
+- El "aha moment" ocurre cuando: [momento específico en que el usuario entiende el valor]
+- Perfil del usuario nuevo: [descripción]
+- Tono del producto: [describir]
+
+Generame el copy de 5 pantallas de onboarding:
+1. Pantalla de bienvenida (primera vez que abre la app)
+2. Propuesta de valor (el beneficio principal, no las features)
+3. Pantalla de setup / personalización inicial
+4. Pantalla puente hacia el aha moment
+5. Pantalla de activación / primer logro
+
+Para cada pantalla: H1 (máx 8 palabras), subtítulo (máx 20 palabras), body opcional (máx 2 oraciones), texto del botón de avance.
+
+El copy debe crear anticipación, no solo describir funcionalidades.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 18</div>
+<h4>Localización de copy para distintos mercados LATAM</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cuando el producto opera en múltiples países de LATAM y el español neutro no alcanza para conectar localmente.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Tengo este copy en español neutro que necesito adaptar para diferentes mercados:
+
+[pegar el copy original — puede ser una pantalla completa, un email, o fragmentos]
+
+Adaptalo para:
+1. Argentina: voseo, tono cercano y directo, informal pero profesional. Palabras y expresiones locales donde sea natural.
+2. México: ustedeo en contextos formales (pagos, legal), tú en contextos cotidianos. Tono cálido y servicial.
+3. Colombia: ustedeo consistente, tono respetuoso y profesional, especialmente en fintech o salud.
+4. Chile: tuteo, tono más formal que Argentina pero más coloquial que Colombia.
+
+Para cada adaptación:
+- El copy adaptado
+- Lista de los cambios que hiciste (no solo el resultado)
+- Una advertencia si hay alguna expresión que podría malinterpretarse en ese mercado</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 19</div>
+<h4>Tooltips y textos de ayuda contextual</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Para pantallas complejas con muchos conceptos que el usuario necesita entender. Especialmente útil en productos B2B o técnicos.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Esta pantalla tiene los siguientes elementos que necesitan texto de ayuda: [listar cada elemento con su función].
+
+El contexto del producto: [descripción].
+El usuario: [perfil — experto / principiante / mixto].
+Tono: [describir].
+
+Para cada elemento generame dos versiones:
+1. Tooltip inline (máx 12 palabras): aparece al hacer hover. Debe ser la versión más corta posible.
+2. Help text expandido (máx 50 palabras): para el "?" o modal de ayuda. Puede incluir un ejemplo concreto.
+
+Reglas:
+- El tooltip NO puede repetir el nombre del elemento (si el label dice "Período de facturación", el tooltip no puede empezar con "El período de facturación es...")
+- Usá ejemplos concretos cuando el concepto sea abstracto
+- Si el elemento tiene consecuencias importantes (no reversibles, afectan datos, cuestan dinero), aclaralo sin alarmar</div>
+</div>
+
+<div class="recipe-category">📊 Categoría 4 — Estrategia y presentaciones</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 20</div>
+<h4>Estructura de presentación de research para stakeholders</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Antes de preparar las slides. Claude te da el storyline y la estructura, vos ejecutás la presentación.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Terminé un proceso de UX research sobre [tema]. Necesito estructurar la presentación de resultados.
+
+Mis hallazgos principales son: [pegar hallazgos en bruto — puede ser desordenado, está bien]
+
+La audiencia: [CEO / PM / equipo de negocio / board / equipo de desarrollo]
+El objetivo de la presentación: [informar / convencer de X / pedir aprobación para Y / solicitar presupuesto para Z]
+Tiempo disponible: [N minutos]
+
+Estructurá una presentación con:
+1. El "narrative arc" — la historia que voy a contar (problema → hallazgos → implicaciones → recomendación)
+2. Slide por slide: título + punto clave + qué evidencia mostrar
+3. Las 3 citas de usuarios que debo incluir sí o sí (las más impactantes)
+4. Los datos cuantitativos que refuerzan los hallazgos cualitativos
+5. La recomendación de cierre formulada como "Si hacemos X, esperamos Y" (causa-efecto)
+6. La pregunta de apertura para involucrar a la audiencia desde el minuto 0</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 21</div>
+<h4>User stories y criterios de aceptación</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al preparar el handoff con desarrollo. User stories bien escritas reducen preguntas, bugs y re-trabajo.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Diseñé esta feature: [descripción detallada del diseño y comportamientos].
+
+El usuario es: [perfil].
+El objetivo del negocio que resuelve: [descripción].
+
+Generame las user stories en formato "Como [usuario], quiero [acción], para [objetivo]".
+
+Para cada historia incluí:
+- Criterios de aceptación en formato Gherkin: Given [contexto] / When [acción] / Then [resultado esperado]
+- Los edge cases a tener en cuenta
+- Estimación de complejidad relativa: S / M / L / XL
+
+Organizalas en epics si hay más de 5 historias.
+
+Al final: las 2 historias de mayor riesgo técnico que conviene discutir con el equipo de desarrollo antes de empezar.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 22</div>
+<h4>Brief de propuesta de diseño para stakeholders</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cuando necesitás "vender" internamente un proyecto nuevo, un rediseño, o una iniciativa de UX. El brief conecta el problema del usuario con el objetivo de negocio.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Quiero proponer [nombre del proyecto o iniciativa].
+
+El problema del usuario: [descripción — cuantificado si es posible]
+El impacto en el negocio si no lo resolvemos: [consecuencias medibles o estimadas]
+Lo que proponemos: [descripción de la solución o del proyecto]
+Alcance estimado: [tiempo, personas, recursos]
+Los indicadores de éxito: [métricas de UX y de negocio]
+
+Generame un brief ejecutivo de media página con:
+- El problema (con dato o evidencia si tenés)
+- La oportunidad (por qué ahora)
+- La solución propuesta (sin entrar en detalle técnico)
+- Lo que está en scope y lo que no
+- KPIs: 2 de experiencia de usuario y 2 de negocio
+- Los riesgos conocidos y cómo los mitigaríamos
+- Próximo paso concreto (qué necesitamos para arrancar)
+
+Tono: ejecutivo y conciso, sin jerga de diseño. Como si lo leyera alguien que nunca abrió Figma.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 23</div>
+<h4>OKRs de experiencia de usuario</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al planificar el trimestre o el año. Los OKRs de UX alineados con el negocio hacen que diseño deje de ser percibido como "servicio" y pase a ser estratégico.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Ayudame a definir los OKRs de experiencia de usuario para [Q[N] / el año].
+
+Contexto:
+- Producto: [descripción]
+- Problemas principales de la experiencia actual: [listar]
+- Objetivos de negocio del período: [listar]
+- Métricas de UX que ya estamos midiendo (o podríamos medir): [CSAT, NPS, task completion rate, time-on-task, churn, activation rate — listar las que apliquen]
+
+Generame 3 OKRs de UX que:
+1. Estén directamente vinculados a un objetivo de negocio (explicitá el link)
+2. Tengan Key Results medibles con métricas reales de UX
+3. Incluyan baseline actual (o estimado) y target
+4. Sean ambiciosos pero no imposibles
+
+Formato por OKR:
+Objective: [qué queremos lograr — cualitativo, inspiracional]
+KR1: [métrica] pasa de [X] a [Y] para el [fecha]
+KR2: [métrica] pasa de [X] a [Y] para el [fecha]
+KR3: [métrica] pasa de [X] a [Y] para el [fecha]
+Vinculación con negocio: [cómo este objective impacta en [objetivo de negocio]]</div>
+</div>
+
+<div class="recipe-category">🔧 Categoría 5 — Handoff y documentación</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 24</div>
+<h4>Anotaciones técnicas para desarrollo</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Al preparar el handoff de cualquier diseño. Anotaciones buenas reducen las preguntas de desarrollo a la mitad.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Voy a hacer el handoff de este diseño al equipo de desarrollo. Te voy a describir el diseño y sus comportamientos:
+
+[descripción detallada: layout, elementos, interacciones, animaciones, estados, responsive behavior]
+
+El equipo usa: [React / Vue / Angular / HTML vanilla]
+
+Generame las anotaciones técnicas para cada elemento incluyendo:
+- Comportamiento esperado en cada estado (default, hover, focus, active, disabled, loading, error, success)
+- Breakpoints y cómo cambia el layout en cada uno (mobile / tablet / desktop)
+- Especificaciones de animación donde apliquen: duración (ms), easing function, qué propiedades animan
+- Condiciones de visibilidad: qué elementos aparecen/desaparecen según qué condiciones
+- Edge cases que el dev debe manejar (texto muy largo, imágenes que fallan, listas vacías)
+- Dependencias de datos o APIs que el dev necesita conocer
+
+Formato: lista técnica por componente, lista para pegar en Figma como comentarios o en el ticket de Jira.</div>
+</div>
+
+<div class="recipe-block">
+<div class="recipe-num">Receta 25</div>
+<h4>Documentación de componente para design system</h4>
+<div class="recipe-when">⚡ <strong>Cuándo usarlo:</strong> Cada vez que agregás un componente nuevo al design system. La documentación consistente es lo que convierte un Figma library en un design system real.</div>
+<div class="prompt-label">Prompt de inicio</div>
+<div class="prompt-block">Estoy documentando el componente [nombre] para nuestro design system.
+
+Descripción del componente: [qué es, cómo funciona, qué variantes tiene]
+Contexto del producto: [descripción]
+
+Generame la documentación completa con estas secciones:
+
+¿Qué es?
+[2 oraciones máximo]
+
+¿Cuándo usarlo?
+[Con al menos 3 ejemplos concretos de pantallas donde va]
+
+¿Cuándo NO usarlo?
+[Anti-patterns: al menos 2 casos donde no corresponde este componente y qué usar en cambio]
+
+Variantes disponibles
+[Por cada variante: nombre, descripción de cuándo usar esa variante específicamente]
+
+Comportamiento y states
+[Lista de estados: default, hover, focus, active, disabled, loading, error, success — solo los que apliquen]
+
+Accesibilidad
+[Lo mínimo que el dev y el diseñador deben saber para que sea accesible]
+
+Copy guidelines para este componente
+[Reglas de escritura específicas: longitud máxima, tono, qué evitar]
+
+Formato: listo para pegar en Notion, Confluence o Zeroheight.</div>
+</div>
+
+<div class="tip-box"><div class="box-title">Cómo sacarle el máximo a cualquier receta</div>
+<p><strong>Iterá siempre.</strong> El primer output de Claude es el punto de partida, no el final. Después del primer resultado, probá: "Hacelo más conciso", "Cambiá el tono a más formal", "Agregá un ejemplo concreto de [industria]", "Esta parte no me convence, reescribíla con un enfoque distinto".</p>
+<p><strong>Guardá tus prompts que funcionan.</strong> Cuando un prompt da un resultado excepcional, guardálo. Esa es tu biblioteca personal de prompts — uno de tus activos profesionales más valiosos.</p>
+<p><strong>Compartí las recetas con tu equipo.</strong> Cada vez que encontrás un flujo que funciona, documentálo y compartílo. Un equipo que usa Claude con las mismas recetas es un equipo que produce outputs consistentes.</p></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio: Tu primera semana con el recetario</div>
+<div class="box-desc">Usá el recetario en situaciones reales de tu trabajo esta semana.</div>
+<ol>
+<li>Elegí 3 recetas de categorías distintas que se apliquen a algo en lo que estés trabajando ahora</li>
+<li>Ejecutá cada una con tu contexto real (no con ejemplos ficticios)</li>
+<li>Para cada receta: documentá el prompt que usaste, el resultado obtenido, y cómo lo refinaste</li>
+<li>Compartí al menos una receta con un colega y pedile que la pruebe con su propio contexto</li>
+<li>Identificá 2 tareas de tu trabajo que NO están cubiertas en el recetario y escribí el prompt para ellas</li>
+<li>Contribuí: si encontrás una receta que funciona muy bien, proponé agregarla al recetario del equipo</li>
+</ol></div>`},
+
 {id:"lc_2",title:"Claude Code: prototipado sin código para diseñadores",dur:"1.5h",content:`
 <div class="tldr"><div class="tldr-label">TL;DR</div><p>Claude Code es la CLI de Anthropic que permite trabajar con código directamente desde la terminal. Para diseñadores UX, abre la posibilidad de generar prototipos HTML funcionales, automatizar tareas repetitivas, y colaborar más fluidamente con equipos de desarrollo — sin necesidad de saber programar.</p></div>
 
@@ -1587,6 +2208,16 @@ const LESSON_REFS = {
 {type:"Herramienta",author:"Locofy",title:"Locofy Lightning — Design to production code",source:"locofy.ai",year:"2024"},
 {type:"Herramienta",author:"Whimsical",title:"Whimsical AI — Flowcharts and wireframes",source:"whimsical.com",year:"2024"},
 {type:"Herramienta",author:"FigJam AI",title:"FigJam AI — Collaborative brainstorming",source:"figma.com/figjam",year:"2024"}
+],
+"lc_rec":[
+{type:"Libro",author:"Portigal, S.",title:"Interviewing Users: How to Uncover Compelling Insights",source:"Rosenfeld Media",year:"2013"},
+{type:"Libro",author:"Goodman, E. et al.",title:"Observing the User Experience (2nd ed.)",source:"Morgan Kaufmann",year:"2012"},
+{type:"Framework",author:"Nielsen, J.",title:"10 Usability Heuristics for User Interface Design",source:"nngroup.com",year:"1994"},
+{type:"Libro",author:"Ulwick, A.",title:"Jobs to be Done: Theory to Practice",source:"IDEA BITE Press",year:"2016"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"UX Writing Study Guide",source:"nngroup.com",year:"2023"},
+{type:"Libro",author:"Kohavi, R. et al.",title:"Trustworthy Online Controlled Experiments",source:"Cambridge University Press",year:"2020"},
+{type:"Framework",author:"W3C",title:"Web Content Accessibility Guidelines (WCAG) 2.1",source:"w3.org/TR/WCAG21",year:"2018"},
+{type:"Libro",author:"Kalbach, J.",title:"Mapping Experiences",source:"O'Reilly Media",year:"2020"}
 ],
 "lc_1":[
 {type:"Docs",author:"Anthropic",title:"Claude.ai — Using Projects and Memory",source:"support.anthropic.com",year:"2024"},
