@@ -50,6 +50,14 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .cover-author{margin-top:40px;font-size:.82rem;color:var(--text3);line-height:1.6}
 .cover-author strong{color:var(--text2);font-weight:600}
 
+/* ===== REFS SECTION ===== */
+.refs-section{margin-top:32px;padding:24px 28px;background:var(--card2);border-radius:var(--radius);border-left:4px solid var(--accent)}
+.refs-section h5{font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.ref-item{display:flex;gap:10px;margin-bottom:10px;font-size:.82rem;color:var(--text2);line-height:1.5}
+.ref-type{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:700;background:rgba(73,107,227,.1);color:var(--accent);white-space:nowrap;flex-shrink:0;margin-top:2px;height:fit-content}
+.ref-text{flex:1}
+.ref-text em{color:var(--text3);font-style:normal}
+
 /* ===== SIDEBAR ===== */
 .sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--primary);border-right:1px solid var(--border);box-shadow:2px 0 12px rgba(0,0,0,.04);z-index:100;display:flex;flex-direction:column;transition:transform .3s ease,width .3s ease}
 .sidebar.collapsed{transform:translateX(calc(-1 * var(--sidebar-w)))}
@@ -247,7 +255,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 </div>
 <div class="cover-grid" id="cover-grid"></div>
 <button class="start-btn" onclick="enterCourse()">Comenzar el programa →</button>
-<div class="cover-author">Creado por <strong>Eli Trozzi</strong> ❤️ · Armado con <strong>Claude</strong> de Anthropic</div>
+<div class="cover-author">Creado por <strong>Eli Trozzi</strong> ❤️ · Armado con <strong>Claude</strong> de Anthropic — <strong>v1.2.0</strong> · <span style="color:var(--accent);cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">ver changelog</span><div style="display:none;text-align:left;margin-top:10px;font-size:.76rem;line-height:1.8;color:var(--text3)"><strong style="color:var(--text2)">v1.2.0</strong> (Mar 2026) — Nuevo módulo: Trabajá mejor con Claude · Sección de referencias académicas en todas las lecciones<br><strong style="color:var(--text2)">v1.1.0</strong> (Mar 2026) — Cards de módulos clickeables en portada<br><strong style="color:var(--text2)">v1.0.0</strong> (Mar 2026) — Lanzamiento del programa: 11 módulos, 34 lecciones, 55h+ de contenido</div></div>
 </div>
 </div>
 
@@ -1133,8 +1141,484 @@ lessons:[
 </ol></div>`}
 ]});
 
+// ============ MÓDULO CLAUDE ============
+MODULES.push({id:"m_claude",title:"Trabajá mejor con Claude",hours:"7h",color:"#D97757",icon:"🤖",
+lessons:[
+{id:"lc_1",title:"Claude Chat: tu asistente de diseño UX",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Claude.ai es mucho más que un chatbot: con Projects, memoria persistente y personalización, se convierte en tu co-diseñador siempre disponible. Aprendé a usarlo para research, writing, síntesis y estrategia UX.</p></div>
+<div class="lesson-img"><svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gc1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#D97757;stop-opacity:.08"/><stop offset="100%" style="stop-color:#886BFF;stop-opacity:.06"/></linearGradient></defs><rect fill="url(#gc1)" width="800" height="420" rx="12"/><rect x="120" y="80" width="260" height="260" rx="16" fill="none" stroke="#D97757" stroke-width="1.5" opacity=".4"/><rect x="420" y="80" width="260" height="260" rx="16" fill="none" stroke="#496BE3" stroke-width="1.5" opacity=".4"/><text x="250" y="130" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="bold" fill="#D97757" opacity=".9">Claude Chat</text><text x="250" y="160" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">🗂 Projects</text><text x="250" y="185" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">🧠 Memoria</text><text x="250" y="210" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">📎 Artefactos</text><text x="250" y="235" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">📁 Archivos</text><text x="250" y="260" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">✍️ Análisis</text><text x="550" y="130" text-anchor="middle" font-family="system-ui" font-size="13" font-weight="bold" fill="#496BE3" opacity=".9">Casos UX</text><text x="550" y="160" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">🔍 Research synthesis</text><text x="550" y="185" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">✏️ UX Writing</text><text x="550" y="210" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">📋 Briefing</text><text x="550" y="235" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">🎯 Estrategia</text><text x="550" y="260" text-anchor="middle" font-family="system-ui" font-size="11" fill="#8888a0">📊 Análisis datos</text><text x="400" y="395" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">Claude Chat como co-diseñador permanente</text></svg></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Dominar la interfaz Claude.ai y sus funciones principales</li>
+<li>Crear y gestionar Projects con memoria persistente para proyectos UX</li>
+<li>Usar artefactos para generar y exportar outputs de diseño</li>
+<li>Integrar Claude en el flujo de trabajo de investigación y escritura UX</li>
+</ul></div>
+
+<h4>¿Qué es Claude.ai?</h4>
+<p>Claude.ai es la interfaz web de Claude, el asistente de IA de Anthropic. A diferencia de un simple chatbot, Claude tiene capacidades que lo hacen especialmente valioso para diseñadores UX: puede leer y analizar documentos, generar artefactos (código HTML, SVGs, documentos), mantener contexto largo en una conversación, y con <strong>Projects</strong>, recordar información entre sesiones.</p>
+
+<h4>Projects: tu asistente con memoria</h4>
+<p>Los Projects son la función más poderosa de Claude.ai para uso profesional. Un Project es un espacio de trabajo persistente donde podés: subir documentos de referencia (guidelines de marca, research previo, brief del producto), escribir instrucciones personalizadas que Claude siempre va a seguir, y mantener conversaciones en contexto a lo largo del tiempo.</p>
+
+<table class="info-table"><thead><tr><th>Función</th><th>Cómo usarla en diseño UX</th></tr></thead><tbody>
+<tr><td>Custom Instructions</td><td>Decirle a Claude: "Soy UX designer en una fintech para adultos mayores. Siempre considera accesibilidad y simpleza"</td></tr>
+<tr><td>Archivos en el proyecto</td><td>Subir tu system de diseño, guidelines de marca, resultados de research previo</td></tr>
+<tr><td>Memoria del proyecto</td><td>Claude recuerda el contexto del producto, usuarios y decisiones anteriores</td></tr>
+<tr><td>Artefactos</td><td>Genera HTML/CSS, SVGs, documentos Markdown que podés exportar directamente</td></tr>
+</tbody></table>
+
+<h4>Casos de uso para diseñadores UX</h4>
+<p><strong>Síntesis de research:</strong> Pegá transcripciones de entrevistas y pedile a Claude que identifique patrones, quote citas relevantes, y genere un resumen por tema. En 10 minutos tenés lo que antes tomaba días. <strong>UX Writing en escala:</strong> Generá microcopy consistente con tu tono de voz. Subí tu guideline de escritura al Project y Claude siempre va a respetar el estilo.</p>
+<p><strong>Análisis de competidores:</strong> Describí la UI de un competidor (o pegá screenshots) y pedile un análisis de patrones, fortalezas y oportunidades. <strong>Generación de briefings:</strong> Con el contexto del proyecto en el Project, Claude puede ayudarte a armar briefings para stakeholders, documentación de decisiones de diseño, y razonamiento de cambios.</p>
+
+<h4>Artefactos: outputs accionables</h4>
+<p>Los artefactos son uno de los features más útiles para diseñadores. Cuando le pedís a Claude que genere código HTML, un documento, una tabla, o un SVG, los muestra en un panel separado que podés editar, copiar o previsualizar. Casos prácticos: prototipos HTML simples de una pantalla, documentos de especificaciones en Markdown, tablas comparativas de herramientas, y diagramas SVG para presentaciones.</p>
+
+<div class="tip-box"><div class="box-title">Tip profesional</div><p>Creá un Project por cada cliente o producto en el que estés trabajando. Subí al inicio: el brief, las personas de usuario, el design system, y cualquier research previo. A partir de ahí, cada conversación va a tener todo el contexto necesario sin que tengas que repetirlo.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Equipo de diseño en Notion</div>
+<div class="case-company">Notion AI — potenciado por Claude de Anthropic</div>
+<p>Notion integró Claude en su producto AI. El equipo de diseño de Notion usa internamente Projects de Claude para mantener el contexto de sus proyectos de rediseño: suben sus design principles, el research de usuarios, y las decisiones previas. Esto les permite que cualquier diseñador del equipo pueda entrar al proyecto y obtener contexto completo sin necesidad de reuniones de onboarding.</p>
+<div class="case-takeaway">Lección para UX: Claude con Projects no es solo una herramienta individual — puede ser una base de conocimiento del proyecto accesible para todo el equipo de diseño.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio lc.1: Configurá tu primer Project UX</div>
+<div class="box-desc">Creá un Project de Claude para un proyecto de diseño real o ficticio.</div>
+<ol>
+<li>Accedé a claude.ai y creá un nuevo Project (requiere cuenta Claude.ai Pro o Team)</li>
+<li>Escribí Custom Instructions detalladas: tu rol, el producto, los usuarios objetivo, el tono de voz</li>
+<li>Subí al menos 2 documentos de referencia (puede ser un brief ficticio, una persona de usuario, guidelines de marca)</li>
+<li>Hacé 3 tareas de diseño con Claude dentro del Project: (a) síntesis de research ficticio, (b) 5 variaciones de microcopy para un botón CTA, (c) análisis de usabilidad de una pantalla que describas</li>
+<li>Evaluá: ¿cómo cambió la calidad de las respuestas con el contexto del Project vs. sin él?</li>
+<li>Documentá en Figma o Notion los outputs generados y cómo los integrarías en tu flujo real</li>
+</ol></div>`},
+
+{id:"lc_2",title:"Claude Code: prototipado sin código para diseñadores",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Claude Code es la CLI de Anthropic que permite trabajar con código directamente desde la terminal. Para diseñadores UX, abre la posibilidad de generar prototipos HTML funcionales, automatizar tareas repetitivas, y colaborar más fluidamente con equipos de desarrollo — sin necesidad de saber programar.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Entender qué es Claude Code y en qué se diferencia de Claude Chat</li>
+<li>Identificar casos de uso concretos de Claude Code para diseñadores UX</li>
+<li>Generar un prototipo HTML desde una descripción de diseño</li>
+<li>Comprender cómo Claude Code facilita la colaboración con desarrollo</li>
+</ul></div>
+
+<h4>¿Qué es Claude Code?</h4>
+<p>Claude Code es una interfaz de línea de comandos (CLI) que permite interactuar con Claude directamente desde la terminal de tu computadora. A diferencia de Claude Chat (web), Claude Code puede leer y editar archivos de tu sistema, ejecutar comandos, y trabajar con el código de un proyecto real. Este mismo curso — su HTML, CSS y JavaScript — fue construido con Claude Code.</p>
+
+<table class="info-table"><thead><tr><th></th><th>Claude Chat</th><th>Claude Code</th></tr></thead><tbody>
+<tr><td>Interfaz</td><td>Web browser</td><td>Terminal / CLI</td></tr>
+<tr><td>Acceso a archivos</td><td>Subís manualmente</td><td>Lee y edita tu sistema</td></tr>
+<tr><td>Ideal para</td><td>Conversación, análisis, writing</td><td>Código, prototipos, automatización</td></tr>
+<tr><td>Requiere</td><td>Solo cuenta Claude.ai</td><td>Node.js instalado</td></tr>
+</tbody></table>
+
+<h4>Casos de uso para diseñadores UX</h4>
+<p><strong>Prototipos HTML desde un diseño:</strong> Describís una pantalla en lenguaje natural (o pasás capturas de tu diseño en Figma) y Claude Code genera el HTML/CSS funcional. Ideal para demos rápidas con stakeholders. <strong>Automatización de tareas:</strong> Claude Code puede ayudarte a renombrar archivos en masa, procesar CSVs de research, generar JSON de contenido para development, y modificar múltiples archivos de documentación simultáneamente.</p>
+<p><strong>Colaboración con desarrollo:</strong> Con Claude Code podés entender qué hace un componente de código existente, generar documentación técnica de un diseño, y crear especificaciones en formato que los desarrolladores prefieren (Markdown, JSON). <strong>Crear herramientas de diseño:</strong> Podés pedir a Claude Code que construya scripts simples para automatizar partes de tu flujo de trabajo, como extraer colores de una imagen o generar paletas de accesibilidad.</p>
+
+<h4>Cómo empezar con Claude Code</h4>
+<p>Para instalar Claude Code necesitás Node.js en tu computadora. Después es tan simple como abrir la terminal y escribir <code>npm install -g @anthropic-ai/claude-code</code> y luego <code>claude</code> para iniciar. Una vez dentro, podés pedirle que lea archivos de tu proyecto y te ayude a modificarlos — todo en lenguaje natural, sin comandos técnicos.</p>
+
+<div class="tip-box"><div class="box-title">Este curso fue hecho con Claude Code</div><p>El diseño, el contenido, la interactividad y la estructura de este curso fueron construidos iterativamente usando Claude Code. Eli Trozzi describía en lenguaje natural qué quería cambiar, y Claude Code editaba el HTML directamente. Este es exactamente el flujo de trabajo que vas a aprender a usar.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Equipos de diseño en startups</div>
+<div class="case-company">Diseño sin fronteras — la nueva generación de UX designers que codean con IA</div>
+<p>Startups como Linear, Vercel y Loom reportaron que sus diseñadores usan herramientas de IA para código (Claude Code, Cursor) para generar prototipos HTML que van directo a testing con usuarios — saltándose la etapa de development para validación inicial. Esto redujo el ciclo de "diseño → prototipo → test" de 2 semanas a 2 días en casos documentados.</p>
+<div class="case-takeaway">Lección para UX: Claude Code no te convierte en developer — te da superpoderes para construir prototipos funcionales y comunicarte mejor con tu equipo técnico. La barrera entre diseño y código se vuelve más permenable.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio lc.2: Tu primer prototipo con Claude Code (o via Chat)</div>
+<div class="box-desc">Generá un prototipo HTML funcional usando IA — ya sea desde Claude Code o desde Claude Chat con artefactos.</div>
+<ol>
+<li>Elegí una pantalla simple de tu trabajo actual o inventá una: un formulario de onboarding, una dashboard de métricas, o una pantalla de perfil</li>
+<li>Describí la pantalla en detalle: qué elementos tiene, la jerarquía visual, los colores aproximados, el tono</li>
+<li>Opción A (Claude Chat): pedile que genere el HTML/CSS como artefacto y previsualizalo</li>
+<li>Opción B (Claude Code): si tenés Node.js instalado, probá Claude Code en tu terminal y pedile que genere el archivo directamente</li>
+<li>Itará 3 veces: pedí cambios específicos en lenguaje natural (como le dirías a un dev)</li>
+<li>Reflexioná: ¿cuánto tiempo te tomó vs. el wireframe en Figma? ¿Cuándo usarías cada enfoque?</li>
+</ol></div>`},
+
+{id:"lc_3",title:"Claude en equipo: Projects, colaboración y flujos",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Claude for Teams y Enterprise transforma el trabajo colaborativo: un asistente con contexto de todo el equipo, integrado en las herramientas que ya usan (Slack, Notion, email). Aprendé a diseñar flujos de trabajo que multipliquen la productividad de todo el equipo de diseño.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Entender Claude for Teams vs Claude.ai Pro individual</li>
+<li>Conocer las integraciones de Claude con herramientas de colaboración</li>
+<li>Diseñar flujos de trabajo de equipo que incorporen Claude</li>
+<li>Evaluar casos de uso de empresas que usan Claude para colaboración</li>
+</ul></div>
+
+<h4>Claude for Teams y Enterprise</h4>
+<p>Claude for Teams está diseñado para equipos de trabajo. A diferencia del plan individual, permite compartir Projects y contexto entre miembros del equipo, tiene mayor seguridad y privacidad (los datos no se usan para entrenamiento), y ofrece mayor límite de uso. Claude for Enterprise agrega control de acceso, SSO, y cumplimiento de regulaciones como SOC 2.</p>
+
+<table class="info-table"><thead><tr><th>Plan</th><th>Ideal para</th><th>Diferencias clave</th></tr></thead><tbody>
+<tr><td>Claude.ai Free</td><td>Exploración personal</td><td>Uso limitado, sin Projects avanzados</td></tr>
+<tr><td>Claude.ai Pro</td><td>Profesionales individuales</td><td>Uso prioritario, Projects, artefactos</td></tr>
+<tr><td>Claude for Teams</td><td>Equipos de 5+ personas</td><td>Compartir Projects, privacidad de datos</td></tr>
+<tr><td>Claude Enterprise</td><td>Empresas medianas y grandes</td><td>SSO, control de acceso, compliance, API</td></tr>
+</tbody></table>
+
+<h4>Integraciones: Claude donde ya trabajás</h4>
+<p><strong>Slack AI con Claude:</strong> Slack integró Claude en su función AI. Podés hacer preguntas sobre conversaciones pasadas del equipo, generar resúmenes de canales, y pedir borradores de mensajes — todo sin salir de Slack. Para equipos de diseño, es especialmente útil para recuperar decisiones de diseño que se discutieron semanas atrás.</p>
+<p><strong>Notion AI con Claude:</strong> Notion usa Claude como motor de su función AI. En documentos de diseño, podés pedir que mejore redacción, genere tablas comparativas de alternativas de diseño, o resuma reuniones de Design Review. El contexto del documento está siempre disponible para Claude.</p>
+<p><strong>API de Claude para herramientas internas:</strong> Equipos más avanzados usan la API de Anthropic para construir integraciones propias: un bot de Slack que responde preguntas sobre el design system, un plugin de Figma personalizado, o una herramienta interna de análisis de research.</p>
+
+<h4>Flujos de trabajo colaborativo con Claude</h4>
+<p>El mayor valor de Claude en equipos no es reemplazar reuniones — es hacer más eficiente el trabajo entre reuniones. Algunos flujos efectivos: <strong>Design Review asistida</strong> — compartir el brief y los diseños con Claude en el Project, y pedir un análisis de consistencia antes de la review. <strong>Onboarding de nuevos diseñadores</strong> — un Project con todo el contexto del producto y el design system, accesible a través de preguntas en lenguaje natural. <strong>Documentación automática</strong> — después de una decisión de diseño importante, pedirle a Claude que genere la documentación del razonamiento.</p>
+
+<div class="tip-box"><div class="box-title">Tip de implementación</div><p>Antes de adoptar Claude en tu equipo, definí un "Project maestro del producto" con: los principios de diseño, las personas de usuario, el design system, y las decisiones de diseño más importantes. Ese será el punto de partida para todas las conversaciones del equipo con Claude.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Slack</div>
+<div class="case-company">Slack AI — Inteligencia artificial integrada en la plataforma de comunicación</div>
+<p>Slack lanzó Slack AI en 2024, powered by Claude de Anthropic. Las funciones incluyen resumen de canales, búsqueda semántica en el historial, y generación de respuestas. Equipos de diseño en empresas como Shopify y Figma (que usan Slack internamente) reportaron que Slack AI redujo el tiempo de "ponerse al día" después de vacaciones o licencias de días a minutos.</p>
+<div class="case-takeaway">Lección para UX: al diseñar la integración de Claude en herramientas de equipo, el mayor desafío de UX es la confianza. Los usuarios necesitan saber qué hace Claude con su información y cuándo pueden (y no deben) confiar en sus respuestas.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio lc.3: Diseñá un flujo de trabajo de equipo con Claude</div>
+<div class="box-desc">Mapeá cómo incorporarías Claude en el flujo de trabajo de un equipo de diseño real.</div>
+<ol>
+<li>Elegí un equipo de diseño (puede ser el tuyo, uno que conozcas, o un equipo ficticio de 3-5 personas)</li>
+<li>Mapeá el flujo de trabajo actual: desde el brief hasta el handoff, identifica dónde hay fricciones, esperas o tareas repetitivas</li>
+<li>Identifica 3 puntos específicos donde Claude podría agregar valor (investiga los planes y herramientas disponibles)</li>
+<li>Diseñá el "Project maestro": ¿qué información pondría en el Project? ¿Quién lo mantendría?</li>
+<li>Creá una propuesta de 1 página en Figma o Notion: "Cómo vamos a usar Claude en nuestro equipo de diseño"</li>
+<li>Bonus: investiga si las herramientas que ya usa el equipo tienen integración con Claude (Slack, Notion, Jira, etc.)</li>
+</ol></div>`},
+
+{id:"lc_4",title:"Skills avanzadas: personalización y automatización",dur:"1.5h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Las Skills de Claude son comandos personalizados que automatizan flujos repetitivos. Combinadas con la API y herramientas como Claude Code, permiten a diseñadores construir sus propias automatizaciones — sin ser developers. El futuro del diseño es saber orquestar IA a tu medida.</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Entender qué son las Skills en Claude Code y cómo funcionan</li>
+<li>Crear Skills personalizadas para tareas de diseño frecuentes</li>
+<li>Conocer los fundamentos de la API de Claude para integraciones</li>
+<li>Diseñar automatizaciones UX con Claude como motor</li>
+</ul></div>
+
+<h4>¿Qué son las Skills en Claude Code?</h4>
+<p>Las Skills son comandos personalizados que podés crear en Claude Code para automatizar tareas repetitivas. Funcionan como "atajos" — en lugar de escribir un prompt largo cada vez, creás una Skill que lo ejecuta con un comando corto. Para diseñadores UX, las Skills son especialmente potentes para flujos que hacés todas las semanas.</p>
+
+<table class="info-table"><thead><tr><th>Skill ejemplo</th><th>Qué hace</th><th>Tiempo ahorrado</th></tr></thead><tbody>
+<tr><td>/ux-review</td><td>Analiza una pantalla o flujo y genera un informe de usabilidad estructurado</td><td>~2h por review</td></tr>
+<tr><td>/persona-gen</td><td>Genera 3 personas detalladas a partir de datos de research</td><td>~3h por proyecto</td></tr>
+<tr><td>/microcopy</td><td>Genera 5 variaciones de copy para un elemento UI con el tono de voz del producto</td><td>~45min por elemento</td></tr>
+<tr><td>/brief-parse</td><td>Analiza un brief y extrae: objetivos, usuarios, KPIs, riesgos y próximos pasos</td><td>~1h por proyecto</td></tr>
+</tbody></table>
+
+<h4>Cómo crear una Skill en Claude Code</h4>
+<p>Las Skills se definen en un archivo de configuración de Claude Code. Básicamente es un prompt template que podés llamar con un slash command. El proceso es: definís el nombre de la Skill, el prompt que va a ejecutar, y opcionalmente parámetros que podés pasarle. Por ejemplo, <code>/analyze-ux figma-screenshot.png</code> podría tomar el screenshot y ejecutar automáticamente un análisis de heurísticas de Nielsen.</p>
+
+<h4>La API de Claude: integraciones personalizadas</h4>
+<p>Para equipos más avanzados, la API de Anthropic permite integrar Claude directamente en herramientas propias. Casos de uso para diseño: un plugin de Figma que analiza accessibility de tu diseño en tiempo real usando Claude, un script que procesa automáticamente las respuestas de encuestas y genera insights, o un chatbot interno que responde preguntas sobre el design system.</p>
+<p>La API usa un modelo de precios por tokens (cantidad de texto procesado). Para la mayoría de los casos de uso de diseño, los costos son muy accesibles — analizar una entrevista de investigación entera con Claude claude-haiku-4-5 cuesta fracciones de un centavo de dólar.</p>
+
+<h4>Extended Thinking: razonamiento profundo</h4>
+<p>Claude tiene una función de "extended thinking" donde el modelo razona en voz alta antes de responder. Para diseñadores, esto es valioso cuando necesitás que Claude analice problemas complejos de UX: conflictos entre necesidades de usuarios, trade-offs de accesibilidad vs. estética, o estrategias de personalización ética.</p>
+
+<div class="tip-box"><div class="box-title">Tip: Tu biblioteca de prompts como Skills</div><p>Si ya tenés prompts que funcionan bien en tu trabajo diario, convertirlos en Skills de Claude Code es el siguiente paso natural. Empezá con los 3 prompts que más repetís y convertílos en comandos reutilizables. Esa biblioteca de Skills se vuelve uno de tus activos profesionales más valiosos.</p></div>
+
+<div class="case-study"><div class="case-label">Caso real: Equipos de diseño con Claude API</div>
+<div class="case-company">Empresas que construyeron herramientas internas con Claude</div>
+<p>Empresas como Asana (gestión de proyectos) y Zoom integraron Claude API en sus productos internos de diseño. El equipo de design ops de una fintech latinoamericana (caso anónimo) construyó con Claude API un "asistente de design review" que analiza screenshots de Figma y genera automáticamente un checklist de consistencia con el design system — ahorrando 3h de revisión manual por sprint.</p>
+<div class="case-takeaway">Lección para UX: la API de Claude no es solo para developers. Un diseñador con conocimiento básico de prompting puede construir herramientas propias que automatizan partes tediosas del trabajo. El límite lo pone tu imaginación, no el código.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio lc.4: Diseñá tu biblioteca de Skills UX</div>
+<div class="box-desc">Creá un set de prompts-Skills personalizados para tu flujo de trabajo.</div>
+<ol>
+<li>Listá las 10 tareas de diseño que más repetís en tu trabajo (síntesis de research, generación de copy, análisis de competidores, documentación, etc.)</li>
+<li>Para las 3 más frecuentes, escribí un prompt "maestro" — detallado, con contexto, formato de output esperado y ejemplos</li>
+<li>Probá cada prompt en Claude Chat y refinalo hasta que el output sea profesional y accionable</li>
+<li>Si tenés acceso a Claude Code, convertílos en Skills siguiendo la documentación oficial</li>
+<li>Calculá el tiempo que ahorrarías por semana si usaras estas Skills consistentemente</li>
+<li>Compartí tu biblioteca de prompts con al menos una persona de tu equipo y recibí feedback</li>
+</ol></div>`},
+
+{id:"lc_5",title:"Casos reales: empresas que integran Claude",dur:"2h",content:`
+<div class="tldr"><div class="tldr-label">TL;DR</div><p>Anthropic tiene más de 500 clientes enterprise usando Claude. Desde Slack y Notion hasta empresas de salud y finanzas, Claude está transformando productos en todas las industrias. Analizá estos casos con ojos de diseñador: ¿cómo resolvieron el UX de integrar IA? ¿Qué decisiones tomaron y por qué?</p></div>
+
+<div class="objectives"><h4>Objetivos de aprendizaje</h4><ul>
+<li>Conocer casos reales de empresas que integran Claude en sus productos</li>
+<li>Analizar las decisiones de UX detrás de integraciones de IA exitosas</li>
+<li>Identificar patrones de diseño en productos con Claude embebido</li>
+<li>Extraer lecciones aplicables a tu propio trabajo de diseño</li>
+</ul></div>
+<div class="lesson-img"><svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gc5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#D97757;stop-opacity:.07"/><stop offset="100%" style="stop-color:#496BE3;stop-opacity:.05"/></linearGradient></defs><rect fill="url(#gc5)" width="800" height="400" rx="12"/><circle cx="400" cy="200" r="55" fill="none" stroke="#D97757" stroke-width="2" opacity=".6"/><text x="400" y="195" text-anchor="middle" font-family="system-ui" font-size="12" font-weight="bold" fill="#D97757" opacity=".9">Claude</text><text x="400" y="212" text-anchor="middle" font-family="system-ui" font-size="10" fill="#D97757" opacity=".7">API</text><text x="170" y="80" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Slack AI</text><text x="630" y="80" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Notion AI</text><text x="120" y="220" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Zoom AI</text><text x="680" y="220" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Salesforce</text><text x="200" y="340" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">DuckDuckGo</text><text x="600" y="340" text-anchor="middle" font-family="system-ui" font-size="12" fill="#496BE3" opacity=".8">Asana AI</text><line x1="350" y1="175" x2="230" y2="100" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><line x1="450" y1="175" x2="570" y2="100" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><line x1="345" y1="200" x2="180" y2="200" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><line x1="455" y1="200" x2="620" y2="200" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><line x1="365" y1="230" x2="260" y2="320" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><line x1="435" y1="230" x2="540" y2="320" stroke="#D97757" stroke-width="1" stroke-dasharray="4" opacity=".4"/><text x="400" y="385" text-anchor="middle" font-family="system-ui" font-size="12" fill="#8888a0">El ecosistema de productos powered by Claude</text></svg></div>
+
+<h4>Slack AI — Comunicación que se auto-organiza</h4>
+<p>Slack AI, lanzado en 2024 y powered by Claude, tiene tres funciones principales: resúmenes de canales (qué pasó en #general mientras estabas fuera), búsqueda semántica (encontrá conversaciones por concepto, no solo por palabra exacta), y Thread Summaries. El equipo de diseño de Slack tomó una decisión de UX importante: Claude no responde en nombre de personas — solo resume y busca. Esto preserva la autenticidad de las conversaciones.</p>
+
+<h4>Notion AI — Documentos que piensan</h4>
+<p>Notion integró Claude en toda la plataforma. Podés pedirle que mejore un documento, genere borradores, cree tablas, o resuma páginas largas. La decisión de UX más interesante: Notion AI siempre trabaja en el contexto de la página o base de datos actual — nunca necesitás "pegar" el contexto, ya está ahí. Para diseñadores que documentan en Notion, esto multiplica la velocidad de generación de documentación de diseño.</p>
+
+<h4>Zoom AI Companion — Reuniones más productivas</h4>
+<p>Zoom AI Companion (que usa varios modelos incluyendo Claude) genera resúmenes de reuniones, captura action items, y puede responder preguntas sobre reuniones pasadas. Para equipos de diseño, el caso más valioso es el resumen de Design Reviews: en vez de que alguien tome notas manualmente, el AI genera automáticamente los próximos pasos y las decisiones tomadas.</p>
+
+<h4>Salesforce Einstein — CRM que entiende el negocio</h4>
+<p>Salesforce integró Claude en Einstein AI, su capa de inteligencia para CRM. Las decisiones de UX son fascinantes: Einstein no da respuestas genéricas, siempre tienen contexto del cliente específico, el negocio específico, y el historial de la relación. Es un ejemplo perfecto de "IA embebida en contexto" — el modelo de integración más difícil de diseñar pero el más valioso.</p>
+
+<h4>Patrones de diseño en integraciones exitosas de Claude</h4>
+<p>Analizando estos casos, emergen patrones de UX comunes en integraciones exitosas de IA: <strong>Contexto siempre presente</strong> — Claude nunca trabaja "en blanco", siempre tiene el contexto del usuario, el documento o la conversación. <strong>Acciones reversibles</strong> — ninguna acción de AI es irreversible; siempre podés rechazar una sugerencia o editar un resumen. <strong>Transparencia del origen</strong> — queda claro qué fue generado por AI y qué escribió un humano. <strong>Opt-in no opt-out</strong> — la IA no interrumpe el flujo normal; el usuario la invoca cuando la necesita.</p>
+
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/MsEHKOCCFP8" title="Anthropic CEO Dario Amodei on Claude and the future of AI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="video-label">Anthropic — Claude y el futuro de la IA en empresas</div>
+
+<div class="case-study"><div class="case-label">Caso real: DuckDuckGo</div>
+<div class="case-company">DuckDuckGo AI Chat — privacidad primero en la era de la IA</div>
+<p>DuckDuckGo integró Claude (junto con otros modelos) en su función AI Chat. La propuesta de valor es única: podés conversar con Claude sin que Anthropic guarde tu historial y sin que se use para entrenamiento. El equipo de diseño de DuckDuckGo tomó una decisión radical: mostrar siempre qué modelo estás usando y explicar exactamente cómo funciona la privacidad. Transparencia total como ventaja competitiva de diseño.</p>
+<div class="case-takeaway">Lección para UX: en la era de la IA, la privacidad y la transparencia son features de diseño, no solo cuestiones técnicas o legales. Los usuarios toman decisiones basadas en cuánto entienden qué hace la IA con su información.</div></div>
+
+<div class="exercise-box"><div class="box-title">Ejercicio lc.5: Análisis de integración de Claude en un producto</div>
+<div class="box-desc">Analizá en profundidad la experiencia de usuario de un producto que integra Claude.</div>
+<ol>
+<li>Elegí uno de los productos mencionados (Slack AI, Notion AI, Zoom AI, o buscá otro) y accedé a su versión gratuita o trial</li>
+<li>Usá la función de IA del producto durante 30 minutos en tareas reales o simuladas</li>
+<li>Mapeá el UX de la integración: ¿cómo se activa la IA? ¿Cómo muestra los resultados? ¿Cómo maneja errores? ¿Cómo comunica qué es IA y qué es humano?</li>
+<li>Evaluá contra los 4 patrones de diseño (Contexto presente, Reversibilidad, Transparencia, Opt-in)</li>
+<li>Identificá 2 decisiones de UX que tomarías diferente y justificá por qué</li>
+<li>Diseñá en Figma un "rediseño de la integración AI" para una de las funciones, aplicando lo aprendido en el curso</li>
+</ol></div>`}
+]});
+
 const MODULE_TLDRS = {"m1":"En este módulo aprenderás qué es la IA, sus tipos (ML, Deep Learning, LLMs, IA Generativa), el ecosistema completo de herramientas para diseñadores, y cómo la IA está transformando cada fase del proceso de diseño (Double Diamond). Saldrás con tu propio AI Design Stack configurado.","m2":"Dominarás el arte de comunicarte con modelos de IA usando el framework CRAFT (Contexto, Rol, Acción, Formato, Tono), técnicas avanzadas de prompting (few-shot, chain-of-thought, iteración), y construirás una biblioteca de prompts específicos para UX/UI que usarás en tu día a día.","m3":"Explorarás herramientas de IA generativa (Midjourney, DALL-E, Firefly, Galileo AI) para crear UI, ilustraciones, iconografía y sistemas visuales completos. Aprenderás a generar assets profesionales, crear variaciones de diseño en minutos, e integrar IA en tu flujo visual.","m4":"La IA revoluciona la investigación de usuarios: aprenderás a analizar entrevistas con LLMs, crear personas basadas en datos reales, sintetizar hallazgos cualitativos automáticamente, y usar herramientas como Dovetail y Maze para research asistido por IA.","m5":"Diseñarás interfaces conversacionales efectivas (chatbots, asistentes de voz), comprenderás los principios de diseño conversacional, y aprenderás a crear flujos que integran IA de forma natural en la experiencia del usuario.","m6":"Aprenderás a diseñar experiencias que se adaptan al usuario en tiempo real: sistemas de recomendación, interfaces adaptativas, contenido personalizado. Entenderás los modelos de datos detrás de la personalización y sus implicaciones éticas.","m7":"Descubrirás cómo la IA puede hacer productos más accesibles e inclusivos: desde generación automática de alt-text hasta interfaces adaptativas para diversas capacidades. Combinarás WCAG con IA para crear diseños universales.","m8":"Integrarás la IA en tu flujo de trabajo diario en Figma: plugins de IA, automatización de tareas repetitivas, generación de design tokens, documentación automática, y optimización del handoff design-to-code.","m9":"Abordarás los desafíos éticos de diseñar con IA: sesgo algorítmico, transparencia, privacidad, impacto social. Aprenderás frameworks para evaluar y mitigar riesgos éticos en productos que usan IA.","m10":"Culminarás el programa con estrategia de producto con IA, construcción de tu portfolio profesional mostrando proyectos IA, y un proyecto capstone integrador que demuestre todas las competencias adquiridas."};
 MODULE_TLDRS["m_tools"] = "Tu guía completa de herramientas IA organizadas por función: writing, visual, research, flujos y prototipado. Con precios actualizados y recomendaciones de cuándo usar cada una según tu necesidad específica.";
+MODULE_TLDRS["m_claude"] = "Dominá Claude en profundidad: desde Claude.ai Chat con Projects y memoria persistente, hasta Claude Code para prototipos sin código. Integraciones enterprise, Skills personalizadas y casos reales de empresas como Slack, Notion y Zoom que transformaron su trabajo con Claude.";
+
+// ============ LESSON REFS ============
+const LESSON_REFS = {
+"l1_1":[
+{type:"Paper",author:"LeCun, Y., Bengio, Y. & Hinton, G.",title:"Deep learning",source:"Nature, 521, 436–444",year:"2015"},
+{type:"Paper",author:"Vaswani, A. et al.",title:"Attention Is All You Need",source:"NeurIPS 2017, arXiv:1706.03762",year:"2017"},
+{type:"Paper",author:"Brown, T. et al.",title:"Language Models are Few-Shot Learners (GPT-3)",source:"NeurIPS 2020, arXiv:2005.14165",year:"2020"},
+{type:"Paper",author:"Bender, E. M. et al.",title:"On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?",source:"FAccT 2021",year:"2021"},
+{type:"Video",author:"3Blue1Brown",title:"But what is a neural network?",source:"youtube.com/watch?v=aircAruvnKk",year:"2017"}
+],
+"l1_2":[
+{type:"Reporte",author:"Nielsen Norman Group",title:"AI Writing Assistants: UX Research Report",source:"nngroup.com",year:"2023"},
+{type:"Blog",author:"Figma Team",title:"Introducing AI features in Figma — Config 2024",source:"figma.com/blog",year:"2024"},
+{type:"Reporte",author:"McKinsey & Company",title:"The state of AI in 2023: Generative AI's breakout year",source:"mckinsey.com",year:"2023"},
+{type:"Herramienta",author:"Adobe",title:"Adobe Firefly: Generative AI for Creative Cloud",source:"adobe.com/products/firefly",year:"2024"}
+],
+"l1_3":[
+{type:"Framework",author:"Design Council (UK)",title:"The Double Diamond Design Process Model",source:"designcouncil.org.uk",year:"2022"},
+{type:"Reporte",author:"McKinsey Global Institute",title:"The economic potential of generative AI",source:"mckinsey.com",year:"2023"},
+{type:"Blog",author:"Airbnb Engineering",title:"Sketching Interfaces: Generating code from low-fidelity wireframes",source:"medium.com/airbnb-engineering",year:"2017"},
+{type:"Libro",author:"Norman, D.",title:"The Design of Everyday Things (revised ed.)",source:"Basic Books",year:"2013"}
+],
+"l2_1":[
+{type:"Paper",author:"Wei, J. et al.",title:"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",source:"NeurIPS 2022, arXiv:2201.11903",year:"2022"},
+{type:"Paper",author:"Brown, T. et al.",title:"Language Models are Few-Shot Learners",source:"NeurIPS 2020, arXiv:2005.14165",year:"2020"},
+{type:"Paper",author:"White, J. et al.",title:"A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT",source:"arXiv:2302.11382",year:"2023"},
+{type:"Blog",author:"Duolingo Engineering",title:"Duolingo Max: GPT-4 powers Explain My Answer and Roleplay",source:"blog.duolingo.com",year:"2023"}
+],
+"l2_2":[
+{type:"Paper",author:"Ramesh, A. et al.",title:"Hierarchical Text-Conditional Image Generation with CLIP Latents (DALL-E 2)",source:"arXiv:2204.06125",year:"2022"},
+{type:"Paper",author:"Rombach, R. et al.",title:"High-Resolution Image Synthesis with Latent Diffusion Models",source:"CVPR 2022, arXiv:2112.10752",year:"2022"},
+{type:"Docs",author:"Midjourney",title:"Midjourney Documentation — Prompting Guide",source:"docs.midjourney.com",year:"2024"},
+{type:"Paper",author:"Saharia, C. et al.",title:"Photorealistic Text-to-Image Diffusion Models (Imagen)",source:"NeurIPS 2022, arXiv:2205.11487",year:"2022"}
+],
+"l2_3":[
+{type:"Libro",author:"Redish, J.",title:"Letting Go of the Words: Writing Web Content that Works",source:"Morgan Kaufmann",year:"2012"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"UX Writing: Study Guide",source:"nngroup.com",year:"2023"},
+{type:"Libro",author:"Shreiber, K.",title:"Microcopy: The Complete Guide",source:"Kinneret Yifrah",year:"2017"},
+{type:"Paper",author:"Ouyang, L. et al.",title:"Training language models to follow instructions with human feedback (InstructGPT)",source:"NeurIPS 2022, arXiv:2203.02155",year:"2022"}
+],
+"l3_1":[
+{type:"Paper",author:"Dhariwal, P. & Nichol, A.",title:"Diffusion Models Beat GANs on Image Synthesis",source:"NeurIPS 2021, arXiv:2105.05233",year:"2021"},
+{type:"Herramienta",author:"Galileo AI",title:"Galileo — Text-to-UI generation",source:"usegalileo.ai",year:"2023"},
+{type:"Herramienta",author:"Uizard",title:"Uizard Autodesigner",source:"uizard.io",year:"2024"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"AI-Assisted UI Generation: Current State",source:"nngroup.com",year:"2024"}
+],
+"l3_2":[
+{type:"Libro",author:"Frost, B.",title:"Atomic Design",source:"atomicdesign.bradfrost.com",year:"2016"},
+{type:"Libro",author:"Kholmatova, A.",title:"Design Systems",source:"Smashing Magazine",year:"2017"},
+{type:"Blog",author:"Figma Team",title:"Building design systems with AI",source:"figma.com/blog",year:"2024"},
+{type:"Herramienta",author:"Tokens Studio",title:"Design Tokens for Figma",source:"tokens.studio",year:"2024"}
+],
+"l3_3":[
+{type:"Paper",author:"Ramesh, A. et al.",title:"Zero-Shot Text-to-Image Generation (DALL-E)",source:"ICML 2021, arXiv:2102.12092",year:"2021"},
+{type:"Herramienta",author:"Adobe",title:"Adobe Firefly: Commercial-safe generative AI",source:"firefly.adobe.com",year:"2024"},
+{type:"Herramienta",author:"Midjourney",title:"Midjourney v6 — State of the art image generation",source:"midjourney.com",year:"2024"},
+{type:"Paper",author:"Ho, J. et al.",title:"Denoising Diffusion Probabilistic Models",source:"NeurIPS 2020, arXiv:2006.11239",year:"2020"}
+],
+"l4_1":[
+{type:"Paper",author:"Braun, V. & Clarke, V.",title:"Using thematic analysis in psychology",source:"Qualitative Research in Psychology, 3(2), 77–101",year:"2006"},
+{type:"Libro",author:"Portigal, S.",title:"Interviewing Users: How to Uncover Compelling Insights",source:"Rosenfeld Media",year:"2013"},
+{type:"Herramienta",author:"Dovetail",title:"AI-powered qualitative research analysis",source:"dovetail.com",year:"2024"},
+{type:"Paper",author:"Yin, R. K.",title:"Qualitative Research from Start to Finish",source:"Guilford Press",year:"2016"}
+],
+"l4_2":[
+{type:"Libro",author:"Nielsen, J.",title:"Usability Engineering",source:"Academic Press",year:"1994"},
+{type:"Herramienta",author:"Maze",title:"AI-powered UX research and testing",source:"maze.co",year:"2024"},
+{type:"Reporte",author:"Baymard Institute",title:"E-Commerce UX Research Findings",source:"baymard.com",year:"2024"},
+{type:"Paper",author:"Kohavi, R. et al.",title:"Controlled experiments on the web: survey and practical guide",source:"Data Mining and Knowledge Discovery, 18(1), 140–181",year:"2009"}
+],
+"l4_3":[
+{type:"Libro",author:"Cooper, A.",title:"The Inmates Are Running the Asylum",source:"Sams Publishing",year:"1999"},
+{type:"Libro",author:"Richardson, A.",title:"Using Customer Journey Maps to Improve Customer Experience",source:"Harvard Business Review",year:"2010"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"Journey Mapping 101",source:"nngroup.com",year:"2019"},
+{type:"Herramienta",author:"Notably",title:"AI research synthesis and personas",source:"notably.ai",year:"2024"}
+],
+"l5_1":[
+{type:"Libro",author:"Pearl, C.",title:"Designing Voice User Interfaces",source:"O'Reilly Media",year:"2016"},
+{type:"Framework",author:"Google PAIR",title:"People + AI Guidebook — Conversational AI Design",source:"pair.withgoogle.com",year:"2023"},
+{type:"Paper",author:"Fitzpatrick, K. K. et al.",title:"Delivering Cognitive Behavior Therapy to Young Adults with Woebot",source:"JMIR Mental Health, 4(2)",year:"2017"},
+{type:"Libro",author:"Eyal, N.",title:"Hooked: How to Build Habit-Forming Products",source:"Portfolio/Penguin",year:"2014"}
+],
+"l5_2":[
+{type:"Reporte",author:"OpenAI",title:"GPT-4 Technical Report (multimodal capabilities)",source:"arXiv:2303.08774",year:"2023"},
+{type:"Reporte",author:"Anthropic",title:"Claude's Character and Multimodal Capabilities",source:"anthropic.com",year:"2024"},
+{type:"Paper",author:"Baltrusaitis, T. et al.",title:"Multimodal Machine Learning: A Survey and Taxonomy",source:"IEEE TPAMI, 41(2), 423–443",year:"2019"},
+{type:"Framework",author:"Google Material Design",title:"Material Design 3 — Adaptive & Expressive UI",source:"m3.material.io",year:"2024"}
+],
+"l5_3":[
+{type:"Reporte",author:"GitHub",title:"The economic impact of the AI-powered developer lifecycle",source:"github.blog",year:"2023"},
+{type:"Paper",author:"Li, X. et al.",title:"Generative UI: Towards Personalized, Context-Aware Interfaces",source:"CHI 2024",year:"2024"},
+{type:"Reporte",author:"Gartner",title:"Gartner Hype Cycle for Emerging Technologies",source:"gartner.com",year:"2023"},
+{type:"Libro",author:"Hoekman, R.",title:"Designing the Obvious: A Common Sense Approach to Web & Mobile Application Design",source:"New Riders",year:"2010"}
+],
+"l6_1":[
+{type:"Paper",author:"Resnick, P. et al.",title:"GroupLens: An Open Architecture for Collaborative Filtering",source:"CSCW 1994",year:"1994"},
+{type:"Paper",author:"Adomavicius, G. & Tuzhilin, A.",title:"Toward the Next Generation of Recommender Systems",source:"IEEE Transactions on Knowledge and Data Engineering, 17(6)",year:"2005"},
+{type:"Blog",author:"Netflix Technology Blog",title:"The Netflix Recommender System: Algorithms, Business Value and Innovation",source:"netflixtechblog.com",year:"2015"},
+{type:"Libro",author:"Ricci, F. et al.",title:"Recommender Systems Handbook",source:"Springer",year:"2011"}
+],
+"l6_2":[
+{type:"Libro",author:"Ricci, F. et al.",title:"Recommender Systems Handbook (2nd ed.)",source:"Springer",year:"2022"},
+{type:"Paper",author:"Covington, P. et al.",title:"Deep Neural Networks for YouTube Recommendations",source:"RecSys 2016",year:"2016"},
+{type:"Paper",author:"Rendle, S.",title:"Factorization Machines",source:"IEEE ICDM 2010",year:"2010"},
+{type:"Blog",author:"Spotify Engineering",title:"For Your Ears Only: Personalizing Spotify Home with Machine Learning",source:"engineering.atspotify.com",year:"2020"}
+],
+"l6_3":[
+{type:"Paper",author:"Kohavi, R. et al.",title:"Online Controlled Experiments at Large Scale",source:"KDD 2013",year:"2013"},
+{type:"Libro",author:"Kohavi, R. et al.",title:"Trustworthy Online Controlled Experiments",source:"Cambridge University Press",year:"2020"},
+{type:"Blog",author:"Booking.com",title:"How Booking.com Runs 1,000+ A/B Tests Per Year",source:"booking.ai",year:"2023"},
+{type:"Reporte",author:"VWO",title:"A/B Testing Guide and Best Practices",source:"vwo.com",year:"2024"}
+],
+"l7_1":[
+{type:"Estándar",author:"W3C",title:"Web Content Accessibility Guidelines (WCAG) 2.1",source:"w3.org/TR/WCAG21",year:"2018"},
+{type:"Reporte",author:"WebAIM",title:"The WebAIM Million: Annual Accessibility Report",source:"webaim.org/projects/million",year:"2024"},
+{type:"Libro",author:"Slatin, J. & Rush, S.",title:"Maximum Accessibility",source:"Addison-Wesley",year:"2003"},
+{type:"Herramienta",author:"Deque Systems",title:"axe-core: Accessibility testing engine",source:"github.com/dequelabs/axe-core",year:"2024"}
+],
+"l7_2":[
+{type:"Framework",author:"Microsoft",title:"Microsoft Inclusive Design Toolkit",source:"inclusive.microsoft.design",year:"2016"},
+{type:"Paper",author:"Ladner, R.",title:"Design for User Empowerment",source:"Interactions, ACM, 22(2), 24–29",year:"2015"},
+{type:"Libro",author:"Wachter-Boettcher, S.",title:"Technically Wrong: Sexist Apps, Biased Algorithms, and Other Threats of Toxic Tech",source:"W.W. Norton",year:"2017"},
+{type:"Reporte",author:"Accenture",title:"Getting to Equal: The Disability Inclusion Advantage",source:"accenture.com",year:"2018"}
+],
+"l7_3":[
+{type:"Herramienta",author:"Stark",title:"Accessibility plugin for Figma, Sketch and Adobe XD",source:"getstark.co",year:"2024"},
+{type:"Herramienta",author:"Deque",title:"axe DevTools Pro",source:"deque.com",year:"2024"},
+{type:"Herramienta",author:"WebAIM",title:"WAVE Web Accessibility Evaluation Tool",source:"wave.webaim.org",year:"2024"},
+{type:"Estándar",author:"W3C",title:"ARIA Authoring Practices Guide",source:"w3.org/WAI/ARIA/apg",year:"2024"}
+],
+"l8_1":[
+{type:"Blog",author:"Figma Team",title:"Config 2024: Everything announced — AI features",source:"figma.com/blog",year:"2024"},
+{type:"Herramienta",author:"Figma",title:"Figma AI — Native AI features documentation",source:"figma.com/ai",year:"2024"},
+{type:"Herramienta",author:"Autoname",title:"Autoname for Figma — AI layer naming",source:"autoname.app",year:"2024"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"Figma and AI: Current Capabilities and Future Directions",source:"nngroup.com",year:"2024"}
+],
+"l8_2":[
+{type:"Herramienta",author:"Vercel",title:"v0 by Vercel — Generate UI with text",source:"v0.dev",year:"2024"},
+{type:"Herramienta",author:"Locofy",title:"Locofy Lightning — Figma to production code",source:"locofy.ai",year:"2024"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"Design Handoff: The Collaboration UX Challenge",source:"nngroup.com",year:"2023"},
+{type:"Paper",author:"Beltramelli, T.",title:"pix2code: Generating Code from a Graphical User Interface Screenshot",source:"arXiv:1705.07962",year:"2017"}
+],
+"l8_3":[
+{type:"Herramienta",author:"Storybook",title:"Storybook — Component documentation with AI",source:"storybook.js.org",year:"2024"},
+{type:"Herramienta",author:"Confluence",title:"Atlassian Intelligence in Confluence",source:"atlassian.com",year:"2024"},
+{type:"Libro",author:"Kalbach, J.",title:"Mapping Experiences: A Complete Guide to Customer Alignment",source:"O'Reilly Media",year:"2020"},
+{type:"Reporte",author:"Atlassian",title:"The State of Teams 2024",source:"atlassian.com",year:"2024"}
+],
+"l9_1":[
+{type:"Paper",author:"Buolamwini, J. & Gebru, T.",title:"Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification",source:"FAccT 2018",year:"2018"},
+{type:"Libro",author:"O'Neil, C.",title:"Weapons of Math Destruction",source:"Crown Books",year:"2016"},
+{type:"Paper",author:"Obermeyer, Z. et al.",title:"Dissecting racial bias in an algorithm used to manage the health of populations",source:"Science, 366(6464), 447–453",year:"2019"},
+{type:"Libro",author:"Benjamin, R.",title:"Race After Technology: Abolitionist Tools for the New Jim Code",source:"Polity Press",year:"2019"}
+],
+"l9_2":[
+{type:"Libro",author:"Shneiderman, B.",title:"Human-Centered AI",source:"Oxford University Press",year:"2022"},
+{type:"Ley",author:"Unión Europea",title:"EU AI Act — Regulation on Artificial Intelligence",source:"eur-lex.europa.eu",year:"2024"},
+{type:"Reporte",author:"NIST",title:"Artificial Intelligence Risk Management Framework (AI RMF 1.0)",source:"nist.gov/airmf",year:"2023"},
+{type:"Paper",author:"Doshi-Velez, F. & Kim, B.",title:"Towards a Rigorous Science of Interpretable Machine Learning",source:"arXiv:1702.08608",year:"2017"}
+],
+"l9_3":[
+{type:"Paper",author:"Jobin, A. et al.",title:"The global landscape of AI ethics guidelines",source:"Nature Machine Intelligence, 1, 389–399",year:"2019"},
+{type:"Paper",author:"Bai, Y. et al. (Anthropic)",title:"Constitutional AI: Harmlessness from AI Feedback",source:"arXiv:2212.08073",year:"2022"},
+{type:"Ley",author:"Unión Europea",title:"EU AI Act (Regulation 2024/1689)",source:"eur-lex.europa.eu",year:"2024"},
+{type:"Framework",author:"IEEE",title:"Ethically Aligned Design (EAD) — A Vision for Prioritizing Human Well-being",source:"standards.ieee.org",year:"2019"}
+],
+"l10_1":[
+{type:"Reporte",author:"McKinsey & Company",title:"The state of AI in 2023 — Generative AI",source:"mckinsey.com",year:"2023"},
+{type:"Libro",author:"Ries, E.",title:"The Lean Startup",source:"Crown Business",year:"2011"},
+{type:"Libro",author:"Gothelf, J. & Seiden, J.",title:"Lean UX: Designing Great Products with Agile Teams",source:"O'Reilly Media",year:"2021"},
+{type:"Reporte",author:"Andreessen Horowitz (a16z)",title:"AI Canon — Essential reading for AI builders",source:"a16z.com",year:"2023"}
+],
+"l10_2":[
+{type:"Reporte",author:"Nielsen Norman Group",title:"UX Portfolio Guide: How to Get Hired in UX",source:"nngroup.com",year:"2023"},
+{type:"Libro",author:"Cao, J.",title:"The Designer's Guide to Building a Portfolio",source:"UXPin",year:"2020"},
+{type:"Blog",author:"Cofolios",title:"Top UX Portfolios — What makes a great portfolio",source:"cofolios.com",year:"2024"},
+{type:"Reporte",author:"LinkedIn",title:"Jobs on the Rise 2024 — AI-related design roles",source:"linkedin.com",year:"2024"}
+],
+"l10_3":[
+{type:"Libro",author:"IDEO.org",title:"The Field Guide to Human-Centered Design",source:"designkit.org",year:"2015"},
+{type:"Framework",author:"Google Design",title:"Material Design — Human-centered AI design patterns",source:"material.io",year:"2024"},
+{type:"Reporte",author:"Interaction Design Foundation",title:"AI UX: Designing Artificial Intelligence Products",source:"interaction-design.org",year:"2024"},
+{type:"Libro",author:"Houde, S. & Hill, C.",title:"What do Prototypes Prototype?",source:"Handbook of Human-Computer Interaction, Elsevier",year:"1997"}
+],
+"lt_1":[
+{type:"Herramienta",author:"Anthropic",title:"Claude — AI assistant for writing and analysis",source:"claude.ai",year:"2024"},
+{type:"Herramienta",author:"Jasper",title:"Jasper AI — AI writing for marketing teams",source:"jasper.ai",year:"2024"},
+{type:"Herramienta",author:"Copy.ai",title:"Copy.ai — AI-powered copywriting",source:"copy.ai",year:"2024"},
+{type:"Reporte",author:"Nielsen Norman Group",title:"AI Writing Assistants: UX Research Report",source:"nngroup.com",year:"2023"}
+],
+"lt_2":[
+{type:"Herramienta",author:"Midjourney",title:"Midjourney v6 Documentation",source:"docs.midjourney.com",year:"2024"},
+{type:"Herramienta",author:"Adobe",title:"Adobe Firefly — Generative AI for creatives",source:"firefly.adobe.com",year:"2024"},
+{type:"Herramienta",author:"Stable Diffusion",title:"Stability AI — Open source image generation",source:"stability.ai",year:"2024"},
+{type:"Paper",author:"Ramesh, A. et al.",title:"Zero-Shot Text-to-Image Generation (DALL-E)",source:"ICML 2021, arXiv:2102.12092",year:"2021"}
+],
+"lt_3":[
+{type:"Herramienta",author:"Dovetail",title:"Dovetail — AI-powered research repository",source:"dovetail.com",year:"2024"},
+{type:"Herramienta",author:"Maze",title:"Maze — Remote user testing with AI",source:"maze.co",year:"2024"},
+{type:"Herramienta",author:"Otter.ai",title:"Otter.ai — AI transcription for interviews",source:"otter.ai",year:"2024"},
+{type:"Herramienta",author:"Notably",title:"Notably — AI synthesis for UX research",source:"notably.ai",year:"2024"}
+],
+"lt_4":[
+{type:"Herramienta",author:"Vercel",title:"v0 — Generate UI from text prompts",source:"v0.dev",year:"2024"},
+{type:"Herramienta",author:"Locofy",title:"Locofy Lightning — Design to production code",source:"locofy.ai",year:"2024"},
+{type:"Herramienta",author:"Whimsical",title:"Whimsical AI — Flowcharts and wireframes",source:"whimsical.com",year:"2024"},
+{type:"Herramienta",author:"FigJam AI",title:"FigJam AI — Collaborative brainstorming",source:"figma.com/figjam",year:"2024"}
+],
+"lc_1":[
+{type:"Docs",author:"Anthropic",title:"Claude.ai — Using Projects and Memory",source:"support.anthropic.com",year:"2024"},
+{type:"Reporte",author:"Anthropic",title:"Claude's Character — How Claude approaches its work",source:"anthropic.com",year:"2024"},
+{type:"Blog",author:"Anthropic",title:"Introducing Projects: Long-term memory for Claude",source:"anthropic.com/blog",year:"2024"},
+{type:"Paper",author:"Anthropic",title:"The Claude 3 Model Family: Opus, Sonnet, Haiku",source:"anthropic.com",year:"2024"}
+],
+"lc_2":[
+{type:"Docs",author:"Anthropic",title:"Claude Code — CLI for software engineering tasks",source:"docs.anthropic.com",year:"2024"},
+{type:"Blog",author:"Anthropic",title:"Introducing Claude Code",source:"anthropic.com/blog",year:"2025"},
+{type:"Herramienta",author:"Anthropic",title:"Claude Code — GitHub repository",source:"github.com/anthropics/claude-code",year:"2025"},
+{type:"Reporte",author:"GitHub",title:"The economic impact of AI developer tools",source:"github.blog",year:"2023"}
+],
+"lc_3":[
+{type:"Docs",author:"Anthropic",title:"Claude for Enterprise — Team collaboration features",source:"anthropic.com/enterprise",year:"2024"},
+{type:"Blog",author:"Anthropic",title:"Claude for Work: Bringing AI to teams",source:"anthropic.com/blog",year:"2024"},
+{type:"Herramienta",author:"Slack",title:"Slack AI powered by Claude",source:"slack.com/intl/ai",year:"2024"},
+{type:"Herramienta",author:"Notion",title:"Notion AI — Powered by Claude",source:"notion.so/product/ai",year:"2024"}
+],
+"lc_4":[
+{type:"Docs",author:"Anthropic",title:"Claude API — Custom skills and tool use",source:"docs.anthropic.com",year:"2024"},
+{type:"Paper",author:"Anthropic",title:"Tool use (function calling) in Claude",source:"docs.anthropic.com/tool-use",year:"2024"},
+{type:"Blog",author:"Anthropic",title:"Building with Claude: Prompt engineering best practices",source:"anthropic.com/blog",year:"2024"},
+{type:"Docs",author:"Anthropic",title:"Claude's extended thinking capabilities",source:"docs.anthropic.com",year:"2025"}
+],
+"lc_5":[
+{type:"Blog",author:"Anthropic",title:"How companies are building with Claude",source:"anthropic.com/customers",year:"2024"},
+{type:"Blog",author:"Slack Engineering",title:"Slack AI: Building enterprise AI with Claude",source:"slack.engineering",year:"2024"},
+{type:"Blog",author:"Notion",title:"Notion AI: How we built it with Claude",source:"notion.so/blog",year:"2024"},
+{type:"Reporte",author:"Anthropic",title:"Economic impact of Claude in enterprise settings",source:"anthropic.com",year:"2024"}
+]
+};
 
 // ============ STATE ============
 let completedLessons = JSON.parse(localStorage.getItem('ai_course_progress')||'[]');
@@ -1262,7 +1746,7 @@ existing.innerHTML=`
 </p>
 </div>
 ${MODULE_TLDRS[m.id]?'<div class="module-tldr"><div class="tldr-label">Resumen del módulo</div><p>'+MODULE_TLDRS[m.id]+'</p></div>':''}
-<div class="lesson"><div class="lesson-content">${l.content}</div></div>
+<div class="lesson"><div class="lesson-content">${l.content}${LESSON_REFS[lid]?`<div class="refs-section"><h5>📚 Referencias</h5>${LESSON_REFS[lid].map(r=>`<div class="ref-item"><span class="ref-type">${r.type}</span><span class="ref-text">${r.author?`<strong>${r.author}</strong> `:''}${r.title}${r.source?` <em>· ${r.source}</em>`:''}${r.year?` (${r.year})`:''}</span></div>`).join('')}</div>`:''}</div></div>
 <div class="lesson-complete ${completedLessons.includes(lid)?'done':''}" onclick="toggleComplete('${lid}')" id="cbtn-${lid}">
 <div class="lc-check">${completedLessons.includes(lid)?'✓':''}</div>
 <div class="lc-text">${completedLessons.includes(lid)?'Lección completada':'Marcar lección como completada'}</div>
