@@ -1649,6 +1649,7 @@ function goToCover(){
 document.getElementById('app-view').classList.remove('active');
 document.getElementById('cover-page').style.display='';
 activeModule=null; activeLesson=null;
+history.replaceState(null,'',window.location.pathname);
 window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1726,6 +1727,7 @@ showLesson(mid,m.lessons[0].id);
 
 function showLesson(mid,lid){
 activeModule=mid; activeLesson=lid;
+history.replaceState(null,'','#'+mid+'/'+lid);
 const m=MODULES.find(x=>x.id===mid);
 const mi=MODULES.indexOf(m);
 const l=m.lessons.find(x=>x.id===lid);
@@ -1815,6 +1817,19 @@ document.getElementById('sidebar').classList.toggle('mobile-open');
 // ============ INIT ============
 renderCover();
 renderSidebar();
+(function(){
+const hash=window.location.hash.slice(1);
+if(!hash)return;
+const parts=hash.split('/');
+const mid=parts[0],lid=parts[1];
+const m=MODULES.find(x=>x.id===mid);
+if(!m)return;
+const l=lid?m.lessons.find(x=>x.id===lid):null;
+if(!l&&!m)return;
+document.getElementById('cover-page').style.display='none';
+document.getElementById('app-view').classList.add('active');
+showLesson(m.id,(l||m.lessons[0]).id);
+})();
 </script>
 </body>
 </html>
